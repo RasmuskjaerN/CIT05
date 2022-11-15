@@ -12,8 +12,8 @@ namespace DataLayer.Domain
     {
         public string? Nconst { get; set; }
         public string? PrimaryName { get; set; }
-        public int? Birthyear { get; set; }
-        public int? Deathyear { get; set; }
+        public string? Birthyear { get; set; }
+        public string? Deathyear { get; set; }
         public float? NameRating { get; set; }
     }
 }

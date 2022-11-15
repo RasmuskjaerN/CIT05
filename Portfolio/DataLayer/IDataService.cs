@@ -6,13 +6,13 @@ namespace DataLayer
 {
     public interface IDataService
     {
-        
         IList<akaAttribute> GetAkaAttributes();
-        akaAttribute? GetAkaAttributes(string Tconst);
+        akaAttribute? GetAkaAttribute(string Tconst);
         IList<akaType> GetAkaTypes();
         akaType? GetAkaType(string Tconst);
 
         IList<ProductSearchModel> GetAttributeByName(string search);
-     
+
+        nameBasic? GetName(string nconst);
     }
 }

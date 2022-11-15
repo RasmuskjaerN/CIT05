@@ -11,104 +11,50 @@ namespace DataLayer
 {
     public class DataService : IDataService
     {
-        public akaAttribute? GetAkaAttributes(string Tconst)
+        public akaAttribute? GetAkaAttribute(string Tconst)
         {
-            throw new NotImplementedException();
+            using var db = new IMDBContext();
+            return db.Attributes.Find(Tconst);
         }
 
         public IList<akaAttribute> GetAkaAttributes()
         {
-            throw new NotImplementedException();
+            using var db = new IMDBContext();
+            return db.Attributes.ToList();
         }
 
         public akaType? GetAkaType(string Tconst)
         {
-            throw new NotImplementedException();
+            using var db = new IMDBContext();
+            return db.Types.Find(Tconst);
         }
 
         public IList<akaType> GetAkaTypes()
         {
-            throw new NotImplementedException();
+            using var db = new IMDBContext();
+            return db.Types.ToList();
         }
 
         public IList<ProductSearchModel> GetAttributeByName(string search)
         {
-            throw new NotImplementedException();
-        }
-    }
-}
-/* public void CreateCategory(akaAttribute akaType)
-        {
-            using var db = new NorthwindContext();
-            akaType.Id = db.Categories.Any() ? db.Categories.Max(x => x.Id) + 1 : 1;
-            db.Categories.Add(akaType);
-            db.SaveChanges();
-        }
-
-        public bool DeleteCategory(int id)
-        {
-            using var db = new NorthwindContext();
-            var akaType = db.Categories.Find(id);
-            db.Categories.Remove(akaType);
-            return db.SaveChanges() > 0;
-        }
-
-        public IList<Category> GetAkaTypes()
-        {
-            using var db = new NorthwindContext();
-            return db.Categories.ToList();
-        }
-
-        public Category? GetAkaType(int id)
-        {
-            using var db = new NorthwindContext();
-            return db.Categories.Find(id);
-        }
-
-        public AkaAttribute? GetProduct(int id)
-        {
-            using var db = new NorthwindContext();
-            return db.Products.Include(x => x.Category).FirstOrDefault(x => x.Id == id);
-        }
-
-        public IList<ProductSearchModel> GetProductByName(string search)
-        {
-            using var db = new NorthwindContext();
-            return db.Products
-                .Include(x => x.Category)
-                .Where(x => x.Name == search)
+            using var db = new IMDBContext();
+            return db.Attributes
+                .Include(x => x.Attribute)
+                .Where(x => x.Tconst == search)
                 .Select(x => new ProductSearchModel
                 {
-                    ProductName = x.Name,
-                    CategoryName = x.Category.Name
+                    AttributeName = x.Attribute,
+                    TypeName = x.Tconst
                 })
                 .ToList();
         }
 
-        public IList<AkaAttribute> GetAkaAttributes(int page, int pageSize)
+        public nameBasic? GetName(string nconst)
         {
-            using var db = new NorthwindContext();
-            return db.Products
-                .Include(x => x.Category)
-                .Skip(page * pageSize)
-                .Take(pageSize)
-                .OrderBy(x => x.Id)
-                .ToList();
+            using var db = new IMDBContext();
+            return db.nameBasics?.FirstOrDefault(x => x.Nconst == nconst);
         }
 
-        public int GetNumberOfAttributes()
-        {
-            using var db = new NorthwindContext();
-            return db.Products.Count();
-        }
+    }
+}
 
-        public bool UpdateCategory(Category akaType)
-        {
-            using var db = new NorthwindContext();
-            var dbCategory = db.Categories.Find(akaType.Id);
-            if (dbCategory == null) return false;
-            dbCategory.Name = akaType.Name;
-            dbCategory.Description = akaType.Description;
-            db.SaveChanges();
-            return true;
-        }*/
