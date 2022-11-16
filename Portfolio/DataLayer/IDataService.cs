@@ -6,13 +6,22 @@ namespace DataLayer
 {
     public interface IDataService
     {
-        IList<akaAttribute> GetAkaAttributes();
+        titleBasic? GetTitle(string Tconst);
+        IList<titleGenre> GetSimilarMovies(string Tconst);
+        nameBasic? GetName(string nconst);
+        IList<knownFor> GetCoactors(string nconst);
+        /*IList<akaAttribute> GetAkaAttributes();
         akaAttribute? GetAkaAttribute(string Tconst);
         IList<akaType> GetAkaTypes();
         akaType? GetAkaType(string Tconst);
 
-        IList<ProductSearchModel> GetAttributeByName(string search);
+        IList<ProductSearchModel> GetAttributeByName(string search);*/
 
-        nameBasic? GetName(string nconst);
+        IList<titlePrincipal> GetPopularActors(string input);
+
+
+
+
+
     }
 }
