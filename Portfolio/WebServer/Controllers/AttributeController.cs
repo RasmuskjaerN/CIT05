@@ -8,7 +8,7 @@ namespace WebServer.Controllers
     [Route("api/attributes")]
     public class AttributeController : ControllerBase
     {
-        private IDataService _dataService = new DataService();
+        /*private IDataService _dataService = new DataService();
 
         [HttpGet]
         public IActionResult Get()
@@ -33,6 +33,6 @@ namespace WebServer.Controllers
                 Attribute = attribute.Attribute
             };
             return Ok(model);
-        }
+        }*/
     }
 }

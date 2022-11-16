@@ -16,7 +16,7 @@ namespace DataLayer
             using var db = new IMDBContext();
             return db.userMain.Find(uid);
         }
-        public void CreateActorBookmark(string userid, string nconstactor, string usernote)
+        public void CreateActorBookmark(string userid, string nconstactor, string? usernote)
         {
             var db = new IMDBContext();
             db.Database.ExecuteSqlInterpolated($"select bookmark_actor({userid},{nconstactor},{usernote})");
@@ -40,6 +40,31 @@ namespace DataLayer
         {
             var db = new IMDBContext();
             db.Database.ExecuteSqlInterpolated($"select delete_rate({userid},{tconst})");
+        }
+
+        public void CreateMovieBookmark(string userid, string tconstmovie)
+        {
+            var db = new IMDBContext();
+            db.Database.ExecuteSqlInterpolated($"select bookmark_actor({userid},{tconstmovie})");
+        }
+
+        /*public IList<UserSearchModel> GetActorSearch(string search)
+        {
+            var db = new IMDBContext();
+            return db.nameBasics
+                .Include(x => x.Nconst)
+                .Where(x => x.PrimaryName == search)
+                .Select(x => new UserSearchModel
+                {
+                    UserId = x.Nconst
+                })
+                .ToList(); ;
+        }*/
+        public IList<UserSearchModel> GetActorSearch(string userid, string search)
+        {
+            var db = new IMDBContext();
+            string search_result = db.Database.ExecuteSqlInterpolated($"select string_search({userid},{search})").ToString();
+            return (IList<UserSearchModel>)search_result.ToList();
         }
     }
 }
