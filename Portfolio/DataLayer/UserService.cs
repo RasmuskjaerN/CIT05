@@ -16,10 +16,10 @@ namespace DataLayer
             using var db = new IMDBContext();
             return db.userMain.Find(uid);
         }
-        public void CreateActorBookmark(string userid, string nconstactor, string usernote)
+        public CreateActorBookmark(string userid, string nconstactor, string? usernote)
         {
             var db = new IMDBContext();
-            db.Database.ExecuteSqlInterpolated($"select bookmark_actor({userid},{nconstactor},{usernote})");
+            return db.Database.ExecuteSqlInterpolated($"select bookmark_actor({userid},{nconstactor},{usernote})");
         }
         public void DeleteActorBookmark(string userid, string nconstactor)
         {

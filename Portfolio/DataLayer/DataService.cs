@@ -54,13 +54,13 @@ namespace DataLayer
             using var db = new IMDBContext();
             return db.Types.Find(Tconst);
         }
-
+        //get akatypes as a list
         public IList<akaType> GetAkaTypes()
         {
             using var db = new IMDBContext();
             return db.Types.ToList();
         }
-
+        //get popular actors
         public IList<titlePrincipal> GetPopularActors(string input)
         {
             using var db = new IMDBContext();
