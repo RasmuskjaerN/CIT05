@@ -9,9 +9,9 @@ namespace WebServer.Controllers
     {
         private readonly IUserService _userService = new UserService();
         [HttpPost("{uid}")]
-        public IActionResult CreateActorBookmark(string userid, string nconstactor, string? usernote)
+        public IActionResult CreateActorBookmark(string userid, string tconstmovie, string? usernote)
         {
-            var bookmark = _userService.CreateActorBookmark(userid, nconstactor, usernote);
+            var bookmark = _userService.CreateActorBookmark(userid, tconstmovie, usernote);
 
             if (bookmark == null)
             {
@@ -19,11 +19,12 @@ namespace WebServer.Controllers
             }
             var model = new UserBookmarkModel
             {
-                Url = "http//:localhost/5001/api/user" + bookmark.Nconst,
+                Url = "http//:localhost/5001/api/user" + bookmark.Uid,
                 Tconst = bookmark.Tconst,
-                Nconst = bookmark.Nconst,
+                //Nconst = bookmark.Nconst,
                 Note = bookmark.Note
             };
+        return Ok(model);
            
 
         }

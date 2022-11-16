@@ -141,10 +141,10 @@ namespace DataLayer
             modelBuilder.Entity<titleWriter>().Property(x => x.Nconst).HasColumnName("writers");
 
             modelBuilder.Entity<userBookmark>().ToTable("user_bookmark");
-            modelBuilder.Entity<userBookmark>().HasKey(x => new { x.Tconst, x.Uid });
+            modelBuilder.Entity<userBookmark>().HasKey(x => new {x.Tconst, x.Uid });
             modelBuilder.Entity<userBookmark>().Property(x => x.Uid).HasColumnName("uid");
             modelBuilder.Entity<userBookmark>().Property(x => x.Tconst).HasColumnName("tconst");
-            modelBuilder.Entity<userBookmark>().Property(x => x.Nconst).HasColumnName("nconst");
+            //modelBuilder.Entity<userBookmark>().Property(x => x.Nconst).HasColumnName("nconst");
             modelBuilder.Entity<userBookmark>().Property(x => x.Note).HasColumnName("note");
 
             modelBuilder.Entity<userHistory>().ToTable("user_history");
