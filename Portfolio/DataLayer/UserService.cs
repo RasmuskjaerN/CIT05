@@ -43,11 +43,11 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select delete_rate({userid},{tconst})");
         }
 
-        public void CreateMovieBookmark(string userid, string tconstmovie)
+        /*public void CreateMovieBookmarksql(string userid, string tconstmovie)
         {
             var db = new IMDBContext();
             db.Database.ExecuteSqlInterpolated($"select bookmark_actor({userid},{tconstmovie})");
-        }
+        }*/
 
         /*public IList<UserSearchModel> GetActorSearch(string search)
         {
@@ -78,7 +78,7 @@ namespace DataLayer
             using var db = new IMDBContext();
             var bm = new userBookmark();
             bm.Uid = userid.Uid;
-            bm.Tconst = tconstmovie.Tconst;
+            bm.Tconst = userid.Tconst;
             bm.Note = note.Note;
             db.userBookmarks.Add(bm);
             db.SaveChanges();

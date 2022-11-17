@@ -9,7 +9,7 @@ namespace WebServer.Models.Profiles
         {
             CreateMap<userBookmark, MovieBookmarkModel>();
 
-            CreateMap<CreateMovieBookmarkModel, MovieBookmarkModel>();
+            CreateMap<CreateMovieBookmarkModel, userBookmark>();
         }
     }
 }

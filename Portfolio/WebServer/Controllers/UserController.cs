@@ -7,6 +7,7 @@ using DataLayer.Domain;
 namespace WebServer.Controllers
 {
     [Route("api/user")]
+    [ApiController]
     public class UserController : ControllerBase
     {
         private IUserService _userService;
@@ -42,7 +43,7 @@ namespace WebServer.Controllers
             return Ok(model);
         }
 
-        [HttpPost]
+        [HttpPost("{userid}",Name =nameof(CreateMovieBookmark))]
         public IActionResult CreateMovieBookmark(CreateMovieBookmarkModel model)
         {
             var bm = _mapper.Map<userBookmark>(model);            
@@ -55,10 +56,11 @@ namespace WebServer.Controllers
         private MovieBookmarkModel CreateMovieBookmarkModel(userBookmark user)
         {
             var model = _mapper.Map<MovieBookmarkModel>(user);
-            model.Url = _generator.GetUriByName(HttpContext, nameof(GetMovieBookmark), new { user.Uid});
-            model.Uid = user.Uid;
-            model.Tconst = "tt6201920 "+user.Tconst;
-            model.Note = "this is a test"+user.Note;
+            //model.Url = _generator.GetUriByName(HttpContext, nameof(GetMovieBookmark), new { user.Uid});
+            model.Url = "http//:localhost/5001/api/user" + user.Uid;
+            //model.Uid = "44444";
+            //model.Tconst = "tt6201920";
+            //model.Note = "test create";
             return model;
         }
 
