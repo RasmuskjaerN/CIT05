@@ -20,24 +20,24 @@ namespace WebServer.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public IActionResult GetMovieTconst()
+        [HttpGet(Name = nameof(GetMovieBookmarks))]
+        public IActionResult GetMovieBookmarks()
         {
-            var movieTconst = _userService.GetMovieTconst().Select(x => CreateMovieBookmarkModel(x));
-            return Ok(movieTconst);
+            var bookmarks = _userService.GetMovieBookmarks().Select(x => CreateMovieBookmarkModel(x));
+            return Ok(bookmarks);
         }
 
-        [HttpGet("{tconst}", Name = nameof(GetMovieTconst))]
-        public IActionResult GetMovieTconst(string tconst)
+        [HttpGet("{userid}", Name = nameof(GetMovieBookmark))]
+        public IActionResult GetMovieBookmark(string userid)
         {
-            var movieTconst = _userService.GetMovieTconst(tconst);
+            var user = _userService.GetMovieBookmark(userid);
 
-            if (movieTconst == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            var model = CreateMovieBookmarkModel(movieTconst);
+            var model = CreateMovieBookmarkModel(user);
 
             return Ok(model);
         }
@@ -45,24 +45,26 @@ namespace WebServer.Controllers
         [HttpPost]
         public IActionResult CreateMovieBookmark(CreateMovieBookmarkModel model)
         {
-            var movieBookmark = _mapper.Map<userBookmark>(model);
+            var bm = _mapper.Map<userBookmark>(model);            
 
-            _userService.CreateMovieBookmark(movieBookmark);
+            _userService.CreateMovieBookmark(bm, bm, bm);
 
-            return CreatedAtRoute(null, CreateMovieBookmarkModel(movieBookmark));
+            return CreatedAtRoute(null, CreateMovieBookmarkModel(bm));
         }
 
-        private MovieBookmarkModel movieBookmarkModel(userBookmark movieBookmark)
+        private MovieBookmarkModel CreateMovieBookmarkModel(userBookmark user)
         {
-            var model = _mapper.Map<MovieBookmarkModel>(movieBookmark);
-            model.Url = _generator.GetUriByName(HttpContext, nameof(GetMovieTconst), new { movieBookmark.Uid });
+            var model = _mapper.Map<MovieBookmarkModel>(user);
+            model.Url = _generator.GetUriByName(HttpContext, nameof(GetMovieBookmark), new { user.Uid});
+            model.Uid = user.Uid;
+            model.Tconst = "tt6201920 "+user.Tconst;
+            model.Note = "this is a test"+user.Note;
             return model;
         }
 
-        private MovieBookmarkModel CreateMovieBookmarkModel(userBookmark movieBookmark)
+        private string? CreateLink(int page, int pageSize)
         {
-            var model = _mapper.Map<MovieBookmarkModel>(movieBookmark);
-            model.Url = _generator.GetUriByName(HttpContext, nameof(GetMovieTconst), new { movieBookmark.Uid });
+            return _generator.GetUriByName(HttpContext, nameof(GetMovieBookmarks), new{page, pageSize});
         }
 
         /*[HttpPost("{uid}")]

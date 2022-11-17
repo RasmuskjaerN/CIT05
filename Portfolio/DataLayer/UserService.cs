@@ -73,27 +73,28 @@ namespace DataLayer
             throw new NotImplementedException();
         }
 
-        public void CreateMovieBookmark(userBookmark userid, userBookmark tconstmovie, userBookmark? note)
+        public void CreateMovieBookmark(userBookmark userid, userBookmark? tconstmovie, userBookmark? note)
         {
             using var db = new IMDBContext();
-            var user = db.userBookmarks.FirstOrDefault();
-            var movietconst = tconstmovie.Tconst;
-            var bookmarknote = note.Note;
-            db.userBookmarks.Add(user, movietconst, bookmarknote);
+            var bm = new userBookmark();
+            bm.Uid = userid.Uid;
+            bm.Tconst = tconstmovie.Tconst;
+            bm.Note = note.Note;
+            db.userBookmarks.Add(bm);
             db.SaveChanges();
             
         }
 
-        public IList<userBookmark> GetMovieTconst()
+        public IList<userBookmark> GetMovieBookmarks()
         {
             using var db = new IMDBContext();
             return db.userBookmarks.ToList();
         }
 
-        public userBookmark? GetMovieTconst(string movietconst)
+        public userBookmark? GetMovieBookmark(string userid)
         {
             using var db =  new IMDBContext();
-            return db.userBookmarks.Find(movietconst);
+            return db.userBookmarks.Find(userid);
         }
     }
 }
