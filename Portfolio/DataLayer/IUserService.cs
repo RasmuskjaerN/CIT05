@@ -11,7 +11,15 @@ namespace DataLayer
 {
     public interface IUserService
     {
+        IList<userBookmark> GetMovieTconst();
+
+        userBookmark? GetMovieTconst(string movietconst);
+
         userBookmark? CreateActorBookmark(string userid, string nconstactor, string? usernote);
+        userBookmark? UpdateActorBookmark(string userid, string nconstactor, string note);
+
+        void CreateMovieBookmark(userBookmark userid, userBookmark tconstmovie, userBookmark? note);
+
         void DeleteActorBookmark(string userid, string nconstactor);
         void DeleteMovieBookmark(string userid, string tconstmovie);
         void CreateRating(string userid, string title, int rating);

@@ -67,5 +67,33 @@ namespace DataLayer
             string search_result = db.Database.ExecuteSqlInterpolated($"select string_search({userid},{search})").ToString();
             return (IList<UserSearchModel>)search_result.ToList();
         }
+
+        public userBookmark? UpdateActorBookmark(string userid, string nconstactor, string note)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMovieBookmark(userBookmark userid, userBookmark tconstmovie, userBookmark? note)
+        {
+            using var db = new IMDBContext();
+            var user = db.userBookmarks.FirstOrDefault();
+            var movietconst = tconstmovie.Tconst;
+            var bookmarknote = note.Note;
+            db.userBookmarks.Add(user, movietconst, bookmarknote);
+            db.SaveChanges();
+            
+        }
+
+        public IList<userBookmark> GetMovieTconst()
+        {
+            using var db = new IMDBContext();
+            return db.userBookmarks.ToList();
+        }
+
+        public userBookmark? GetMovieTconst(string movietconst)
+        {
+            using var db =  new IMDBContext();
+            return db.userBookmarks.Find(movietconst);
+        }
     }
 }
