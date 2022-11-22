@@ -1,5 +1,6 @@
 ﻿using DataLayer.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Logging;
 using System.Data;
 
@@ -8,13 +9,19 @@ namespace DataLayer
 {
     public class IMDBContext : DbContext
     {
-        const string ConnectionString = "host=cit.ruc.dk;db=cit05;uid=cit05;pwd=nR0RFohmp9iY";
+        
+        private readonly string _connectionString;
+
+        
+
+        //const string ConnectionString = "host=cit.ruc.dk;db=cit05;uid=cit05;pwd=nR0RFohmp9iY";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            //optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
-            optionsBuilder.UseNpgsql(ConnectionString);
+            optionsBuilder.UseNpgsql(_connectionString);
         }
+
+
 
         public DbSet<akaAttribute>? Attributes { get; set; }
         public DbSet<akaType>? Types { get; set; }
@@ -36,6 +43,8 @@ namespace DataLayer
         public DbSet<userRate>? userRate { get; set; }
         public DbSet<wi>? wi { get; set; }
         public DbSet<workedAs>? workedAs { get; set; }
+
+        
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

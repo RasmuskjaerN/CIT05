@@ -12,11 +12,13 @@ namespace DataLayer
 {
     public class DataService : IDataService
     {
+        
+        public IMDBContext? db = new IMDBContext();
         //Get movie titles
         public titleBasic? GetTitle(string Tconst)
         {
-            using var db = new IMDBContext();
-            return db.titleBasics.Find(Tconst);
+            titleBasic? titles = db.titleBasics.Find(Tconst);
+            return titles;
         }
         //get similar movies depending on genre
         public IList<titleGenre> GetSimilarMovies(string input)
