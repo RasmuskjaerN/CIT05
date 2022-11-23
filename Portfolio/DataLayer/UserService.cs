@@ -19,9 +19,15 @@ namespace DataLayer
         public userBookmark? CreateActorBookmark(string userid, string tconstmovie, string? usernote)
         {
             var db = new IMDBContext();
+<<<<<<< HEAD
+            var bookmark = db.userBookmarks.FromSqlInterpolated($"select bookmark_movie({userid},{tconstmovie},{usernote})");
+            return bookmark.FirstOrDefault();
+        }
+=======
             var bookmark = db.userBookmarks.FromSqlInterpolated($"select bookmark_actor({userid},{tconstmovie},{usernote})");
             return bookmark.FirstOrDefault();
        }
+>>>>>>> 30086cc3d512026bcb61640ad649b8a69dd763cd
         public void DeleteActorBookmark(string userid, string nconstactor)
         {
             var db = new IMDBContext();
