@@ -6,6 +6,7 @@ namespace DataLayer
 {
     public interface IDataService
     {
+
         titleBasic? GetTitle(string Tconst);
         IList<titleGenre> GetSimilarMovies(string Tconst);
         nameBasic? GetName(string nconst);
