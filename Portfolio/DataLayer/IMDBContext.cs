@@ -10,16 +10,8 @@ namespace DataLayer
     public class IMDBContext : DbContext
     {
         
-        private readonly string _connectionString;
-
+        const string ConnectionString = "host=cit.ruc.dk;db=cit05;uid=cit05;pwd=nR0RFohmp9iY";
         
-
-        //const string ConnectionString = "host=cit.ruc.dk;db=cit05;uid=cit05;pwd=nR0RFohmp9iY";
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseNpgsql(_connectionString);
-        }
 
 
 
@@ -44,8 +36,11 @@ namespace DataLayer
         public DbSet<wi>? wi { get; set; }
         public DbSet<workedAs>? workedAs { get; set; }
 
-        
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql(ConnectionString);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
