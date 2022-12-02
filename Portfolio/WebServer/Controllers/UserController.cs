@@ -1,4 +1,4 @@
-﻿/*using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using DataLayer;
 using WebServer.Models;
 using AutoMapper;
@@ -78,7 +78,7 @@ namespace WebServer.Controllers
             return _generator.GetUriByName(HttpContext, nameof(GetMovieBookmarks), new{page, pageSize});
         }
 
-        *//*[HttpPost("{uid}")]
+        /*[HttpPost("{uid}")]
         public IActionResult CreateActorBookmark(string userid, string tconstmovie, string? usernote)
         {
             var movieBookmark = _userService.CreateActorBookmark(userid, tconstmovie, usernote);
@@ -101,7 +101,7 @@ namespace WebServer.Controllers
                 //Nconst = movieBookmark.Nconst,
                 Note = movieBookmark.Note
             }
-        };*//*
+        };*/
 
 
 
@@ -109,4 +109,3 @@ namespace WebServer.Controllers
 
     }
 }
-*/

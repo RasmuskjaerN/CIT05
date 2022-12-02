@@ -1,6 +1,7 @@
 ﻿using DataLayer.Domain;
 using DataLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,14 +13,6 @@ namespace DataLayer
 {
     public class DataService : IDataService
     {
-<<<<<<< HEAD
-        public IMDBContext db = new IMDBContext();
-        //Get movie titles
-        public titleBasic? GetTitle(string Tconst)
-        {
-            
-            return db.titleBasics.Find(Tconst);
-=======
         
         public IMDBContext? db = new IMDBContext();
         //Get movie titles
@@ -27,7 +20,6 @@ namespace DataLayer
         {
             titleBasic? titles = db.titleBasics.Find(Tconst);
             return titles;
->>>>>>> 30086cc3d512026bcb61640ad649b8a69dd763cd
         }
         //get similar movies depending on genre
         public IList<titleGenre> GetSimilarMovies(string input)

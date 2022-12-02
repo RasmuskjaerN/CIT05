@@ -76,10 +76,12 @@ namespace DataLayer
         public void CreateMovieBookmark(userBookmark userid, userBookmark? tconstmovie, userBookmark? note)
         {
             using var db = new IMDBContext();
-            var bm = new userBookmark();
-            bm.Uid = userid.Uid;
-            bm.Tconst = userid.Tconst;
-            bm.Note = note.Note;
+            var bm = new userBookmark
+            {
+                Uid = userid.Uid,
+                Tconst = userid.Tconst,
+                Note = note.Note
+            };
             db.userBookmarks.Add(bm);
             db.SaveChanges();
             

@@ -10,16 +10,8 @@ namespace DataLayer
     public class IMDBContext : DbContext
     {
         
-        private readonly string _connectionString;
-
+        const string ConnectionString = "host=cit.ruc.dk;db=cit05;uid=cit05;pwd=nR0RFohmp9iY";
         
-
-        //const string ConnectionString = "host=cit.ruc.dk;db=cit05;uid=cit05;pwd=nR0RFohmp9iY";
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseNpgsql(_connectionString);
-        }
 
 
 
@@ -44,8 +36,11 @@ namespace DataLayer
         public DbSet<wi>? wi { get; set; }
         public DbSet<workedAs>? workedAs { get; set; }
 
-        
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql(ConnectionString);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -153,10 +148,6 @@ namespace DataLayer
             modelBuilder.Entity<userBookmark>().HasKey(x => new {x.Uid });
             modelBuilder.Entity<userBookmark>().Property(x => x.Uid).HasColumnName("uid");
             modelBuilder.Entity<userBookmark>().Property(x => x.Tconst).HasColumnName("tconst");
-<<<<<<< HEAD
-=======
-            //modelBuilder.Entity<userBookmark>().Property(x => x.Nconst).HasColumnName("nconst");
->>>>>>> 30086cc3d512026bcb61640ad649b8a69dd763cd
             modelBuilder.Entity<userBookmark>().Property(x => x.Note).HasColumnName("note");
 
             modelBuilder.Entity<userHistory>().ToTable("user_history");
