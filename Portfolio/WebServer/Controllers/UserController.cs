@@ -10,13 +10,7 @@ namespace WebServer.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-<<<<<<< HEAD
-        private readonly IUserService _userService = new UserService();
-        [HttpPost("{tconst}")]
-        public IActionResult CreateActorBookmark(string userid, string tconstmovie, string? usernote)
-        {
-            var bookmark = _userService.CreateActorBookmark(userid, tconstmovie, usernote);
-=======
+        
         private IUserService _userService;
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
@@ -55,7 +49,6 @@ namespace WebServer.Controllers
         {
             var bm = _mapper.Map<userBookmark>(model);
             
->>>>>>> 30086cc3d512026bcb61640ad649b8a69dd763cd
 
             _userService.CreateMovieBookmark(bm, bm, bm);
 
@@ -77,35 +70,5 @@ namespace WebServer.Controllers
         {
             return _generator.GetUriByName(HttpContext, nameof(GetMovieBookmarks), new{page, pageSize});
         }
-
-        /*[HttpPost("{uid}")]
-        public IActionResult CreateActorBookmark(string userid, string tconstmovie, string? usernote)
-        {
-            var movieBookmark = _userService.CreateActorBookmark(userid, tconstmovie, usernote);
-
-            if (movieBookmark == null)
-            {
-                return NotFound();
-            }
-            var model = new UserBookmarkModel
-            {
-<<<<<<< HEAD
-                Uid = bookmark.Uid,
-                Tconst = bookmark.Tconst,
-                Note = bookmark.Note
-            };
-           return Ok(model);
-=======
-                Url = "http//:localhost/5001/api/user" + movieBookmark.Uid,
-                Tconst = movieBookmark.Tconst,
-                //Nconst = movieBookmark.Nconst,
-                Note = movieBookmark.Note
-            }
-        };*/
-
-
-
->>>>>>> 30086cc3d512026bcb61640ad649b8a69dd763cd
-
     }
 }

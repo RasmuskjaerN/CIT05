@@ -69,24 +69,6 @@ namespace DataLayer
             
             return (IList<titlePrincipal>)db.titlePrincipals.FromSqlInterpolated($"select popular_actors({input})");
         }
-        public IList<ProductSearchModel> GetAttributeByName(string search)
-        {
-            
-            return db.Attributes
-                .Include(x => x.Attribute)
-                .Where(x => x.Tconst == search)
-                .Select(x => new ProductSearchModel
-                {
-                    AttributeName = x.Attribute,
-                    TypeName = x.Tconst
-                })
-                .ToList();
-        }
-
-
-
-       
-
     }
 }
 
