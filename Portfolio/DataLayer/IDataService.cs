@@ -1,24 +1,26 @@
 ﻿using DataLayer.Domain;
 using DataLayer.Models;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace DataLayer
 {
     public interface IDataService
     {
 
-        titleBasic? GetTitle(string Tconst);
-        IList<titleGenre> GetSimilarMovies(string Tconst);
+        titleBasic? GetMovie(string Tconst);
+
+        IList<titleBasic> GetMoviesList(string Tconst);
+        IList<titleBasic> GetMoviesList(int page, int pagesize);
+
+        IList<titleGenre> GetSimilarMoviesList(string Tconst);
+
         nameBasic? GetName(string nconst);
+        IList<nameBasic> GetNamesList(string nconst);
+        IList<nameBasic> GetNamesList(int page, int pagesize);
         IList<knownFor> GetCoactors(string nconst);
-        /*IList<akaAttribute> GetAkaAttributes();
-        akaAttribute? GetAkaAttribute(string Tconst);
-        IList<akaType> GetAkaTypes();
-        akaType? GetAkaType(string Tconst);
-
-        IList<ProductSearchModel> GetAttributeByName(string search);*/
-
-        IList<titlePrincipal> GetPopularActors(string input);
+        
 
 
 
