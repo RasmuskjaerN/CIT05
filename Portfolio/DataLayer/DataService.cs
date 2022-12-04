@@ -14,61 +14,50 @@ namespace DataLayer
     public class DataService : IDataService
     {
         
-        public IMDBContext? db = new IMDBContext();
-        //Get movie titles
-        public titleBasic? GetTitle(string Tconst)
+        public IMDBContext db = new IMDBContext();
+        public IList<titleBasic> GetMoviesList(string Tconst)
         {
-            titleBasic? titles = db.titleBasics.Find(Tconst);
-            return titles;
+            return db.titleBasics.ToList();
         }
-        //get similar movies depending on genre
-        public IList<titleGenre> GetSimilarMovies(string input)
+        public titleBasic? GetMovie(string Tconst)
         {
-            
-            return (IList<titleGenre>)db.titleGenres.FromSqlInterpolated($"select sim_movie({input})");
-        }
-        //Get actor names
-        public nameBasic? GetName(string nconst)
-        {
-            
-            return db.nameBasics?.FirstOrDefault(x => x.Nconst == nconst);
-        }
-        //get coactors
-        public IList<knownFor> GetCoactors(string primaryname)
-        {
-            
-            return (IList<knownFor>)db.knownFor.FromSqlInterpolated( $"select find_coactors({primaryname})");
-        }
-        //get attributes
-        public akaAttribute? GetAkaAttribute(string Tconst)
-        {
-            
-            return db.Attributes.Find(Tconst);
+            titleBasic? title = db.titleBasics.Find(Tconst);
+            return title;
         }
 
-        public IList<akaAttribute> GetAkaAttributes()
+        public IList<titleBasic> GetMoviesList(int page = 0, int pagesize = 25)
         {
-            
-            return db.Attributes.ToList();
+            return db.titleBasics.Skip(page).Take(pagesize).ToList();
         }
-        //get types
-        public akaType? GetAkaType(string Tconst)
+
+        public IList<titleGenre> GetSimilarMoviesList(string Tconst)
         {
-            
-            return db.Types.Find(Tconst);
+            return db.titleGenres.ToList();
         }
-        //get akatypes as a list
-        public IList<akaType> GetAkaTypes()
+        
+        public nameBasic? GetName(string nconst)
         {
-            
-            return db.Types.ToList();
+            nameBasic? name = db.nameBasics.Find(nconst);
+            return name;
         }
-        //get popular actors
-        public IList<titlePrincipal> GetPopularActors(string input)
+
+        public IList<nameBasic> GetNamesList(string nconst)
         {
-            
-            return (IList<titlePrincipal>)db.titlePrincipals.FromSqlInterpolated($"select popular_actors({input})");
+            return db.nameBasics.ToList();
         }
+
+        public IList<nameBasic> GetNamesList(int page = 0, int pagesize = 25)
+        {
+            return db.nameBasics.Skip(page).Take(pagesize).ToList();
+        }
+
+
+        public IList<knownFor> GetCoactors(string nconst)
+        {
+            throw new NotImplementedException();
+        }
+        
+
     }
 }
 

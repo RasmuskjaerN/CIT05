@@ -1,4 +1,5 @@
 ﻿using DataLayer.Domain;
+using DataLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Logging;
@@ -35,6 +36,7 @@ namespace DataLayer
         public DbSet<userRate>? userRate { get; set; }
         public DbSet<wi>? wi { get; set; }
         public DbSet<workedAs>? workedAs { get; set; }
+        public DbSet<tempSearch>? tempSearches { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -178,6 +180,9 @@ namespace DataLayer
             modelBuilder.Entity<workedAs>().HasKey(x => new { x.Nconst, x.PrimaryProfession });
             modelBuilder.Entity<workedAs>().Property(x => x.Nconst).HasColumnName("nconst");
             modelBuilder.Entity<workedAs>().Property(x => x.PrimaryProfession).HasColumnName("primaryprofession");
+
+            modelBuilder.Entity<tempSearch>().HasNoKey();
+            modelBuilder.Entity<tempSearch>().Property(x => x.userInput).HasColumnName("userinput");
         }
 
     }
