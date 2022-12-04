@@ -3,6 +3,7 @@ using DataLayer;
 using WebServer.Models;
 using AutoMapper;
 using DataLayer.Domain;
+using DataLayer.Models;
 
 namespace WebServer.Controllers
 {
@@ -11,7 +12,7 @@ namespace WebServer.Controllers
     public class UserController : ControllerBase
     {
         
-        private IUserService _userService;
+        private readonly IUserService _userService;
         private readonly LinkGenerator _generator;
         private readonly IMapper _mapper;
 
@@ -21,6 +22,18 @@ namespace WebServer.Controllers
             _generator = generator;
             _mapper = mapper;
         }
+        /*[HttpGet]
+        [Route("tempSearch")]
+        public IActionResult GetTitlesSearchList(List<string> userinput)
+        {
+            if (userinput == null && !userinput.Any())
+            {
+                return BadRequest();
+            }
+
+            var search = _userService.GetTitlesSearchList(userinput);
+            return Ok(search);
+        }*/
 
         [HttpGet(Name = nameof(GetMovieBookmarks))]
         public IActionResult GetMovieBookmarks()
@@ -70,5 +83,7 @@ namespace WebServer.Controllers
         {
             return _generator.GetUriByName(HttpContext, nameof(GetMovieBookmarks), new{page, pageSize});
         }
+
+        
     }
 }

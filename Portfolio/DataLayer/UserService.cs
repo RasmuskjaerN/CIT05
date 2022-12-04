@@ -11,9 +11,9 @@ namespace DataLayer
 {
     public class UserService : IUserService
     {
+        public IMDBContext db = new IMDBContext();
         public userMain GetUser(string uid)
         {
-            using var db = new IMDBContext();
             return db.userMain.Find(uid);
         }
         
@@ -37,7 +37,6 @@ namespace DataLayer
         }*/
         public IList<UserSearchModel> GetActorSearch(string userid, string search)
         {
-            var db = new IMDBContext();
             string search_result = db.Database.ExecuteSqlInterpolated($"select string_search({userid},{search})").ToString();
             return (IList<UserSearchModel>)search_result.ToList();
         }
@@ -49,7 +48,6 @@ namespace DataLayer
 
         public void CreateMovieBookmark(userBookmark userid, userBookmark? tconstmovie, userBookmark? note)
         {
-            using var db = new IMDBContext();
             var bm = new userBookmark
             {
                 Uid = userid.Uid,
@@ -63,13 +61,11 @@ namespace DataLayer
 
         public IList<userBookmark> GetMovieBookmarks()
         {
-            using var db = new IMDBContext();
             return db.userBookmarks.ToList();
         }
 
         public userBookmark? GetMovieBookmark(string userid)
         {
-            using var db =  new IMDBContext();
             return db.userBookmarks.Find(userid);
         }
 
@@ -92,5 +88,26 @@ namespace DataLayer
         {
             throw new NotImplementedException();
         }
+
+        /*public IList<tempSearch> GetTitlesSearchList(List<string> search)
+        {
+            string ConcatInput = "SELECT * string_search('";
+            foreach (string element in search)
+            {
+                if (search.Last().Equals(element))
+                {
+                    ConcatInput = ConcatInput + element;
+                    ConcatInput = ConcatInput + "')";
+                    break;
+                }
+                ConcatInput = ConcatInput + element;
+                ConcatInput = ConcatInput + "', '";
+
+            }
+
+            var result = db.tempSearches.FromSqlRaw(ConcatInput);
+            return result.ToList();
+            
+        }*/
     }
 }
