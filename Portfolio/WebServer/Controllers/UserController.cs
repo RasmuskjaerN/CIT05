@@ -13,16 +13,17 @@ namespace WebServer.Controllers
     {
                 
         private IUserService _userService;
-        private readonly Hashing _hashing;
+        //private readonly Hashing _hashing;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly LinkGenerator _generator;
 
-        public UserController(IUserService userService, Hashing hashing, IConfiguration configuration)
+        public UserController(IUserService userService, /*Hashing hashing,*/ IConfiguration configuration, IMapper mapper)
         {
             _userService = userService;
-            _hashing = hashing;
+            //_hashing = hashing;
             _generator = _generator;
+            _mapper = mapper;
         }
 
         [HttpPost]
@@ -33,7 +34,7 @@ namespace WebServer.Controllers
             {
                 return BadRequest();
             }
-           if (model.Password == null)
+           if (_userService.GetUser(model.Password) == null)
             {
                 return BadRequest();
             }

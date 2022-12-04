@@ -28,11 +28,11 @@ builder.Services.AddSingleton<Hashing>();
 
         };
     });*/
-//builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<IUserService, UserService>();
 
 var app = builder.Build();
-app.UseAuthentication();
-app.UseAuthorization();
+//app.UseAuthentication();
+//app.UseAuthorization();
 
 app.MapControllers();
 
