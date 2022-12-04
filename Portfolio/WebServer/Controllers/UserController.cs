@@ -3,6 +3,7 @@ using DataLayer;
 using WebServer.Models;
 using AutoMapper;
 using DataLayer.Domain;
+using WebServiceTokens.Models;
 
 namespace WebServer.Controllers
 {
@@ -10,16 +11,35 @@ namespace WebServer.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        
+                
         private IUserService _userService;
-        private readonly LinkGenerator _generator;
+        private readonly Hashing _hashing;
+        private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly LinkGenerator _generator;
 
-        public UserController(IUserService userService, LinkGenerator generator, IMapper mapper)
+        public UserController(IUserService userService, Hashing hashing, IConfiguration configuration)
         {
             _userService = userService;
-            _generator = generator;
-            _mapper = mapper;
+            _hashing = hashing;
+            _generator = _generator;
+        }
+
+        [HttpPost]
+        [Route("register")]
+        public IActionResult CreateUser(UserCreateModel model)
+        {
+            if (_userService.GetUser(model.UserName) == null)
+            {
+                return BadRequest();
+            }
+           if (model.Password == null)
+            {
+                return BadRequest();
+            }
+            //var hashResult = _hashing.hash(model.Password);
+            _userService.CreateUser(model.UserName, model.Password);
+            return Ok();
         }
 
         [HttpGet(Name = nameof(GetMovieBookmarks))]
@@ -68,7 +88,7 @@ namespace WebServer.Controllers
 
         private string? CreateLink(int page, int pageSize)
         {
-            return _generator.GetUriByName(HttpContext, nameof(GetMovieBookmarks), new{page, pageSize});
+            return _generator.GetUriByName(HttpContext, nameof(GetMovieBookmarks), new { page, pageSize });
         }
     }
 }

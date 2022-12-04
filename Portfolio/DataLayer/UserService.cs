@@ -11,21 +11,36 @@ namespace DataLayer
 {
     public class UserService : IUserService
     {
+        public IMDBContext db = new IMDBContext();
+        public void CreateUser(string username, string password)
+        {
+            db.Database.ExecuteSqlInterpolated($"select user_create({username},{password}");
+            db.SaveChanges();
+        }
+
+        public void DeleteUser(string uid, string username)
+        {
+            
+            db.Database.ExecuteSqlInterpolated($"select user_delete({uid}, {username})");
+            db.SaveChanges();
+        }
         public userMain GetUser(string uid)
         {
-            using var db = new IMDBContext();
+            
             return db.userMain.Find(uid);
         }
         
         public void DeleteRating(string userid, string tconst)
         {
-            var db = new IMDBContext();
+           
             db.Database.ExecuteSqlInterpolated($"select delete_rate({userid},{tconst})");
         }
 
+       
+
         /*public IList<UserSearchModel> GetActorSearch(string search)
         {
-            var db = new IMDBContext();
+           
             return db.nameBasics
                 .Include(x => x.Nconst)
                 .Where(x => x.PrimaryName == search)
@@ -37,7 +52,7 @@ namespace DataLayer
         }*/
         public IList<UserSearchModel> GetActorSearch(string userid, string search)
         {
-            var db = new IMDBContext();
+           
             string search_result = db.Database.ExecuteSqlInterpolated($"select string_search({userid},{search})").ToString();
             return (IList<UserSearchModel>)search_result.ToList();
         }
@@ -49,7 +64,7 @@ namespace DataLayer
 
         public void CreateMovieBookmark(userBookmark userid, userBookmark? tconstmovie, userBookmark? note)
         {
-            using var db = new IMDBContext();
+           
             var bm = new userBookmark
             {
                 Uid = userid.Uid,
@@ -63,13 +78,13 @@ namespace DataLayer
 
         public IList<userBookmark> GetMovieBookmarks()
         {
-            using var db = new IMDBContext();
+           
             return db.userBookmarks.ToList();
         }
 
         public userBookmark? GetMovieBookmark(string userid)
         {
-            using var db =  new IMDBContext();
+         
             return db.userBookmarks.Find(userid);
         }
 

@@ -15,7 +15,7 @@ builder.Services.AddSingleton<IDataService, DataService>();
 
 builder.Services.AddSingleton<Hashing>();
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+/*builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
     {
         opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
@@ -27,7 +27,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero
 
         };
-    });
+    });*/
 //builder.Services.AddSingleton<IUserService, UserService>();
 
 var app = builder.Build();
