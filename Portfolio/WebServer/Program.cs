@@ -28,19 +28,11 @@ builder.Services.AddSingleton<IDataService, DataService>();
 
         };
     });*/
-<<<<<<< HEAD
 builder.Services.AddSingleton<IUserService, UserService>();
 
 var app = builder.Build();
 //app.UseAuthentication();
 //app.UseAuthorization();
-=======
-//builder.Services.AddSingleton<IUserService, UserService>();
-
-var app = builder.Build();
-/*app.UseAuthentication();
-app.UseAuthorization();*/
->>>>>>> 5c7b6429dc55cfa71d964856096b1a5cdefe076b
 
 app.MapControllers();
 

@@ -3,11 +3,7 @@ using DataLayer;
 using WebServer.Models;
 using AutoMapper;
 using DataLayer.Domain;
-<<<<<<< HEAD
 using WebServiceTokens.Models;
-=======
-using DataLayer.Models;
->>>>>>> 5c7b6429dc55cfa71d964856096b1a5cdefe076b
 
 namespace WebServer.Controllers
 {
@@ -15,16 +11,10 @@ namespace WebServer.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-<<<<<<< HEAD
                 
         private IUserService _userService;
         //private readonly Hashing _hashing;
         private readonly IConfiguration _configuration;
-=======
-        
-        private readonly IUserService _userService;
-        private readonly LinkGenerator _generator;
->>>>>>> 5c7b6429dc55cfa71d964856096b1a5cdefe076b
         private readonly IMapper _mapper;
         private readonly LinkGenerator _generator;
 
