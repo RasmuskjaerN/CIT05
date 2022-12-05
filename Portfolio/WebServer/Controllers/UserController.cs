@@ -38,23 +38,28 @@ namespace WebServer.Controllers
         }*/
 
         [HttpPost]
-        [Route("register")]
         public IActionResult CreateUser(UserCreateModel model)
         {
-            if (_userService.GetUser(model.UserName) == null)
+            /*if (_userService.GetUser(model.UserName) == null)
             {
                 return BadRequest();
             }
-           if (_userService.GetUser(model.Password) == null)
+           if (_userService.GetUser(model.Password) = null)
             {
                 return BadRequest();
-            }
+            }*/
             //var hashResult = _hashing.hash(model.Password);
             var newUser = _mapper.Map<userMain>(model);
-            _userService.CreateUser(newUser.UserName, newUser.Password);
+            _userService.CreateUser(newUser);
             return CreatedAtRoute(null, UserCreateModel(newUser));
         }
 
+        /*private UserModel NewUserCreateModel(userMain newUser)
+        {
+            var model = _mapper.Map<UserModel>(newUser);
+            model.Url = _generator.GetUriByName(HttpContext, nameof(GetUser), new { newUser.Uid });
+            return model;
+        }*/
         private UserModel UserCreateModel(userMain user)
         {
             var model = _mapper.Map<UserModel>(user);
@@ -69,42 +74,22 @@ namespace WebServer.Controllers
             return Ok(users);
         }
 
-        [HttpGet("{userid}", Name = nameof(GetUser))]
-        public IActionResult GetUser(string userid)
+        [HttpGet("{username}", Name = nameof(GetUser))]
+        public IActionResult GetUser(string user)
         {
-            var user = _userService.GetUser(userid);
+            var username = _userService.GetUser(user);
 
-            if (user == null)
+            if (username == null)
             {
                 return NotFound();
             }
 
-            var model = UserCreateModel(user);
+            var model = UserCreateModel(username);
 
             return Ok(model);
         }
 
-        [HttpPost("{userid}",Name =nameof(CreateMovieBookmark))]
-        public IActionResult CreateMovieBookmark(CreateMovieBookmarkModel model)
-        {
-            var bm = _mapper.Map<userBookmark>(model);
-            
-
-            _userService.CreateMovieBookmark(bm, bm, bm);
-
-            return CreatedAtRoute(null, CreateMovieBookmarkModel(bm));
-        }
-
-        private MovieBookmarkModel CreateMovieBookmarkModel(userBookmark user)
-        {
-            var model = _mapper.Map<MovieBookmarkModel>(user);
-            //model.Url = _generator.GetUriByName(HttpContext, nameof(GetMovieBookmark), new { user.Uid});
-            model.Url = "http//:localhost/5001/api/user" + user.Uid;
-            //model.Uid = "44444";
-            //model.Tconst = "tt6201920";
-            //model.Note = "test create";
-            return model;
-        }
+        
 
         private string? CreateLink(int page, int pageSize)
         {

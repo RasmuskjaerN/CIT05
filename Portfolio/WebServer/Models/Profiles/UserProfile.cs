@@ -10,6 +10,8 @@ namespace WebServer.Models.Profiles
             CreateMap<userMain, UserModel>();
 
             CreateMap<UserCreateModel, userMain>();
+
+            CreateMap<NewUserCreateModel, userMain>();
         }
     }
 }
