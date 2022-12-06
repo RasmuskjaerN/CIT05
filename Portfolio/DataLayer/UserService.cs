@@ -21,10 +21,10 @@ namespace DataLayer
             //create sql function elsewhere and save changes through that.
         }
 
-        public void DeleteUser(string uid, string username)
+        public void DeleteUser(string username, string password)
         {
             
-            db.Database.ExecuteSqlInterpolated($"select user_delete({uid}, {username})");
+            db.Database.ExecuteSqlInterpolated($"select user_delete({username}, {password})");
             db.SaveChanges();
         }
         public userMain? GetUser(string username)
@@ -37,26 +37,18 @@ namespace DataLayer
             return db.userMain.ToList();
         }
 
+        public void CreateRating(string uid, string titlein, int rating)
+        {
+            db.Database.ExecuteSqlInterpolated($"select rate({uid},{titlein},{rating})");
+            db.SaveChanges();
+        }
         public void DeleteRating(string userid, string tconst)
         {
            
             db.Database.ExecuteSqlInterpolated($"select delete_rate({userid},{tconst})");
+            db.SaveChanges();
         }
 
-       
-
-        /*public IList<UserSearchModel> GetActorSearch(string search)
-        {
-           
-            return db.nameBasics
-                .Include(x => x.Nconst)
-                .Where(x => x.PrimaryName == search)
-                .Select(x => new UserSearchModel
-                {
-                    UserId = x.Nconst
-                })
-                .ToList(); ;
-        }*/
         public IList<UserSearchModel> GetActorSearch(string userid, string search)
         {
            
@@ -64,24 +56,22 @@ namespace DataLayer
             return (IList<UserSearchModel>)search_result.ToList();
         }
 
-        public userBookmark? UpdateActorBookmark(string userid, string nconstactor, string note)
-        {
-            throw new NotImplementedException();
-        }
+        
 
-        public void CreateMovieBookmark(userBookmark userid, userBookmark? tconstmovie, userBookmark? note)
+        public void CreateMovieBookmark(string uid, string tconstmovie, string? note)
         {
-           
-            var bm = new userBookmark
-            {
-                Uid = userid.Uid,
-                Tconst = userid.Tconst,
-                Note = note.Note
-            };
-            db.userBookmarks.Add(bm);
+
+            db.Database.ExecuteSqlInterpolated($"select bookmark_movie({uid}, {tconstmovie}, {note})");
             db.SaveChanges();
             
         }
+
+        public void DeleteMovieBookmark(string uid, string tconstmovie)
+        {
+            db.Database.ExecuteSqlInterpolated($"select delete_movie_bookmark({uid},{tconstmovie})");
+            db.SaveChanges();
+        }
+
 
         public IList<userBookmark> GetMovieBookmarks()
         {
@@ -95,26 +85,23 @@ namespace DataLayer
             return db.userBookmarks.Find(userid);
         }
 
-        public userBookmark? CreateActorBookmark(string userid, string nconstactor, string? usernote)
+        public void CreateActorBookmark(string userid, string nconstactor, string? usernote)
         {
-            throw new NotImplementedException();
+            db.Database.ExecuteSqlInterpolated($"select bookmark_actor({userid},{nconstactor},{usernote})");
+            db.SaveChanges();
         }
 
         public void DeleteActorBookmark(string userid, string nconstactor)
         {
-            throw new NotImplementedException();
+            db.Database.ExecuteSqlInterpolated($"select delete_bookmark_actor({userid},{nconstactor})");
+            db.SaveChanges();
         }
 
-        public void DeleteMovieBookmark(string userid, string tconstmovie)
+        public void GetUsersHistory(string userid)
         {
-            throw new NotImplementedException();
+            db.Database.ExecuteSqlInterpolated($"select get_user_history({userid})");
+            db.SaveChanges();
         }
-
-        public void CreateRating(string userid, string title, int rating)
-        {
-            throw new NotImplementedException();
-        }
-
         
 
         /*public IList<tempSearch> GetTitlesSearchList(List<string> search)

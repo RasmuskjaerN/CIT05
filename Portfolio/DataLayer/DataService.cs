@@ -52,9 +52,10 @@ namespace DataLayer
         }
 
 
-        public IList<knownFor> GetCoactors(string nconst)
+        public IList<knownFor> GetCoactors(string uid, string namein)
         {
-            throw new NotImplementedException();
+            var result = db.knownFor.FromSqlInterpolated($"select find_coactor({uid},{namein})");
+            return result.ToList();
         }
         
 
