@@ -11,7 +11,7 @@ namespace WebServer.Models.Profiles
 
             CreateMap<UserCreateModel, userMain>();
 
-            CreateMap<NewUserCreateModel, userMain>();
+            
         }
     }
 }
