@@ -7,8 +7,8 @@ using WebServer.Models;
 
 namespace WebServer.Controllers
 {
-    [Route("api/names")]
-    public class NameBasicController : ControllerBase
+    [Route("api/movies")]
+    public class MovieController : ControllerBase
     {
         private readonly IDataService _dataService;
         private readonly IMapper _mapper;
@@ -17,53 +17,53 @@ namespace WebServer.Controllers
 
         private const int MaxPageSize = 25;
 
-        public NameBasicController(IDataService dataService, IMapper mapper, LinkGenerator generator)
+        public MovieController(IDataService dataService, IMapper mapper, LinkGenerator generator)
         {
             _dataService = dataService;
             _mapper = mapper;
             _generator = generator;
         }
 
-        [HttpGet("{nconst}", Name = nameof(GetName))]
-        public IActionResult GetName( string nconst)
+        [HttpGet("{tconst}", Name = nameof(GetMovie))]
+        public IActionResult GetMovie(string tconst)
         {
-            var name = _dataService.GetName(nconst);
+            var movie = _dataService.GetMovie(tconst);
 
-            if (name == null)
+            if (movie == null)
             {
                 return NotFound();
             }
-            var model = NameCreateModel(name);
+            var model = MovieCreateModel(movie);
 
             return Ok(model);
         }
 
-        [HttpGet(Name = nameof(GetNames))]
+        [HttpGet(Name = nameof(GetMovies))]
         [Route("{page}&{pageSize}")]
-        public IActionResult GetNames(int page = 0, int pagesize = 10)
+        public IActionResult GetMovies(int page = 0, int pagesize = 10)
         {
-            var names = _dataService.GetNamesList(page, pagesize).Select(x => NameCreateListModel(x));
-            var total = _dataService.GetNamesListCount();
-            return Ok(Paging(page, pagesize, total, names));
+            var movies = _dataService.GetMoviesList(page, pagesize).Select(x => MovieCreateListModel(x));
+            var total = _dataService.GetMoviesListCount();
+            return Ok(Paging(page, pagesize, total, movies));
         }
 
-        private NameBasicListModel NameCreateListModel(nameBasic nconst)
+        private MovieListModel MovieCreateListModel(titleBasic tconst)
         {
-            var model = _mapper.Map<NameBasicListModel>(nconst);
-            model.Url = _generator.GetUriByName(HttpContext, nameof(GetName), new { nconst.Nconst });
+            var model = _mapper.Map<MovieListModel>(tconst);
+            model.Url = _generator.GetUriByName(HttpContext, nameof(GetMovie), new { tconst.Tconst });
             return model;
         }
 
-        private NameBasicModel NameCreateModel(nameBasic nconst)
+        private MovieModel MovieCreateModel(titleBasic tconst)
         {
-            var model = _mapper.Map<NameBasicModel>(nconst);
-            model.Url = _generator.GetUriByName(HttpContext, nameof(GetName), new { nconst.Nconst });
+            var model = _mapper.Map<MovieModel>(tconst);
+            model.Url = _generator.GetUriByName(HttpContext, nameof(GetMovie), new { tconst.Tconst });
             return model;
-        }      
+        }
 
         private string? CreateLink(int page, int pageSize)
         {
-            return _generator.GetUriByName(HttpContext, nameof(GetNames), new { page, pageSize });
+            return _generator.GetUriByName(HttpContext, nameof(GetMovies), new { page, pageSize });
         }
         private object Paging<T>(int page, int pageSize, int total, IEnumerable<T> items)
         {

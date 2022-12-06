@@ -1,11 +1,16 @@
-﻿namespace WebServer.Models.Profiles
+﻿using DataLayer.Domain;
+using AutoMapper;
+
+namespace WebServer.Models.Profiles
 {
-    public class NameBasicModel
+    public class NameBasicProfile : Profile
     {
-        public string? Url { get; set; }
-        public string? PrimaryName { get; set; }
-        public string? Birthyear { get; set; }
-        public string? Deathyear { get; set; }
-        public float? NameRating { get; set; }
+        public NameBasicProfile()
+        {
+            CreateMap<nameBasic, NameBasicModel>();
+            CreateMap<nameBasic, NameBasicListModel>();
+        }
+        
     }
+
 }

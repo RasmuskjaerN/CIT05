@@ -1,16 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataLayer.Domain
+﻿namespace WebServer.Models
 {
-
-    public class titleBasic
+    public class MovieModel
     {
-        public string? Tconst { get; set; }
+        public string? Url { get; set; }
         public string? TitleType { get; set; }
         public string? PrimaryTitle { get; set; }
         public string? OriginalTitle { get; set; }

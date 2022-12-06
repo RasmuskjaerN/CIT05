@@ -27,9 +27,9 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select user_delete({username}, {password})");
             db.SaveChanges();
         }
-        public userMain? GetUser(string username)
+        public userMain? GetUser(int uid)
         {
-            var user = db.userMain.Find(username);
+            var user = db.userMain.Find(uid);
             return user;
         }
         public IList<userMain> GetUsers()

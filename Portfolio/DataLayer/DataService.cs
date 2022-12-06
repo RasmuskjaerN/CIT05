@@ -15,19 +15,20 @@ namespace DataLayer
     {
         
         public IMDBContext db = new IMDBContext();
-        public IList<titleBasic> GetMoviesList(string Tconst)
+        
+        public titleBasic? GetMovie(string tconst)
         {
-            return db.titleBasics.ToList();
-        }
-        public titleBasic? GetMovie(string Tconst)
-        {
-            titleBasic? title = db.titleBasics.Find(Tconst);
+            titleBasic? title = db.titleBasics.Find(tconst);
             return title;
         }
 
         public IList<titleBasic> GetMoviesList(int page = 0, int pagesize = 25)
         {
-            return db.titleBasics.Skip(page).Take(pagesize).ToList();
+            return db.titleBasics.Skip(page * pagesize).Take(pagesize).ToList();
+        }
+        public int GetMoviesListCount()
+        {
+            return db.titleBasics.Count();
         }
 
         public IList<titleGenre> GetSimilarMoviesList(string Tconst)
@@ -41,14 +42,14 @@ namespace DataLayer
             return name;
         }
 
-        public IList<nameBasic> GetNamesList(string nconst)
+        public int GetNamesListCount()
         {
-            return db.nameBasics.ToList();
+            return db.nameBasics.Count();
         }
 
         public IList<nameBasic> GetNamesList(int page = 0, int pagesize = 25)
         {
-            return db.nameBasics.Skip(page).Take(pagesize).ToList();
+            return db.nameBasics.Skip(page * pagesize).Take(pagesize).ToList();
         }
 
 

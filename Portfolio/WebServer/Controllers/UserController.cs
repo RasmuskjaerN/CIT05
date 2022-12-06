@@ -58,6 +58,7 @@ namespace WebServer.Controllers
             return Ok(users);
         }
 
+<<<<<<< HEAD
         [HttpDelete]
         public IActionResult DeleteUser(string username, string password)
         {
@@ -77,15 +78,19 @@ namespace WebServer.Controllers
 
         [HttpGet("{username}", Name = nameof(GetUser))]
         public IActionResult GetUser(string user)
+=======
+        [HttpGet("{uid}", Name = nameof(GetUser))]
+        public IActionResult GetUser(int uid)
+>>>>>>> c96309e0f52277decfb6a63c65931c0b92f087be
         {
-            var username = _userService.GetUser(user);
+            var Uid = _userService.GetUser(uid);
 
-            if (username == null)
+            if (Uid == null)
             {
                 return NotFound();
             }
 
-            var model = UserCreateModel(username);
+            var model = UserCreateModel(Uid);
 
             return Ok(model);
         }
