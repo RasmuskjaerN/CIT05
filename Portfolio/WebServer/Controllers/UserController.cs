@@ -3,10 +3,6 @@ using DataLayer;
 using WebServer.Models;
 using AutoMapper;
 using DataLayer.Domain;
-<<<<<<< HEAD
-using WebServiceTokens.Models;
-=======
->>>>>>> 12f94253f6db57afab7e06b75d48454898aeb0d8
 
 namespace WebServer.Controllers
 {
@@ -21,18 +17,10 @@ namespace WebServer.Controllers
         private readonly IMapper _mapper;
         private readonly LinkGenerator _generator;
 
-<<<<<<< HEAD
-        public UserController(IUserService userService, /*Hashing hashing,*/ IConfiguration configuration, IMapper mapper, LinkGenerator generator)
-        {
-            _userService = userService;
-            //_hashing = hashing
-            _configuration = configuration;
-=======
         public UserController(IUserService userService, /*Hashing hashing,*/LinkGenerator generator, IConfiguration configuration, IMapper mapper)
         {
             _userService = userService;
             //_hashing = hashing;
->>>>>>> 12f94253f6db57afab7e06b75d48454898aeb0d8
             _generator = generator;
             _mapper = mapper;
         }
@@ -53,11 +41,7 @@ namespace WebServer.Controllers
         [HttpPost]
         public IActionResult CreateUser(UserCreateModel model)
         {
-<<<<<<< HEAD
-            if (_userService.GetUserName(model.UserName) == null)
-=======
             /*if (_userService.GetUser(model.UserName) == null)
->>>>>>> 12f94253f6db57afab7e06b75d48454898aeb0d8
             {
                 return BadRequest();
             }

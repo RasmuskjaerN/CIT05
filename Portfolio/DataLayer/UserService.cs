@@ -12,11 +12,7 @@ namespace DataLayer
     public class UserService : IUserService
     {
         public IMDBContext db = new IMDBContext();
-<<<<<<< HEAD
-        public void CreateUser(string username, string password)
-=======
         public void CreateUser(userMain newUser)
->>>>>>> 12f94253f6db57afab7e06b75d48454898aeb0d8
         {
             newUser.Uid = db.userMain.Any() ? db.userMain.Max(x => x.Uid) + 1 : 1;
             //db.Database.ExecuteSqlInterpolated($"select user_create({newUser.UserName},{newUser.Password}");
@@ -33,15 +29,6 @@ namespace DataLayer
         }
         public userMain? GetUser(string username)
         {
-<<<<<<< HEAD
-            return db.userMain.Find(uid);
-        }
-        
-        public userMain GetUserName(string username)
-        {
-            return db.userMain.Find(username);
-        }
-=======
             var user = db.userMain.Find(username);
             return user;
         }
@@ -50,7 +37,6 @@ namespace DataLayer
             return db.userMain.ToList();
         }
 
->>>>>>> 12f94253f6db57afab7e06b75d48454898aeb0d8
         public void DeleteRating(string userid, string tconst)
         {
            
