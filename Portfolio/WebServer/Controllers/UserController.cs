@@ -54,12 +54,7 @@ namespace WebServer.Controllers
             return CreatedAtRoute(null, UserCreateModel(newUser));
         }
 
-        /*private UserModel NewUserCreateModel(userMain newUser)
-        {
-            var model = _mapper.Map<UserModel>(newUser);
-            model.Url = _generator.GetUriByName(HttpContext, nameof(GetUser), new { newUser.Uid });
-            return model;
-        }*/
+       
         private UserModel UserCreateModel(userMain user)
         {
             var model = _mapper.Map<UserModel>(user);
