@@ -12,7 +12,6 @@ namespace DataLayer
     public class UserService : IUserService
     {
         public IMDBContext db = new IMDBContext();
-<<<<<<< HEAD
         public void CreateUser(string username, string password)
         {
             db.Database.ExecuteSqlInterpolated($"select user_create({username},{password}");
@@ -27,14 +26,13 @@ namespace DataLayer
         }
         public userMain GetUser(string uid)
         {
-            
-=======
-        public userMain GetUser(string uid)
-        {
->>>>>>> 5c7b6429dc55cfa71d964856096b1a5cdefe076b
             return db.userMain.Find(uid);
         }
         
+        public userMain GetUserName(string username)
+        {
+            return db.userMain.Find(username);
+        }
         public void DeleteRating(string userid, string tconst)
         {
            
@@ -57,10 +55,7 @@ namespace DataLayer
         }*/
         public IList<UserSearchModel> GetActorSearch(string userid, string search)
         {
-<<<<<<< HEAD
            
-=======
->>>>>>> 5c7b6429dc55cfa71d964856096b1a5cdefe076b
             string search_result = db.Database.ExecuteSqlInterpolated($"select string_search({userid},{search})").ToString();
             return (IList<UserSearchModel>)search_result.ToList();
         }
@@ -72,10 +67,7 @@ namespace DataLayer
 
         public void CreateMovieBookmark(userBookmark userid, userBookmark? tconstmovie, userBookmark? note)
         {
-<<<<<<< HEAD
            
-=======
->>>>>>> 5c7b6429dc55cfa71d964856096b1a5cdefe076b
             var bm = new userBookmark
             {
                 Uid = userid.Uid,
@@ -89,19 +81,13 @@ namespace DataLayer
 
         public IList<userBookmark> GetMovieBookmarks()
         {
-<<<<<<< HEAD
            
-=======
->>>>>>> 5c7b6429dc55cfa71d964856096b1a5cdefe076b
             return db.userBookmarks.ToList();
         }
 
         public userBookmark? GetMovieBookmark(string userid)
         {
-<<<<<<< HEAD
          
-=======
->>>>>>> 5c7b6429dc55cfa71d964856096b1a5cdefe076b
             return db.userBookmarks.Find(userid);
         }
 
