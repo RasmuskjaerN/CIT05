@@ -8,7 +8,7 @@ namespace WebServer.Models.Profiles
         public NameBasicProfile()
         {
             CreateMap<nameBasic, NameBasicModel>();
-            CreateMap<NameCreateModel, nameBasic>();
+            CreateMap<nameBasic, NameBasicListModel>();
         }
         
     }
