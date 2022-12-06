@@ -13,6 +13,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddSingleton<IDataService, DataService>();
 
+
 //builder.Services.AddSingleton<Hashing>();
 
 /*builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
