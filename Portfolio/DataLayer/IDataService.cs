@@ -17,7 +17,7 @@ namespace DataLayer
         IList<titleGenre> GetSimilarMoviesList(string Tconst);
 
         nameBasic? GetName(string nconst);
-        IList<nameBasic> GetNamesList(string nconst);
+        IList<nameBasic> GetNamesList();
         IList<nameBasic> GetNamesList(int page, int pagesize);
         IList<knownFor> GetCoactors(string nconst);
         

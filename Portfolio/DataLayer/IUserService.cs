@@ -25,7 +25,7 @@ namespace DataLayer
         void DeleteRating(string userid, string tconst);
         IList<UserSearchModel> GetActorSearch(string userid,string search);
         void CreateUser(userMain newUser);
-        public userMain? GetUser(string username);
+        public userMain? GetUser(int uid);
         IList<userMain> GetUsers();
     }
 }

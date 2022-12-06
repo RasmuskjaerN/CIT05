@@ -27,7 +27,7 @@ namespace DataLayer
 
         public IList<titleBasic> GetMoviesList(int page = 0, int pagesize = 25)
         {
-            return db.titleBasics.Skip(page).Take(pagesize).ToList();
+            return db.titleBasics.Skip(page * pagesize).Take(pagesize).ToList();
         }
 
         public IList<titleGenre> GetSimilarMoviesList(string Tconst)
@@ -41,14 +41,14 @@ namespace DataLayer
             return name;
         }
 
-        public IList<nameBasic> GetNamesList(string nconst)
+        public IList<nameBasic> GetNamesList()
         {
             return db.nameBasics.ToList();
         }
 
         public IList<nameBasic> GetNamesList(int page = 0, int pagesize = 25)
         {
-            return db.nameBasics.Skip(page).Take(pagesize).ToList();
+            return db.nameBasics.Skip(page * pagesize).Take(pagesize).ToList();
         }
 
 

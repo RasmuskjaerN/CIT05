@@ -70,17 +70,17 @@ namespace WebServer.Controllers
             return Ok(users);
         }
 
-        [HttpGet("{username}", Name = nameof(GetUser))]
-        public IActionResult GetUser(string user)
+        [HttpGet("{uid}", Name = nameof(GetUser))]
+        public IActionResult GetUser(int uid)
         {
-            var username = _userService.GetUser(user);
+            var Uid = _userService.GetUser(uid);
 
-            if (username == null)
+            if (Uid == null)
             {
                 return NotFound();
             }
 
-            var model = UserCreateModel(username);
+            var model = UserCreateModel(Uid);
 
             return Ok(model);
         }
