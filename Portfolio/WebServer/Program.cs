@@ -1,4 +1,5 @@
 using DataLayer;
+using AutoMapper;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
@@ -37,7 +38,7 @@ var app = builder.Build();
 
 app.MapControllers();
 
-app.Run();
+
 app.Run();
 
 

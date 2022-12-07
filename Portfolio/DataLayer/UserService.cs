@@ -21,10 +21,10 @@ namespace DataLayer
             //create sql function elsewhere and save changes through that.
         }
 
-        public void DeleteUser(string username, string password)
+        public void DeleteUser(int uid)
         {
             
-            db.Database.ExecuteSqlInterpolated($"select user_delete({username}, {password})");
+            db.Database.ExecuteSqlInterpolated($"select user_delete({uid})");
             db.SaveChanges();
         }
         public userMain? GetUser(int uid)
