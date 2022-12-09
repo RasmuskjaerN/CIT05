@@ -75,14 +75,9 @@ namespace WebServer.Controllers
             return Ok(users);
         }
 
-<<<<<<< HEAD
         [HttpPost("uid")]
         [Route("delete")]
         public IActionResult DeleteUser(int uid)
-=======
-        /*[HttpDelete]
-        public IActionResult DeleteUser(string username, string password)
->>>>>>> e9251a7d6b811cb87bb31858f90fdcb5b361be2b
         {
             if (uid == 0)
             {
@@ -97,37 +92,12 @@ namespace WebServer.Controllers
                 return BadRequest();
             }
             return Ok();
-        }*/
-
-<<<<<<< HEAD
-        [HttpGet(Name =nameof(GetRatings))]
-        public IActionResult GetRatings()
-=======
-        
-        [HttpGet("{uid}", Name = nameof(GetUser))]
-        public IActionResult GetUser(int uid)
->>>>>>> e9251a7d6b811cb87bb31858f90fdcb5b361be2b
-        {
-            var ratings = _userService.GetRatings().Select(x => UserCreateRatingModel(x));
-            return ratings;
-        }
-        
-        private RatingModel UserCreateRatingModel(userRate us)
-        {
-            var model = _mapper.Map<userRate>(us);
-            model.Uid = us.Uid;
-            return model;
         }
 
-<<<<<<< HEAD
         [HttpPost("uid&tconst&rating")]
         [Route("rate")]
-        [Authorize]
+      
         public IActionResult CreateRating(string uid, string tconst, int rating)
-=======
-        /*[HttpPost]
-        public IActionResult CreateRating(string userid, string tconst, string? note)
->>>>>>> e9251a7d6b811cb87bb31858f90fdcb5b361be2b
         {
             if (uid == null || tconst == null || rating == null)
             {
@@ -142,17 +112,11 @@ namespace WebServer.Controllers
                 return BadRequest();
             }
             return Ok();
-<<<<<<< HEAD
         }
         
-        [HttpDelete("Uid&Tconst")]
+        [HttpDelete("uid&tconst")]
         [Route("ratedelete")]
         public IActionResult DeleteRating(int uid, string tconst)
-=======
-        }*/
-        /*[HttpDelete]
-        public IActionResult DeleteRating(string userid, string tconst)
->>>>>>> e9251a7d6b811cb87bb31858f90fdcb5b361be2b
         {
             if (uid == null || string.IsNullOrEmpty(tconst))
             {
@@ -167,17 +131,10 @@ namespace WebServer.Controllers
                 return Ok("hello");
             }
             return Ok();
-<<<<<<< HEAD
         }
         
 
         [HttpPost("create/moviemark/{tconstmovie}")]
-=======
-        }*/
-
-
-        /*[HttpPost]
->>>>>>> e9251a7d6b811cb87bb31858f90fdcb5b361be2b
         public IActionResult CreateMovieBookmark(string uid, string tconstmovie, string? note)
         {
             if (uid == null || tconstmovie == null)
@@ -193,16 +150,10 @@ namespace WebServer.Controllers
                 return BadRequest();
             }
             return Ok();
-<<<<<<< HEAD
         }
         /*
         [HttpDelete("delete/{uid]")]
         
-=======
-        }*/
-
-        /*[HttpDelete("delete/{uid]")]
->>>>>>> e9251a7d6b811cb87bb31858f90fdcb5b361be2b
         public IActionResult DeleteMovieBookmark(string uid, string tconstmovie)
         {
             if (uid == null || tconstmovie == null)
@@ -242,31 +193,8 @@ namespace WebServer.Controllers
         private string? CreateLink(int page, int pageSize)
         {
             return _generator.GetUriByName(HttpContext, nameof(GetUsers), new { page, pageSize });
-        }*/
-        
-        [HttpPost("Uid")]
-        [Route("delete")]
-        public IActionResult DeleteUser(int Uid)
-        {
-            if (Uid == 0)
-            {
-                return BadRequest();
-
-            }
-
-            try
-            {
-                _userService.DeleteUser(Uid);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-
-
-            return Ok();
-
         }
+       
 
 
     }

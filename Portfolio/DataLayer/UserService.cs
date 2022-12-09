@@ -42,7 +42,7 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select rate_movie({uid},{tconst},{rating})");
             db.SaveChanges();
         }
-        public void DeleteRating(int uid, string tconst)
+        public void DeleteRating(string uid, string tconst)
         {
             //var user = db.userRate.Find(uid);
             db.Database.ExecuteSqlInterpolated($"select delete_rate({uid},{tconst})");
