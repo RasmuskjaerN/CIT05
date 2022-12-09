@@ -98,7 +98,7 @@ namespace WebServer.Controllers
         {
             var model = _mapper.Map<userRate>(us);
             model.Uid = us.Uid;
-            return model;
+           w return model;
         }*/
 
         [HttpPost("uid&tconst&rating")]
