@@ -18,7 +18,7 @@ namespace DataLayer
         void DeleteActorBookmark(string userid, string nconstactor);
         void DeleteMovieBookmark(string userid, string tconstmovie);
         void CreateRating(string uid, string tconst, int rating);
-        void DeleteRating(int uid, string tconst);
+        void DeleteRating(string uid, string tconst);
         IList<UserSearchModel> GetActorSearch(string userid,string search);
         void CreateUser(userMain newUser);
         void DeleteUser(int uid);

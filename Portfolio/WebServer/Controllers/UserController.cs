@@ -93,13 +93,27 @@ namespace WebServer.Controllers
             }
             return Ok();
         }
+<<<<<<< HEAD
 
         [HttpPost("uid&tconst&rating")]
         [Route("rate")]
       
+=======
+        
+        /*private RatingModel UserCreateRatingModel(userRate us)
+        {
+            var model = _mapper.Map<userRate>(us);
+            model.Uid = us.Uid;
+           w return model;
+        }*/
+
+        [HttpPost("uid&tconst&rating")]
+        [Route("rate")]
+        //[Authorize]
+>>>>>>> 91f5395cfa93765bb3089240573bb72f3077beda
         public IActionResult CreateRating(string uid, string tconst, int rating)
         {
-            if (uid == null || tconst == null || rating == null)
+            if (uid == null && string.IsNullOrEmpty(tconst) && rating == null)
             {
                 return BadRequest();
             }
@@ -114,11 +128,17 @@ namespace WebServer.Controllers
             return Ok();
         }
         
+<<<<<<< HEAD
         [HttpDelete("uid&tconst")]
         [Route("ratedelete")]
         public IActionResult DeleteRating(int uid, string tconst)
+=======
+        [HttpPost("uid&tconst")]
+        [Route("ratedelete")]
+        public IActionResult DeleteRating(string uid, string tconst)
+>>>>>>> 91f5395cfa93765bb3089240573bb72f3077beda
         {
-            if (uid == null || string.IsNullOrEmpty(tconst))
+            if (string.IsNullOrEmpty(uid) || string.IsNullOrEmpty(tconst))
             {
                 return BadRequest();
             }
@@ -134,7 +154,11 @@ namespace WebServer.Controllers
         }
         
 
+<<<<<<< HEAD
         [HttpPost("create/moviemark/{tconstmovie}")]
+=======
+        /*[HttpPost("create/moviemark/{tconstmovie}")]
+>>>>>>> 91f5395cfa93765bb3089240573bb72f3077beda
         public IActionResult CreateMovieBookmark(string uid, string tconstmovie, string? note)
         {
             if (uid == null || tconstmovie == null)
@@ -150,7 +174,11 @@ namespace WebServer.Controllers
                 return BadRequest();
             }
             return Ok();
+<<<<<<< HEAD
         }
+=======
+        }*/
+>>>>>>> 91f5395cfa93765bb3089240573bb72f3077beda
         /*
         [HttpDelete("delete/{uid]")]
         
@@ -194,7 +222,12 @@ namespace WebServer.Controllers
         {
             return _generator.GetUriByName(HttpContext, nameof(GetUsers), new { page, pageSize });
         }
+<<<<<<< HEAD
        
+=======
+        
+        
+>>>>>>> 91f5395cfa93765bb3089240573bb72f3077beda
 
 
     }
