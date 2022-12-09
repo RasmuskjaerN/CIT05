@@ -39,10 +39,6 @@ var app = builder.Build();
 
 app.MapControllers();
 
-<<<<<<< HEAD
-=======
-
->>>>>>> e9251a7d6b811cb87bb31858f90fdcb5b361be2b
 app.Run();
 
 
