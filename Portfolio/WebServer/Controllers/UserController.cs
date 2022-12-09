@@ -3,6 +3,7 @@ using DataLayer;
 using WebServer.Models;
 using AutoMapper;
 using DataLayer.Domain;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebServer.Controllers
 {
@@ -10,7 +11,7 @@ namespace WebServer.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-                
+
         private readonly IUserService _userService;
         //private readonly Hashing _hashing;
         private readonly IConfiguration _configuration;
@@ -24,9 +25,17 @@ namespace WebServer.Controllers
             _generator = generator;
             _mapper = mapper;
         }
-        
 
-        [HttpPost]
+        private UserModel UserCreateModel(userMain user)
+        {
+            var model = _mapper.Map<UserModel>(user);
+            model.Url = _generator.GetUriByName(HttpContext, nameof(GetUser), new { user.Uid });
+            return model;
+        }
+
+
+        [HttpPost("create")]
+        
         public IActionResult CreateUser(UserCreateModel model)
         {
             /*if (_userService.GetUser(model.UserName) == null)
@@ -42,46 +51,8 @@ namespace WebServer.Controllers
             _userService.CreateUser(newUser);
             return CreatedAtRoute(null, UserCreateModel(newUser));
         }
-
-       
-        private UserModel UserCreateModel(userMain user)
-        {
-            var model = _mapper.Map<UserModel>(user);
-            model.Url = _generator.GetUriByName(HttpContext, nameof(GetUser), new { user.Uid });
-            return model;
-        }
-
-        [HttpGet(Name = nameof(GetUsers))]
-        public IActionResult GetUsers()
-        {
-            var users = _userService.GetUsers().Select(x => UserCreateModel(x));
-            return Ok(users);
-        }
-
-<<<<<<< HEAD
-        [HttpDelete]
-        public IActionResult DeleteUser(string username, string password)
-        {
-            if (username == null)
-            {
-                return BadRequest();
-            }
-            try
-            {
-                _userService.DeleteUser(username, password);
-            } catch
-            {
-                return BadRequest();
-            }
-            return Ok();
-        }
-
-        [HttpGet("{username}", Name = nameof(GetUser))]
-        public IActionResult GetUser(string user)
-=======
         [HttpGet("{uid}", Name = nameof(GetUser))]
         public IActionResult GetUser(int uid)
->>>>>>> c96309e0f52277decfb6a63c65931c0b92f087be
         {
             var Uid = _userService.GetUser(uid);
 
@@ -95,34 +66,89 @@ namespace WebServer.Controllers
             return Ok(model);
         }
 
-        [HttpPost]
-        public IActionResult CreateRating(string userid, string tconst, string note)
+
+
+        [HttpGet(Name = nameof(GetUsers))]
+        public IActionResult GetUsers()
         {
-            if (userid == null || tconst == null)
+            var users = _userService.GetUsers().Select(x => UserCreateModel(x));
+            return Ok(users);
+        }
+
+        [HttpPost("uid")]
+        [Route("delete")]
+        public IActionResult DeleteUser(int uid)
+        {
+            if (uid == 0)
+            {
+                return NotFound();
+            }
+            try
+            {
+                _userService.DeleteUser(uid);
+            }
+            catch
             {
                 return BadRequest();
             }
             return Ok();
         }
-        [HttpDelete]
-        public IActionResult DeleteRating(string userid, string tconst)
+
+        [HttpGet(Name =nameof(GetRatings))]
+        public IActionResult GetRatings()
         {
-            if (userid == null || tconst == null)
+            var ratings = _userService.GetRatings().Select(x => UserCreateRatingModel(x));
+            return ratings;
+        }
+        
+        private RatingModel UserCreateRatingModel(userRate us)
+        {
+            var model = _mapper.Map<userRate>(us);
+            model.Uid = us.Uid;
+            return model;
+        }
+
+        [HttpPost("uid&tconst&rating")]
+        [Route("rate")]
+        [Authorize]
+        public IActionResult CreateRating(string uid, string tconst, int rating)
+        {
+            if (uid == null || tconst == null || rating == null)
             {
                 return BadRequest();
             }
             try
             {
-                _userService.DeleteRating(userid, tconst);
-            } catch
+                _userService.CreateRating(uid, tconst, rating);
+            }
+            catch
             {
                 return BadRequest();
             }
             return Ok();
         }
+        
+        [HttpDelete("Uid&Tconst")]
+        [Route("ratedelete")]
+        public IActionResult DeleteRating(int uid, string tconst)
+        {
+            if (uid == null || string.IsNullOrEmpty(tconst))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                _userService.DeleteRating(uid, tconst);
+            } 
+            catch
+            {
+                return Ok("hello");
+            }
+            return Ok();
+        }
+        
 
-
-        [HttpPost]
+        [HttpPost("create/moviemark/{tconstmovie}")]
         public IActionResult CreateMovieBookmark(string uid, string tconstmovie, string? note)
         {
             if (uid == null || tconstmovie == null)
@@ -139,7 +165,7 @@ namespace WebServer.Controllers
             }
             return Ok();
         }
-
+        /*
         [HttpDelete("delete/{uid]")]
         
         public IActionResult DeleteMovieBookmark(string uid, string tconstmovie)
@@ -160,9 +186,8 @@ namespace WebServer.Controllers
                  
         }
 
-        [HttpGet]
-        [Route("{uid}/history")]
-
+        [HttpGet("{uid}/history")]
+        
         public IActionResult GetHistory([FromRoute]string userid)
         {
             if (!string.IsNullOrEmpty(userid))
@@ -171,7 +196,7 @@ namespace WebServer.Controllers
             }
                        
             return Ok();
-        }
+        }*/
         private string? CreateLink(int page, int pageSize)
         {
             return _generator.GetUriByName(HttpContext, nameof(GetUsers), new { page, pageSize });

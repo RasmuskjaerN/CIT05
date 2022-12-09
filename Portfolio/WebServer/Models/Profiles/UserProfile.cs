@@ -10,8 +10,9 @@ namespace WebServer.Models.Profiles
             CreateMap<userMain, UserModel>();
 
             CreateMap<UserCreateModel, userMain>();
-
-            
+            CreateMap<UserCreateRatingModel, userRate>();
+            CreateMap<UserDeleteRating, userRate>();
+            CreateMap<userRate, RatingModel>();
         }
     }
 }
