@@ -12,13 +12,26 @@ namespace DataLayer
     public class UserService : IUserService
     {
         public IMDBContext db = new IMDBContext();
-        public void CreateUser(userMain newUser)
+        /*public void CreateUser(userMain newUser)
         {
             newUser.Uid = db.userMain.Any() ? db.userMain.Max(x => x.Uid) + 1 : 1;
             //db.Database.ExecuteSqlInterpolated($"select user_create({newUser.UserName},{newUser.Password}");
             db.userMain.Add(newUser);
             db.SaveChanges();
             //create sql function elsewhere and save changes through that.
+        }*/
+        public userMain CreateUser(string? username, string? password = null, string? salt = null)
+        {
+            var user = new userMain();
+            {
+                user.Uid = db.userMain.Max(x => x.Uid) + 1;
+                user.UserName = username;
+                user.Password = password;
+                user.Salt = salt;
+            };
+            db.Add(user);
+            db.SaveChanges();
+            return user;
         }
 
         public void DeleteUser(int uid)
@@ -27,7 +40,7 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select user_delete({uid})");
             db.SaveChanges();
         }
-        public userMain? GetUser(int uid)
+        public userMain? GetUser(int? uid)
         {
             var user = db.userMain.Find(uid);
             return user;
@@ -107,7 +120,11 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select get_user_history({userid})");
             db.SaveChanges();
         }
-        
+        public userMain GetUserName(string? username)
+        {
+            return db.userMain.FirstOrDefault(x => x.UserName == username);
+        }
+
 
         /*public IList<tempSearch> GetTitlesSearchList(List<string> search)
         {

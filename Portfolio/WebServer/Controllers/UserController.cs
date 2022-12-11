@@ -4,6 +4,10 @@ using WebServer.Models;
 using AutoMapper;
 using DataLayer.Domain;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace WebServer.Controllers
 {
@@ -13,17 +17,18 @@ namespace WebServer.Controllers
     {
 
         private readonly IUserService _userService;
-        //private readonly Hashing _hashing;
+        private readonly Hashing _hashing;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly LinkGenerator _generator;
 
-        public UserController(IUserService userService, /*Hashing hashing,*/LinkGenerator generator, IConfiguration configuration, IMapper mapper)
+        public UserController(IUserService userService, Hashing hashing, LinkGenerator generator, IConfiguration configuration, IMapper mapper)
         {
             _userService = userService;
-            //_hashing = hashing;
+            _hashing = hashing;
             _generator = generator;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         private UserModel UserCreateModel(userMain user)
@@ -48,7 +53,7 @@ namespace WebServer.Controllers
             }*/
             //var hashResult = _hashing.hash(model.Password);
             var newUser = _mapper.Map<userMain>(model);
-            _userService.CreateUser(newUser);
+            _userService.CreateUser(newUser.UserName, newUser.Password, newUser.Salt);
             return CreatedAtRoute(null, UserCreateModel(newUser));
         }
         [HttpGet("{uid}", Name = nameof(GetUser))]
@@ -201,9 +206,53 @@ namespace WebServer.Controllers
         {
             return _generator.GetUriByName(HttpContext, nameof(GetUsers), new { page, pageSize });
         }
-        
-        
 
+        [HttpPost("register")]
+        public IActionResult RegisterUser(UserCreateModel model)
+        {
+            if(_userService.GetUserName(model.UserName) != null)
+            {
+                return BadRequest();
+            }
+            if (string.IsNullOrEmpty(model.Password))
+            {
+                return BadRequest();
+            }
+
+            var hashResult = _hashing.hash(model.Password);
+            _userService.CreateUser(model.UserName, hashResult.hash, hashResult.salt);
+            return Ok();
+        }
+        [HttpPost("login")]
+        public IActionResult LoginUser(UserLoginModel model)
+        {
+            var user = _userService.GetUserName(model.UserName);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+            if(!_hashing.Verify(model.Password, user.Password, user.Salt))
+            {
+                return BadRequest();
+            }
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.UserName)
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("Auth:secret").Value));
+
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddSeconds(30),
+                signingCredentials: creds);
+
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            return Ok(new {user.UserName, token = jwt});
+        }
 
     }
 }

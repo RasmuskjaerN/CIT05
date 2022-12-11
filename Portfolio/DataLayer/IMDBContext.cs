@@ -163,6 +163,7 @@ namespace DataLayer
             modelBuilder.Entity<userMain>().Property(x => x.Uid).HasColumnName("uid");
             modelBuilder.Entity<userMain>().Property(x => x.UserName).HasColumnName("name");
             modelBuilder.Entity<userMain>().Property(x => x.Password).HasColumnName("password");
+            modelBuilder.Entity<userMain>().Property(x => x.Salt).HasColumnName("salt");
 
             modelBuilder.Entity<userRate>().ToTable("user_rate");
             modelBuilder.Entity<userRate>().HasKey(x => new { x.Uid, x.Tconst });

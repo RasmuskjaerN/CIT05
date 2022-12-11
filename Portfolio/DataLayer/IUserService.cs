@@ -20,9 +20,11 @@ namespace DataLayer
         void CreateRating(string uid, string tconst, int rating);
         void DeleteRating(string uid, string tconst);
         IList<UserSearchModel> GetActorSearch(string userid,string search);
-        void CreateUser(userMain newUser);
+        //void CreateUser(userMain newUser);
+        userMain CreateUser(string? username, string? password = null, string? salt = null);
         void DeleteUser(int uid);
-        public userMain? GetUser(int uid);
+        public userMain? GetUser(int? uid);
+        public userMain? GetUserName(string? username);
         IList<userMain> GetUsers();
         void GetUsersHistory(string userid);
         IList<userRate> GetRatings();

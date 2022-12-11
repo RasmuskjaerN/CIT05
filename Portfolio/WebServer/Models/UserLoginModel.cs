@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace WebServer.Models
 {
-    public class UserCreateModel
+    public class UserLoginModel
     {
-        public int? Uid { get; set; }
+
         public string? UserName { get; set; }
         public string? Password { get; set; }
         //public string Hash { get; set; }
