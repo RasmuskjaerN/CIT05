@@ -19,5 +19,7 @@ namespace DataLayer.Domain
         public string? EndYear { get; set; }
         public int? RunTimeMinutes { get; set; }
         public string? Genre { get; set; }
+        //public userRate UserRate { get; set; }
+        public omdbData Poster { get; set; }
     }
 }

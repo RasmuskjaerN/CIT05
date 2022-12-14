@@ -18,13 +18,13 @@ namespace DataLayer
         
         public titleBasic? GetMovie(string tconst)
         {
-            titleBasic? title = db.titleBasics.Find(tconst);
+            titleBasic? title = db.titleBasics.Include(x => x.Poster).FirstOrDefault(x => x.Tconst == tconst);
             return title;
         }
 
         public IList<titleBasic> GetMoviesList(int page = 0, int pagesize = 25)
         {
-            return db.titleBasics.Skip(page * pagesize).Take(pagesize).ToList();
+            return db.titleBasics.Include(x => x.Poster).Skip(page * pagesize).Take(pagesize).OrderBy(x => x.Tconst).ToList();
         }
         public int GetMoviesListCount()
         {

@@ -15,5 +15,6 @@ namespace DataLayer.Domain
         public string? Word { get; set; }
         public string? Field { get; set; }
         public string? Lexeme { get; set; }
+        public virtual titleBasic? titles { get; set; }
     }
 }

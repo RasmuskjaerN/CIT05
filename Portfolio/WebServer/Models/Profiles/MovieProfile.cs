@@ -7,8 +7,10 @@ namespace WebServer.Models.Profiles
     {
         public MovieProfile()
         {
-            CreateMap<titleBasic, MovieModel>();
-            CreateMap<titleBasic, MovieListModel>();
+            CreateMap<titleBasic, MovieModel>()
+                .ForMember(dst => dst.Plot, opt => opt.MapFrom(src => src.Poster.Plot))
+                .ForMember(dst => dst.Poster, opt => opt.MapFrom(src => src.Poster.Poster));
+            CreateMap<titleBasic, MovieListModel>().ForMember(dst => dst.Poster, opt => opt.MapFrom(src => src.Poster.Poster));
 
         }
         

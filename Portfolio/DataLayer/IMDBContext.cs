@@ -34,7 +34,7 @@ namespace DataLayer
         public DbSet<userHistory>? userHistory { get; set; }
         public DbSet<userMain>? userMain { get; set; }
         public DbSet<userRate>? userRate { get; set; }
-        public DbSet<wi>? wi { get; set; }
+        public DbSet<wi>? wis { get; set; }
         public DbSet<workedAs>? workedAs { get; set; }
         public DbSet<tempSearch>? tempSearches { get; set; }
 
@@ -48,6 +48,8 @@ namespace DataLayer
         {
 
             //base.OnModelCreating(modelBuilder);
+            //modelBuilder.Entity<wi>().HasOne(x => x.titles).WithOne(m => m.wis).HasForeignKey<wi>(x => x.Tconst);
+            modelBuilder.Entity<omdbData>().HasOne(x => x.titles).WithOne(m => m.Poster).HasForeignKey<omdbData>(x => x.Tconst);
 
             modelBuilder.Entity<akaAttribute>().ToTable("aka_attributes");
             modelBuilder.Entity<akaAttribute>().HasKey(x => new { x.Tconst, x.Ordering });
