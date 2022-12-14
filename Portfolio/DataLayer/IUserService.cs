@@ -23,7 +23,8 @@ namespace DataLayer
         //void CreateUser(userMain newUser);
         userMain CreateUser(string? username, string? password = null, string? salt = null);
         void DeleteUser(int uid);
-        public userMain? GetUser(int? uid);
+        public userMain? GetUser(int uid);
+        /*IList<userMain>? GetUserModel();*/
         public userMain? GetUserName(string? username);
         IList<userMain> GetUsers();
         void GetUsersHistory(string userid);

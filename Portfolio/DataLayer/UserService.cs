@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace DataLayer
 {
@@ -40,12 +41,27 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select user_delete({uid})");
             db.SaveChanges();
         }
-        public userMain? GetUser(int? uid)
+        public userMain? GetUser(int uid)
         {
-            var user = db.userMain.Find(uid);
+            userMain? user = db.userMain
+                .Include(x => x.Bookmarks)
+                .Include(x => x.Ratings)
+                .Include(x => x.History)
+                .FirstOrDefault(x=> x.Uid == uid);
             return user;
         }
-        public IList<userMain> GetUsers()
+        /*public IList<userMain>? GetUserModel()
+        {
+            //userMain? user = 
+            return db.userMain
+                .Include(x => x.Bookmarks)
+                .Include(x => x.Ratings)
+                .Include(x => x.History)
+                .OrderBy(x=>x.Uid)
+                .ToList();
+            //return user;
+        }*/
+        public IList<userMain> GetUsers()//tjek bulskovs product search model for inspiration.
         {
             return db.userMain.ToList();
         }

@@ -17,5 +17,12 @@ namespace WebServer.Models
         //public virtual wi? wis { get; set; }
         public string? Plot { get; set; }
         public string? Poster { get; set; }
+        public float? AverageRating { get; set; }
+        public int NumVotes { get; set; }
+        public string? Region { get; set; }
+        public string? Language { get; set; }
+        public string? Type { get; set; }
+        public string? Attribute { get; set; }
+        public int Ordering { get; set; }
     }
 }
