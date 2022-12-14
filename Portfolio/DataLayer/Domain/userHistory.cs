@@ -13,6 +13,6 @@ namespace DataLayer.Domain
         public string? Uid { get; set; }
         public DateOnly Date { get; set; }
         public string? SearchInput { get; set; }
-        public userMain User { get; set; }
+        
     }
 }

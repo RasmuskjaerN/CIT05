@@ -13,20 +13,20 @@ namespace DataLayer
     {
         void CreateActorBookmark(string userid, string nconstactor, string? usernote);
         IList<userBookmark> GetMovieBookmarks();
-
         userBookmark? GetMovieBookmark(string userid);
-
         void CreateMovieBookmark(string userid, string tconstmovie, string? note);
-
         void DeleteActorBookmark(string userid, string nconstactor);
         void DeleteMovieBookmark(string userid, string tconstmovie);
-        void CreateRating(string userid, string titlein, int rating);
-        void DeleteRating(string userid, string tconst);
+        void CreateRating(string uid, string tconst, int rating);
+        void DeleteRating(string uid, string tconst);
         IList<UserSearchModel> GetActorSearch(string userid,string search);
-        void CreateUser(userMain newUser);
-        void DeleteUser(int Uid);
-        public userMain? GetUser(int uid);
+        //void CreateUser(userMain newUser);
+        userMain CreateUser(string? username, string? password = null, string? salt = null);
+        void DeleteUser(int uid);
+        public userMain? GetUser(int? uid);
+        public userMain? GetUserName(string? username);
         IList<userMain> GetUsers();
         void GetUsersHistory(string userid);
+        IList<userRate> GetRatings();
     }
 }

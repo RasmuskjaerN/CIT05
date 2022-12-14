@@ -12,13 +12,26 @@ namespace DataLayer
     public class UserService : IUserService
     {
         public IMDBContext db = new IMDBContext();
-        public void CreateUser(userMain newUser)
+        /*public void CreateUser(userMain newUser)
         {
             newUser.Uid = db.userMain.Any() ? db.userMain.Max(x => x.Uid) + 1 : 1;
             //db.Database.ExecuteSqlInterpolated($"select user_create({newUser.UserName},{newUser.Password}");
             db.userMain.Add(newUser);
             db.SaveChanges();
             //create sql function elsewhere and save changes through that.
+        }*/
+        public userMain CreateUser(string? username, string? password = null, string? salt = null)
+        {
+            var user = new userMain();
+            {
+                user.Uid = db.userMain.Max(x => x.Uid) + 1;
+                user.UserName = username;
+                user.Password = password;
+                user.Salt = salt;
+            };
+            db.Add(user);
+            db.SaveChanges();
+            return user;
         }
 
         public void DeleteUser(int uid)
@@ -27,7 +40,7 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select user_delete({uid})");
             db.SaveChanges();
         }
-        public userMain? GetUser(int uid)
+        public userMain? GetUser(int? uid)
         {
             var user = db.userMain.Find(uid);
             return user;
@@ -37,16 +50,21 @@ namespace DataLayer
             return db.userMain.ToList();
         }
 
-        public void CreateRating(string uid, string titlein, int rating)
+        public void CreateRating(string uid, string tconst, int rating)
         {
-            db.Database.ExecuteSqlInterpolated($"select rate({uid},{titlein},{rating})");
+            db.Database.ExecuteSqlInterpolated($"select rate_movie({uid},{tconst},{rating})");
             db.SaveChanges();
         }
-        public void DeleteRating(string userid, string tconst)
+        public void DeleteRating(string uid, string tconst)
         {
-           
-            db.Database.ExecuteSqlInterpolated($"select delete_rate({userid},{tconst})");
+            //var user = db.userRate.Find(uid);
+            db.Database.ExecuteSqlInterpolated($"select delete_rate({uid},{tconst})");
             db.SaveChanges();
+        }
+
+        public IList<userRate> GetRatings()
+        {
+            return db.userRate.ToList();
         }
 
         public IList<UserSearchModel> GetActorSearch(string userid, string search)
@@ -102,7 +120,11 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select get_user_history({userid})");
             db.SaveChanges();
         }
-        
+        public userMain GetUserName(string? username)
+        {
+            return db.userMain.FirstOrDefault(x => x.UserName == username);
+        }
+
 
         /*public IList<tempSearch> GetTitlesSearchList(List<string> search)
         {
