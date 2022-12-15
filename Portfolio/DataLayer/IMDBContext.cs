@@ -153,7 +153,7 @@ namespace DataLayer
             modelBuilder.Entity<userBookmark>().Property(x => x.Note).HasColumnName("note");
 
             modelBuilder.Entity<userHistory>().ToTable("user_history");
-            modelBuilder.Entity<userHistory>().HasKey(x => x.Uid);
+            modelBuilder.Entity<userHistory>().HasKey(x => new {x.Uid, x.Date, x.SearchInput});
             modelBuilder.Entity<userHistory>().Property(x => x.Uid).HasColumnName("uid");
             modelBuilder.Entity<userHistory>().Property(x => x.Date).HasColumnName("date");
             modelBuilder.Entity<userHistory>().Property(x => x.SearchInput).HasColumnName("searchinput");

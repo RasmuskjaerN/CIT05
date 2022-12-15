@@ -54,14 +54,20 @@ namespace DataLayer
             return db.userRate.ToList();
         }
 
-        public IList<UserSearchModel> GetActorSearch(string userid, string search)
+       /* public IList<UserSearchModel> GetMovieSearch(string userid, string search)
         {
            
             string search_result = db.Database.ExecuteSqlInterpolated($"select string_search({userid},{search})").ToString();
             return (IList<UserSearchModel>)search_result.ToList();
-        }
+        }*/
 
-        
+        /*public IList<U> GetMovieSearchOffAuth(string search)
+        {
+
+            string search_result = db.userHistory.ExecuteSqlInterpolated($"select string_searchoffauth({search})").ToString();
+            return search_result.ToList();
+        }*/
+
 
         public void CreateMovieBookmark(string uid, string tconstmovie, string? note)
         {
@@ -73,7 +79,7 @@ namespace DataLayer
 
         public void DeleteMovieBookmark(string uid, string tconstmovie)
         {
-            db.Database.ExecuteSqlInterpolated($"select delete_movie_bookmark({uid},{tconstmovie})");
+            db.Database.ExecuteSqlInterpolated($"select delete_bookmark_movie({uid},{tconstmovie})");
             db.SaveChanges();
         }
 
@@ -101,15 +107,23 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select delete_bookmark_actor({userid},{nconstactor})");
             db.SaveChanges();
         }
-
-        public void GetUsersHistory(string userid)
+        //cannot get history to return the actual user_history, so for now it's void
+      /*  public void GetUsersHistory(string uid)
         {
-            db.Database.ExecuteSqlInterpolated($"select get_user_history({userid})");
+
+            var result = db.userHistory.Find(uid);
+            //return result;
+           
+        }*/
+        
+        public void getSearch(string input)
+        {
+            db.Database.ExecuteSqlInterpolated($"select string_search({input})");
             db.SaveChanges();
         }
         
-
-        /*public IList<tempSearch> GetTitlesSearchList(List<string> search)
+/*
+        public IList<tempSearch> GetTitlesSearchList(List<string> search)
         {
             string ConcatInput = "SELECT * string_search('";
             foreach (string element in search)
