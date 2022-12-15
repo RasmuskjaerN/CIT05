@@ -14,6 +14,6 @@ namespace DataLayer.Domain
         public string? Tconst { get; set; }
         public int? Rate { get; set; }
         public userMain? UserMain { get; set; }
-        public titleBasic TitleBasic { get; set; }
+        public titleBasic? TitleBasic { get; set; }
     }
 }

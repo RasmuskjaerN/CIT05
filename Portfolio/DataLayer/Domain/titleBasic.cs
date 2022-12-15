@@ -20,10 +20,10 @@ namespace DataLayer.Domain
         public int? RunTimeMinutes { get; set; }
         public string? Genre { get; set; }
         //public userRate UserRate { get; set; }
-        public omdbData OmdbData { get; set; }
-        public titleAka TitleAkas { get; set; }
-        public titleRating TitleRating { get; set; }
-        public userBookmark UserBookmarks { get; set; }
-        public userRate UserRating { get; set; }
+        public omdbData? OmdbData { get; set; }
+        public titleAka? TitleAkas { get; set; }
+        public titleRating? TitleRating { get; set; }
+        public virtual List<userBookmark>? UserBookmarks { get; set; }
+        public virtual List<userRate>? UserRating { get; set; }
     }
 }

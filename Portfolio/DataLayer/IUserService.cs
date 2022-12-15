@@ -12,8 +12,7 @@ namespace DataLayer
     public interface IUserService
     {
         void CreateActorBookmark(string userid, string nconstactor, string? usernote);
-        IList<userBookmark> GetMovieBookmarks();
-        userBookmark? GetMovieBookmark(string userid);
+        //userBookmark? GetMovieBookmark(string userid);
         void CreateMovieBookmark(string userid, string tconstmovie, string? note);
         void DeleteActorBookmark(string userid, string nconstactor);
         void DeleteMovieBookmark(string userid, string tconstmovie);
@@ -26,8 +25,10 @@ namespace DataLayer
         public userMain? GetUser(int uid);
         /*IList<userMain>? GetUserModel();*/
         public userMain? GetUserName(string? username);
-        IList<userMain> GetUsers();
-        void GetUsersHistory(string userid);
-        IList<userRate> GetRatings();
+        List<userMain> GetUsers();
+        // void GetUsersHistory(string userid);
+        public List<userHistory> UserGetHistory();
+        public List<userRate> GetRatings();
+        public List<userBookmark> UserGetBookmarks();
     }
 }

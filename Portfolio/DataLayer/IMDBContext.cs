@@ -53,11 +53,13 @@ namespace DataLayer
             modelBuilder.Entity<titleAka>().HasOne(x => x.titles).WithOne(m => m.TitleAkas).HasForeignKey<titleAka>(x => x.Tconst);
             modelBuilder.Entity<titleRating>().HasOne(x => x.titles).WithOne(m => m.TitleRating).HasForeignKey<titleRating>(x => x.Tconst);
 
-            modelBuilder.Entity<userBookmark>().HasOne(x => x.UserMain).WithOne(m => m.Bookmarks).HasForeignKey<userBookmark>(x => x.Uid);
-            modelBuilder.Entity<userHistory>().HasOne(x => x.UserMain).WithOne(m => m.History).HasForeignKey<userHistory>(x => x.Uid);
-            modelBuilder.Entity<userRate>().HasOne(x => x.UserMain).WithOne(m => m.Ratings).HasForeignKey<userRate>(x => x.Uid);
-            modelBuilder.Entity<userBookmark>().HasOne(x => x.TitleBasic).WithOne(m => m.UserBookmarks).HasForeignKey<userBookmark>(x => x.Tconst);
-            modelBuilder.Entity<userRate>().HasOne(x => x.TitleBasic).WithOne(m => m.UserRating).HasForeignKey<userRate>(x => x.Tconst);
+            modelBuilder.Entity<userBookmark>().HasOne(x => x.UserMain).WithMany(m => m.Bookmarks).HasForeignKey(x => x.Uid);
+            modelBuilder.Entity<userBookmark>().HasOne(x => x.TitleBasic).WithMany(m => m.UserBookmarks).HasForeignKey(x => x.Tconst);
+            modelBuilder.Entity<userHistory>().HasOne(x => x.UserMain).WithMany(m => m.History).HasForeignKey(x => x.Uid);
+            modelBuilder.Entity<userRate>().HasOne(x => x.UserMain).WithMany(m => m.Ratings).HasForeignKey(x => x.Uid);
+            modelBuilder.Entity<userRate>().HasOne(x => x.TitleBasic).WithMany(m => m.UserRating).HasForeignKey(x => x.Tconst);
+            
+            
 
             modelBuilder.Entity<akaAttribute>().ToTable("aka_attributes");
             modelBuilder.Entity<akaAttribute>().HasKey(x => new { x.Tconst, x.Ordering });
@@ -176,7 +178,7 @@ namespace DataLayer
             modelBuilder.Entity<userMain>().Property(x => x.Salt).HasColumnName("salt");
 
             modelBuilder.Entity<userRate>().ToTable("user_rate");
-            modelBuilder.Entity<userRate>().HasKey(x => new { x.Uid, x.Tconst });
+            modelBuilder.Entity<userRate>().HasKey(x => new { x.Uid, x.Tconst});
             modelBuilder.Entity<userRate>().Property(x => x.Uid).HasColumnName("uid");
             modelBuilder.Entity<userRate>().Property(x => x.Tconst).HasColumnName("tconst");
             modelBuilder.Entity<userRate>().Property(x => x.Rate).HasColumnName("rate");
