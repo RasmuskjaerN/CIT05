@@ -6,19 +6,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace DataLayer
 {
     public class UserService : IUserService
     {
         public IMDBContext db = new IMDBContext();
-        public void CreateUser(userMain newUser)
+        /*public void CreateUser(userMain newUser)
         {
             newUser.Uid = db.userMain.Any() ? db.userMain.Max(x => x.Uid) + 1 : 1;
             //db.Database.ExecuteSqlInterpolated($"select user_create({newUser.UserName},{newUser.Password}");
             db.userMain.Add(newUser);
             db.SaveChanges();
             //create sql function elsewhere and save changes through that.
+        }*/
+        public userMain CreateUser(string? username, string? password = null, string? salt = null)
+        {
+            var user = new userMain();
+            {
+                user.Uid = db.userMain.Max(x => x.Uid) + 1;
+                user.UserName = username;
+                user.Password = password;
+                user.Salt = salt;
+            };
+            db.Add(user);
+            db.SaveChanges();
+            return user;
         }
 
         public void DeleteUser(int uid)
@@ -29,10 +43,25 @@ namespace DataLayer
         }
         public userMain? GetUser(int uid)
         {
-            var user = db.userMain.Find(uid);
+            userMain? user = db.userMain
+                .Include(x => x.Bookmarks)
+                .Include(x => x.Ratings)
+                .Include(x => x.History)
+                .FirstOrDefault(x=> x.Uid == uid);
             return user;
         }
-        public IList<userMain> GetUsers()
+        /*public IList<userMain>? GetUserModel()
+        {
+            //userMain? user = 
+            return db.userMain
+                .Include(x => x.Bookmarks)
+                .Include(x => x.Ratings)
+                .Include(x => x.History)
+                .OrderBy(x=>x.Uid)
+                .ToList();
+            //return user;
+        }*/
+        public IList<userMain> GetUsers()//tjek bulskovs product search model for inspiration.
         {
             return db.userMain.ToList();
         }
@@ -121,9 +150,19 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select string_search({input})");
             db.SaveChanges();
         }
+<<<<<<< HEAD
         
 /*
         public IList<tempSearch> GetTitlesSearchList(List<string> search)
+=======
+        public userMain GetUserName(string? username)
+        {
+            return db.userMain.FirstOrDefault(x => x.UserName == username);
+        }
+
+
+        /*public IList<tempSearch> GetTitlesSearchList(List<string> search)
+>>>>>>> f9e92dab41f4aaff27c0606ee026f07218cbe348
         {
             string ConcatInput = "SELECT * string_search('";
             foreach (string element in search)

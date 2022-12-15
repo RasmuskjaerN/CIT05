@@ -10,8 +10,10 @@ namespace DataLayer.Domain
 
     public class userBookmark
     {
-        public string? Uid { get; set; }
+        public int? Uid { get; set; }
         public string? Tconst { get; set; }
         public string? Note { get; set; }
+        public userMain? UserMain { get; set; }
+        public titleBasic? TitleBasic { get; set; }
     }
 }

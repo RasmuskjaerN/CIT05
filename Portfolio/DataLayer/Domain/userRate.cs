@@ -10,10 +10,10 @@ namespace DataLayer.Domain
 
     public class userRate
     {
-        public string? Uid { get; set; }
+        public int? Uid { get; set; }
         public string? Tconst { get; set; }
         public int? Rate { get; set; }
-        public userMain user { get; set; }
-        public titleBasic title { get; set; }
+        public userMain? UserMain { get; set; }
+        public titleBasic TitleBasic { get; set; }
     }
 }
