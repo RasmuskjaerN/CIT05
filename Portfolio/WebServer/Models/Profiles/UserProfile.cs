@@ -7,16 +7,16 @@ namespace WebServer.Models.Profiles
     {
         public UserProfile()
         {
-            CreateMap<userMain, UserModel>()
-                /*.ForMember(dst => dst.bookmarkTconst, opt => opt.MapFrom(src => src.Bookmarks))
-                .ForMember(dst => dst.bookmarkNote, opt => opt.MapFrom(src => src.Bookmarks))
-                .ForMember(dst => dst.rateTconst, opt => opt.MapFrom(src => src.Ratings.Tconst))
-                .ForMember(dst => dst.Rating, opt => opt.MapFrom(src => src.Ratings.Rate))
-                .ForMember(dst => dst.searchDate, opt => opt.MapFrom(src => src.History.Date.ToString()))
-                .ForMember(dst => dst.SearchInput, opt => opt.MapFrom(src => src.History.SearchInput))*/;
-            /*CreateMap<UserCreateModel, userMain>();
-            CreateMap<UserDeleteRating, userRate>();
-            CreateMap<userRate, RatingModel>();*/
+            CreateMap<userMain, UserModel>();                
+            CreateMap<userBookmark, userbookmarkmodel>()
+                .ForMember(dst => dst.bookmarkTconst, opt => opt.MapFrom(src => src.Tconst))
+                .ForMember(dst => dst.bookmarkNote, opt => opt.MapFrom(src => src.Note));
+            CreateMap<userHistory, userhistorymodel>()
+               .ForMember(dst => dst.historyDate, opt => opt.MapFrom(src => src.Date))
+               .ForMember(dst => dst.historySearchInput, opt => opt.MapFrom(src => src.SearchInput));
+            CreateMap<userRate, userratingmodel>()
+               .ForMember(dst => dst.ratingTconst, opt => opt.MapFrom(src => src.Tconst))
+               .ForMember(dst => dst.ratingRate, opt => opt.MapFrom(src => src.Rating));
         }
     }
 }

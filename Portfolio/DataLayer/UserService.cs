@@ -35,20 +35,23 @@ namespace DataLayer
             db.SaveChanges();
         }
         
-        public userMain? GetUser(int uid)
+        public userMain? GetUser(int? uid)
         {
             userMain? user = db.userMain
-                .Include(x => x.Bookmarks)
-                .Include(x => x.Ratings)
-                .Include(x => x.History)
                 .FirstOrDefault(x=> x.Uid == uid);//add first or default tconst
+            if (user != null) 
+            {
+                user.Bookmarks = db.userBookmarks.Where(x => x.Uid == uid).ToList();
+                user.Histories = db.userHistories.Where(x => x.Uid == uid).ToList();
+                user.Ratings = db.userRates.Where(x => x.Uid == uid).ToList();
+            }
             return user;
         }
         public List<userMain> GetUsers()
         {
             return db.userMain.ToList();
         }
-        public List<userBookmark> UserGetBookmarks()
+        /*public List<userBookmark> UserGetBookmarks()
         {
             return db.userBookmarks.ToList();
         }
@@ -56,10 +59,10 @@ namespace DataLayer
         {
             return db.userRate.ToList();
         }
-        public List<userHistory> UserGetHistory()
+        public IList<userHistory> UserGetHistory()
         {
             return db.userHistory.ToList();
-        }
+        }*/
 
         public void CreateRating(string uid, string tconst, int rating)
         {

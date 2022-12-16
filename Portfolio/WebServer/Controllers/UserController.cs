@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 
+
 namespace WebServer.Controllers
 {
     [Route("api/user")]
@@ -57,7 +58,7 @@ namespace WebServer.Controllers
             return CreatedAtRoute(null, UserCreateModel(newUser));
         }
         [HttpGet("{uid}", Name = nameof(GetUser))]
-        public IActionResult GetUser(int uid)
+        public IActionResult GetUser(int? uid)
         {
             var Uid = _userService.GetUser(uid);
 
@@ -100,12 +101,7 @@ namespace WebServer.Controllers
             return Ok();
         }
         
-        /*private RatingModel UserCreateRatingModel(userRate us)
-        {
-            var model = _mapper.Map<userRate>(us);
-            model.Uid = us.Uid;
-           w return model;
-        }*/
+        
 
         [HttpPost("uid&tconst&rating")]
         [Route("rate")]
@@ -146,63 +142,6 @@ namespace WebServer.Controllers
             return Ok();
         }
         
-
-        /*[HttpPost("create/moviemark/{tconstmovie}")]
-        public IActionResult CreateMovieBookmark(string uid, string tconstmovie, string? note)
-        {
-            if (uid == null || tconstmovie == null)
-            {
-                return BadRequest();
-            }
-            try
-            {
-                _userService.CreateMovieBookmark(uid, tconstmovie, note);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-            return Ok();
-        }*/
-        /*
-        [HttpDelete("delete/{uid]")]
-        
-        public IActionResult DeleteMovieBookmark(string uid, string tconstmovie)
-        {
-            if (uid == null || tconstmovie == null)
-            {
-                return BadRequest();
-            }
-            try
-            {
-                _userService.DeleteMovieBookmark(uid, tconstmovie);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-            return Ok();
-                 
-<<<<<<< HEAD
-        }
-
-        [HttpGet("{uid}/history")]
-        
-=======
-        }*/
-
-        /*[HttpGet]
-        //[Route("{uid}/history")]
->>>>>>> e9251a7d6b811cb87bb31858f90fdcb5b361be2b
-        public IActionResult GetHistory([FromRoute]string userid)
-        {
-            if (!string.IsNullOrEmpty(userid))
-            {
-                return BadRequest();
-            }
-                       
-            return Ok();
-        }*/
         private string? CreateLink(int page, int pageSize)
         {
             return _generator.GetUriByName(HttpContext, nameof(GetUsers), new { page, pageSize });
