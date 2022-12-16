@@ -34,7 +34,7 @@ namespace DataLayer
         public DbSet<userHistory>? userHistory { get; set; }
         public DbSet<userMain>? userMain { get; set; }
         public DbSet<userRate>? userRate { get; set; }
-        public DbSet<wi>? wi { get; set; }
+        public DbSet<wi>? wis { get; set; }
         public DbSet<workedAs>? workedAs { get; set; }
         public DbSet<tempSearch>? tempSearches { get; set; }
 
@@ -48,6 +48,16 @@ namespace DataLayer
         {
 
             //base.OnModelCreating(modelBuilder);
+            //modelBuilder.Entity<wi>().HasOne(x => x.titles).WithOne(m => m.wis).HasForeignKey<wi>(x => x.Tconst);
+            modelBuilder.Entity<omdbData>().HasOne(x => x.titles).WithOne(m => m.OmdbData).HasForeignKey<omdbData>(x => x.Tconst);
+            modelBuilder.Entity<titleAka>().HasOne(x => x.titles).WithOne(m => m.TitleAkas).HasForeignKey<titleAka>(x => x.Tconst);
+            modelBuilder.Entity<titleRating>().HasOne(x => x.titles).WithOne(m => m.TitleRating).HasForeignKey<titleRating>(x => x.Tconst);
+
+            modelBuilder.Entity<userBookmark>().HasOne(x => x.UserMain).WithOne(m => m.Bookmarks).HasForeignKey<userBookmark>(x => x.Uid);
+            modelBuilder.Entity<userHistory>().HasOne(x => x.UserMain).WithOne(m => m.History).HasForeignKey<userHistory>(x => x.Uid);
+            modelBuilder.Entity<userRate>().HasOne(x => x.UserMain).WithOne(m => m.Ratings).HasForeignKey<userRate>(x => x.Uid);
+            modelBuilder.Entity<userBookmark>().HasOne(x => x.TitleBasic).WithOne(m => m.UserBookmarks).HasForeignKey<userBookmark>(x => x.Tconst);
+            modelBuilder.Entity<userRate>().HasOne(x => x.TitleBasic).WithOne(m => m.UserRating).HasForeignKey<userRate>(x => x.Tconst);
 
             modelBuilder.Entity<akaAttribute>().ToTable("aka_attributes");
             modelBuilder.Entity<akaAttribute>().HasKey(x => new { x.Tconst, x.Ordering });
@@ -153,7 +163,7 @@ namespace DataLayer
             modelBuilder.Entity<userBookmark>().Property(x => x.Note).HasColumnName("note");
 
             modelBuilder.Entity<userHistory>().ToTable("user_history");
-            modelBuilder.Entity<userHistory>().HasKey(x => x.Uid);
+            modelBuilder.Entity<userHistory>().HasKey(x => new {x.Uid, x.Date, x.SearchInput});
             modelBuilder.Entity<userHistory>().Property(x => x.Uid).HasColumnName("uid");
             modelBuilder.Entity<userHistory>().Property(x => x.Date).HasColumnName("date");
             modelBuilder.Entity<userHistory>().Property(x => x.SearchInput).HasColumnName("searchinput");

@@ -41,7 +41,7 @@ namespace WebServer.Controllers
 
         [HttpGet(Name = nameof(GetMovies))]
         [Route("{page}&{pageSize}")]
-        [Authorize]
+        //[Authorize]
         public IActionResult GetMovies(int page = 0, int pagesize = 10)
         {
             var movies = _dataService.GetMoviesList(page, pagesize).Select(x => MovieCreateListModel(x));

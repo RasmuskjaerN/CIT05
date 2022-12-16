@@ -18,22 +18,27 @@ namespace DataLayer
         
         public titleBasic? GetMovie(string tconst)
         {
-            titleBasic? title = db.titleBasics.Find(tconst);
+            titleBasic? title = db.titleBasics
+                .Include(x => x.OmdbData)
+                .Include(x => x.TitleAkas)
+                .Include(x => x.TitleRating)
+                .FirstOrDefault(x => x.Tconst == tconst);
             return title;
         }
 
         public IList<titleBasic> GetMoviesList(int page = 0, int pagesize = 25)
         {
-            return db.titleBasics.Skip(page * pagesize).Take(pagesize).ToList();
+            return db.titleBasics.Include(x => x.OmdbData).Skip(page * pagesize).Take(pagesize).OrderBy(x => x.Tconst).ToList();
         }
         public int GetMoviesListCount()
         {
             return db.titleBasics.Count();
         }
 
-        public IList<titleGenre> GetSimilarMoviesList(string Tconst)
+        public IList<titleGenre> GetSimilarMoviesList(string uid,string Tconst)
         {
-            return db.titleGenres.ToList();
+            var result = db.titleGenres.FromSqlInterpolated($"select sim_movie({uid},{Tconst}");
+            return result.ToList();
         }
         
         public nameBasic? GetName(string nconst)
@@ -56,9 +61,9 @@ namespace DataLayer
         public IList<knownFor> GetCoactors(string uid, string namein)
         {
             var result = db.knownFor.FromSqlInterpolated($"select find_coactor({uid},{namein})");
-            return result.ToList();
+            return result.
+        ToList();
         }
-        
 
     }
 }

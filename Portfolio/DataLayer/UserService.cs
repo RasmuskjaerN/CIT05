@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace DataLayer
 {
@@ -40,12 +41,27 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select user_delete({uid})");
             db.SaveChanges();
         }
-        public userMain? GetUser(int? uid)
+        public userMain? GetUser(int uid)
         {
-            var user = db.userMain.Find(uid);
+            userMain? user = db.userMain
+                .Include(x => x.Bookmarks)
+                .Include(x => x.Ratings)
+                .Include(x => x.History)
+                .FirstOrDefault(x=> x.Uid == uid);
             return user;
         }
-        public IList<userMain> GetUsers()
+        /*public IList<userMain>? GetUserModel()
+        {
+            //userMain? user = 
+            return db.userMain
+                .Include(x => x.Bookmarks)
+                .Include(x => x.Ratings)
+                .Include(x => x.History)
+                .OrderBy(x=>x.Uid)
+                .ToList();
+            //return user;
+        }*/
+        public IList<userMain> GetUsers()//tjek bulskovs product search model for inspiration.
         {
             return db.userMain.ToList();
         }
@@ -67,14 +83,20 @@ namespace DataLayer
             return db.userRate.ToList();
         }
 
-        public IList<UserSearchModel> GetActorSearch(string userid, string search)
+       /* public IList<UserSearchModel> GetMovieSearch(string userid, string search)
         {
            
             string search_result = db.Database.ExecuteSqlInterpolated($"select string_search({userid},{search})").ToString();
             return (IList<UserSearchModel>)search_result.ToList();
-        }
+        }*/
 
-        
+        /*public IList<U> GetMovieSearchOffAuth(string search)
+        {
+
+            string search_result = db.userHistory.ExecuteSqlInterpolated($"select string_searchoffauth({search})").ToString();
+            return search_result.ToList();
+        }*/
+
 
         public void CreateMovieBookmark(string uid, string tconstmovie, string? note)
         {
@@ -86,7 +108,7 @@ namespace DataLayer
 
         public void DeleteMovieBookmark(string uid, string tconstmovie)
         {
-            db.Database.ExecuteSqlInterpolated($"select delete_movie_bookmark({uid},{tconstmovie})");
+            db.Database.ExecuteSqlInterpolated($"select delete_bookmark_movie({uid},{tconstmovie})");
             db.SaveChanges();
         }
 
@@ -114,12 +136,25 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select delete_bookmark_actor({userid},{nconstactor})");
             db.SaveChanges();
         }
-
-        public void GetUsersHistory(string userid)
+        //cannot get history to return the actual user_history, so for now it's void
+      /*  public void GetUsersHistory(string uid)
         {
-            db.Database.ExecuteSqlInterpolated($"select get_user_history({userid})");
+
+            var result = db.userHistory.Find(uid);
+            //return result;
+           
+        }*/
+        
+        public void getSearch(string input)
+        {
+            db.Database.ExecuteSqlInterpolated($"select string_search({input})");
             db.SaveChanges();
         }
+<<<<<<< HEAD
+        
+/*
+        public IList<tempSearch> GetTitlesSearchList(List<string> search)
+=======
         public userMain GetUserName(string? username)
         {
             return db.userMain.FirstOrDefault(x => x.UserName == username);
@@ -127,6 +162,7 @@ namespace DataLayer
 
 
         /*public IList<tempSearch> GetTitlesSearchList(List<string> search)
+>>>>>>> f9e92dab41f4aaff27c0606ee026f07218cbe348
         {
             string ConcatInput = "SELECT * string_search('";
             foreach (string element in search)

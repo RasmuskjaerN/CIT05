@@ -4,10 +4,14 @@ using WebServer.Models;
 using AutoMapper;
 using DataLayer.Domain;
 using Microsoft.AspNetCore.Authorization;
+<<<<<<< HEAD
+using DataLayer.Models;
+=======
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
+>>>>>>> f9e92dab41f4aaff27c0606ee026f07218cbe348
 
 namespace WebServer.Controllers
 {
@@ -43,15 +47,6 @@ namespace WebServer.Controllers
         
         public IActionResult CreateUser(UserCreateModel model)
         {
-            /*if (_userService.GetUser(model.UserName) == null)
-            {
-                return BadRequest();
-            }
-           if (_userService.GetUser(model.Password) = null)
-            {
-                return BadRequest();
-            }*/
-            //var hashResult = _hashing.hash(model.Password);
             var newUser = _mapper.Map<userMain>(model);
             _userService.CreateUser(newUser.UserName, newUser.Password, newUser.Salt);
             return CreatedAtRoute(null, UserCreateModel(newUser));
@@ -98,17 +93,10 @@ namespace WebServer.Controllers
             }
             return Ok();
         }
-        
-        /*private RatingModel UserCreateRatingModel(userRate us)
-        {
-            var model = _mapper.Map<userRate>(us);
-            model.Uid = us.Uid;
-           w return model;
-        }*/
 
         [HttpPost("uid&tconst&rating")]
         [Route("rate")]
-        //[Authorize]
+      
         public IActionResult CreateRating(string uid, string tconst, int rating)
         {
             if (uid == null && string.IsNullOrEmpty(tconst) && rating == null)
@@ -126,7 +114,7 @@ namespace WebServer.Controllers
             return Ok();
         }
         
-        [HttpPost("uid&tconst")]
+        [HttpDelete("uid&tconst")]
         [Route("ratedelete")]
         public IActionResult DeleteRating(string uid, string tconst)
         {
@@ -140,16 +128,17 @@ namespace WebServer.Controllers
             } 
             catch
             {
-                return Ok("hello");
+                return BadRequest();
             }
             return Ok();
         }
         
 
-        /*[HttpPost("create/moviemark/{tconstmovie}")]
+        [HttpPost("uid&tconstmovie&note")]
+        [Route("create/bookmark")]
         public IActionResult CreateMovieBookmark(string uid, string tconstmovie, string? note)
         {
-            if (uid == null || tconstmovie == null)
+            if (string.IsNullOrEmpty(uid) || string.IsNullOrEmpty(tconstmovie))
             {
                 return BadRequest();
             }
@@ -162,13 +151,14 @@ namespace WebServer.Controllers
                 return BadRequest();
             }
             return Ok();
-        }*/
-        /*
-        [HttpDelete("delete/{uid]")]
+        }
+        
+        [HttpDelete("uid&tconstmovie")]
+        [Route("delete/bookmark")]
         
         public IActionResult DeleteMovieBookmark(string uid, string tconstmovie)
         {
-            if (uid == null || tconstmovie == null)
+            if (string.IsNullOrEmpty(uid) || string.IsNullOrEmpty(tconstmovie))
             {
                 return BadRequest();
             }
@@ -182,30 +172,60 @@ namespace WebServer.Controllers
             }
             return Ok();
                  
-<<<<<<< HEAD
+        }
+        private UserModel HistoryGetModel(userHistory history)
+        {
+            var model = _mapper.Map<UserModel>(history);
+            model.Url = _generator.GetUriByName(HttpContext,
+                                                nameof(GetUser),
+                                                new { history.Uid });
+            return model;
         }
 
-        [HttpGet("{uid}/history")]
-        
-=======
-        }*/
+        /*        [HttpGet("uid")]
+                [Route("get/history")]
 
-        /*[HttpGet]
-        //[Route("{uid}/history")]
->>>>>>> e9251a7d6b811cb87bb31858f90fdcb5b361be2b
-        public IActionResult GetHistory([FromRoute]string userid)
+                public IActionResult GetHistory(int uid)
+                {
+                    if (uid != null)
+                    {
+                        var data = _userService.(uid);
+                        if (data != null)
+                        {
+                            var model = UserCreateModel(data);
+                            return Ok(model);
+                        }
+                    }
+                    return BadRequest();
+
+                }*/
+        [HttpPost]
+        [Route("stringsearch")]
+        public IActionResult StringSearch(string input)
         {
-            if (!string.IsNullOrEmpty(userid))
+            if (string.IsNullOrEmpty(input))
             {
                 return BadRequest();
             }
-                       
+            try
+            {
+                _userService.getSearch(input);
+            }
+            catch
+            {
+                return BadRequest();
+            }
             return Ok();
-        }*/
+        }
+
         private string? CreateLink(int page, int pageSize)
         {
             return _generator.GetUriByName(HttpContext, nameof(GetUsers), new { page, pageSize });
         }
+<<<<<<< HEAD
+       
+=======
+>>>>>>> f9e92dab41f4aaff27c0606ee026f07218cbe348
 
         [HttpPost("register")]
         public IActionResult RegisterUser(UserCreateModel model)
