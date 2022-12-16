@@ -18,17 +18,19 @@ namespace DataLayer
         void DeleteMovieBookmark(string userid, string tconstmovie);
         void CreateRating(string uid, string tconst, int rating);
         void DeleteRating(string uid, string tconst);
-        IList<UserSearchModel> GetActorSearch(string userid,string search);
+       /* IList<UserSearchModel> GetMovieSearch(string userid,string search);
+        IList<UserSearchModel> GetMovieSearchOffAuth(string search);*/
+        //void CreateUser(userMain newUser);
+        //IList<UserSearchModel> GetActorSearch(string userid,string search);
         //void CreateUser(userMain newUser);
         userMain CreateUser(string? username, string? password = null, string? salt = null);
         void DeleteUser(int uid);
         public userMain? GetUser(int? uid);
         /*IList<userMain>? GetUserModel();*/
         public userMain? GetUserName(string? username);
-        List<userMain> GetUsers();
-        // void GetUsersHistory(string userid);
-        /*public IList<userHistory> UserGetHistory();
-        public List<userRate> GetRatings();
-        public List<userBookmark> UserGetBookmarks();*/
+        public IList<userMain> GetUsers();
+        
+        //IList<userHistory> GetUsersHistory(string uid);
+        void getSearch(string input);
     }
 }

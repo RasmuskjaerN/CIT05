@@ -35,9 +35,10 @@ namespace DataLayer
             return db.titleBasics.Count();
         }
 
-        public IList<titleGenre> GetSimilarMoviesList(string Tconst)
+        public IList<titleGenre> GetSimilarMoviesList(string uid,string Tconst)
         {
-            return db.titleGenres.ToList();
+            var result = db.titleGenres.FromSqlInterpolated($"select sim_movie({uid},{Tconst}");
+            return result.ToList();
         }
         
         public nameBasic? GetName(string nconst)
@@ -60,9 +61,9 @@ namespace DataLayer
         public IList<knownFor> GetCoactors(string uid, string namein)
         {
             var result = db.knownFor.FromSqlInterpolated($"select find_coactor({uid},{namein})");
-            return result.ToList();
+            return result.
+        ToList();
         }
-        
 
     }
 }

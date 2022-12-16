@@ -7,6 +7,9 @@ namespace WebServer.Models
         public string? Url { get; set; }
         public string? UserName { get; set; }
         public string? Password { get; set; }
+        //public UserGetHistory? UserHistory { get; set; }
+        
+
         public string? Salt { get; set; }
         public List<userbookmarkmodel>? Bookmarks { get; set; }
         public List<userhistorymodel>? Histories { get; set; }

@@ -4,6 +4,7 @@ using WebServer.Models;
 using AutoMapper;
 using DataLayer.Domain;
 using Microsoft.AspNetCore.Authorization;
+using DataLayer.Models;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -44,15 +45,6 @@ namespace WebServer.Controllers
         
         public IActionResult CreateUser(UserCreateModel model)
         {
-            /*if (_userService.GetUser(model.UserName) == null)
-            {
-                return BadRequest();
-            }
-           if (_userService.GetUser(model.Password) = null)
-            {
-                return BadRequest();
-            }*/
-            //var hashResult = _hashing.hash(model.Password);
             var newUser = _mapper.Map<userMain>(model);
             _userService.CreateUser(newUser.UserName, newUser.Password, newUser.Salt);
             return CreatedAtRoute(null, UserCreateModel(newUser));
@@ -100,12 +92,10 @@ namespace WebServer.Controllers
             }
             return Ok();
         }
-        
-        
 
         [HttpPost("uid&tconst&rating")]
         [Route("rate")]
-        //[Authorize]
+      
         public IActionResult CreateRating(string uid, string tconst, int rating)
         {
             if (uid == null && string.IsNullOrEmpty(tconst) && rating == null)
@@ -123,7 +113,7 @@ namespace WebServer.Controllers
             return Ok();
         }
         
-        [HttpPost("uid&tconst")]
+        [HttpDelete("uid&tconst")]
         [Route("ratedelete")]
         public IActionResult DeleteRating(string uid, string tconst)
         {
@@ -137,15 +127,101 @@ namespace WebServer.Controllers
             } 
             catch
             {
-                return Ok("hello");
+                return BadRequest();
             }
             return Ok();
         }
         
+
+        [HttpPost("uid&tconstmovie&note")]
+        [Route("create/bookmark")]
+        public IActionResult CreateMovieBookmark(string uid, string tconstmovie, string? note)
+        {
+            if (string.IsNullOrEmpty(uid) || string.IsNullOrEmpty(tconstmovie))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                _userService.CreateMovieBookmark(uid, tconstmovie, note);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
+        
+        [HttpDelete("uid&tconstmovie")]
+        [Route("delete/bookmark")]
+        
+        public IActionResult DeleteMovieBookmark(string uid, string tconstmovie)
+        {
+            if (string.IsNullOrEmpty(uid) || string.IsNullOrEmpty(tconstmovie))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                _userService.DeleteMovieBookmark(uid, tconstmovie);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return Ok();
+                 
+        }
+        private UserModel HistoryGetModel(userHistory history)
+        {
+            var model = _mapper.Map<UserModel>(history);
+            model.Url = _generator.GetUriByName(HttpContext,
+                                                nameof(GetUser),
+                                                new { history.Uid });
+            return model;
+        }
+
+        /*        [HttpGet("uid")]
+                [Route("get/history")]
+
+                public IActionResult GetHistory(int uid)
+                {
+                    if (uid != null)
+                    {
+                        var data = _userService.(uid);
+                        if (data != null)
+                        {
+                            var model = UserCreateModel(data);
+                            return Ok(model);
+                        }
+                    }
+                    return BadRequest();
+
+                }*/
+        [HttpPost]
+        [Route("stringsearch")]
+        public IActionResult StringSearch(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                _userService.getSearch(input);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
+
         private string? CreateLink(int page, int pageSize)
         {
             return _generator.GetUriByName(HttpContext, nameof(GetUsers), new { page, pageSize });
         }
+       
 
         [HttpPost("register")]
         public IActionResult RegisterUser(UserCreateModel model)

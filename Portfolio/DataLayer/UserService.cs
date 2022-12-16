@@ -47,7 +47,7 @@ namespace DataLayer
             }
             return user;
         }
-        public List<userMain> GetUsers()
+        public IList<userMain> GetUsers()
         {
             return db.userMain.ToList();
         }
@@ -59,16 +59,22 @@ namespace DataLayer
         {
             return db.userRate.ToList();
         }
-        public IList<userHistory> UserGetHistory()
+
+       /* public IList<UserSearchModel> GetMovieSearch(string userid, string search)
         {
-            return db.userHistory.ToList();
+           
+            string search_result = db.Database.ExecuteSqlInterpolated($"select string_search({userid},{search})").ToString();
+            return (IList<UserSearchModel>)search_result.ToList();
         }*/
 
-        public void CreateRating(string uid, string tconst, int rating)
+        /*public IList<U> GetMovieSearchOffAuth(string search)
         {
-            db.Database.ExecuteSqlInterpolated($"select rate_movie({uid},{tconst},{rating})");
-            db.SaveChanges();
-        }
+
+            string search_result = db.userHistory.ExecuteSqlInterpolated($"select string_searchoffauth({search})").ToString();
+            return search_result.ToList();
+        }*/
+
+
         public void CreateMovieBookmark(string uid, string tconstmovie, string? note)
         {
 
@@ -83,7 +89,7 @@ namespace DataLayer
         }
         public void DeleteMovieBookmark(string uid, string tconstmovie)
         {
-            db.Database.ExecuteSqlInterpolated($"select delete_movie_bookmark({uid},{tconstmovie})");
+            db.Database.ExecuteSqlInterpolated($"select delete_bookmark_movie({uid},{tconstmovie})");
             db.SaveChanges();
         }
         public void DeleteRating(string uid, string tconst)
@@ -97,22 +103,23 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select delete_bookmark_actor({userid},{nconstactor})");
             db.SaveChanges();
         }
-        public IList<UserSearchModel> GetActorSearch(string userid, string search)
+        
+        
+        public void getSearch(string input)
         {
-           
-            string search_result = db.Database.ExecuteSqlInterpolated($"select string_search({userid},{search})").ToString();
-            return (IList<UserSearchModel>)search_result.ToList();
-        }
-        public userMain GetUserName(string? username)
-        {
-            return db.userMain.FirstOrDefault(x => x.UserName == username);
+            db.Database.ExecuteSqlInterpolated($"select string_search({input})");
+            db.SaveChanges();
         }
 
-        //best match
-        /*public userMain? SetUser(userMain input)
+        public userMain? GetUserName(string? username)
         {
-            db.userMain.Add(input);
-            db.SaveChanges();
-        }*/
+             userMain? user = db.userMain.Find(username);
+            return user;
+        }
+
+        public void CreateRating(string uid, string tconst, int rating)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

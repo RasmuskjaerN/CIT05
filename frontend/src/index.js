@@ -6,6 +6,8 @@ import SideBoxes from './sideBoxes';
 import DefaultFrontpage from './DefaultFrontpage';
 import SearchOut from './SearchOutput';
 import reportWebVitals from './reportWebVitals';
+import FetchTesting from './FetchTest';
+import FetchData from './compTest';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,6 +15,7 @@ root.render(
       <TopBar />
       <SideBoxes />
       <DefaultFrontpage />
+      <FetchData />
   </React.StrictMode>
 );
 reportWebVitals();
