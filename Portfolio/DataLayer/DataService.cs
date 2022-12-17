@@ -15,20 +15,26 @@ namespace DataLayer
     {
         
         public IMDBContext db = new IMDBContext();
-        
-        public titleBasic? GetMovie(string tconst)
+
+        public titleBasic? GetMovie(string? tconst)
         {
-            titleBasic? title = db.titleBasics
-                /*.Include(x => x.OmdbData)
-                .Include(x => x.TitleAkas)
-                .Include(x => x.TitleRating)*/
-                .FirstOrDefault(x => x.Tconst == tconst);
-            return title;
+            titleBasic? movie = db.titleBasics
+                .FirstOrDefault(x => x.Tconst == tconst);//add first or default tconst
+            if (movie != null)
+            {
+                movie.OmdbData = db.omdbData.Where(x => x.Tconst == tconst).ToList();
+                movie.TitleAkas = db.titleAkas.Where(x => x.Tconst == tconst).ToList();
+                movie.TitleRating = db.titleRatings.Where(x => x.Tconst == tconst).ToList();
+                movie.UserBookmarks = db.userBookmarks.Where(x => x.Tconst == tconst).ToList();
+                movie.UserRating = db.userRates.Where(x => x.Tconst == tconst).ToList();
+                
+            }
+            return movie;
         }
 
         public IList<titleBasic> GetMoviesList(int page = 0, int pagesize = 25)
         {
-            return db.titleBasics/*.Include(x => x.OmdbData)*/.Skip(page * pagesize).Take(pagesize).OrderBy(x => x.Tconst).ToList();
+            return db.titleBasics.Include(x=>x.OmdbData).Skip(page * pagesize).Take(pagesize).OrderBy(x => x.Tconst).ToList();
         }
         public int GetMoviesListCount()
         {

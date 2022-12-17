@@ -53,6 +53,7 @@ namespace WebServer.Controllers
         {
             var model = _mapper.Map<MovieListModel>(tconst);
             model.Url = _generator.GetUriByName(HttpContext, nameof(GetMovie), new { tconst.Tconst });
+            
             return model;
         }
 
