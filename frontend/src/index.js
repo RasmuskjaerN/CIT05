@@ -8,6 +8,8 @@ import SearchOut from './SearchOutput';
 import reportWebVitals from './reportWebVitals';
 import FetchTesting from './FetchTest';
 import FetchData from './compTest';
+import History from './UserHistory';
+import Bookmarks from './UserBookmarks';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

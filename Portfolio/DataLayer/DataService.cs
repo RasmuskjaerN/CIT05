@@ -18,6 +18,7 @@ namespace DataLayer
 
         public titleBasic? GetMovie(string? tconst)
         {
+            
             titleBasic? movie = db.titleBasics
                 .FirstOrDefault(x => x.Tconst == tconst);//add first or default tconst
             if (movie != null)

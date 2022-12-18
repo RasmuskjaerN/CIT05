@@ -1,5 +1,5 @@
-import React from 'react';
+const userLoggedIn = true;  
+const userAlreadyRated = false;
+const userID = 2;
 
-const userLoggedIn = false;  
-
-export default userLoggedIn;
+export { userLoggedIn, userAlreadyRated, userID };

@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import userLoggedIn from './UserHandler';
+import { userLoggedIn } from './UserHandler.js';
+import History from './UserHistory.js';
+import Bookmarks from './UserBookmarks';
 
 function SideBoxes() {
   const [isExpandedBookmark, setIsExpandedBookmark] = useState(false);
   const [isExpandedHistory, setIsExpandedHistory] = useState(false);
+
   return (
     <div>{userLoggedIn &&
       <div>
@@ -16,7 +19,7 @@ function SideBoxes() {
           position: 'fixed',
           right: 0,
           top: 0,
-          transition: 'width 0.5s ease-in-out',
+          transition: 'width 0.2s ease-in-out',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -24,7 +27,9 @@ function SideBoxes() {
         }}
         onClick={() => setIsExpandedBookmark(!isExpandedBookmark)}
       >
-        {isExpandedBookmark ? '10 latest Bookmarkes' : <div style={{ transform: 'rotate(90deg)' }}>Bookmarkes</div>}
+        {isExpandedBookmark ? 
+        <div>10 latest Bookmarkes <Bookmarks /></div>
+        : <div style={{ transform: 'rotate(90deg)' }}>Bookmarkes</div>}
       </div>
       <div
         style={{
@@ -35,7 +40,7 @@ function SideBoxes() {
           position: 'fixed',
           right: 0,
           bottom: 0,
-          transition: 'width 0.5s ease-in-out',
+          transition: 'width 0.2s ease-in-out',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -43,7 +48,9 @@ function SideBoxes() {
         }}
         onClick={() => setIsExpandedHistory(!isExpandedHistory)}
       >
-        {isExpandedHistory ? '10 latest Search History' : <div style={{ transform: 'rotate(90deg)' }}>History</div>}
+        {isExpandedHistory ? 
+        <div>10 latest Search History <History /></div>
+        : <div style={{ transform: 'rotate(90deg)' }}>History</div>}
       </div>
     </div>
 }</div>

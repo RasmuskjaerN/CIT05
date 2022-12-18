@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import userLoggedIn from './UserHandler';
+import { userLoggedIn } from './UserHandler.js';
 import './App.css';
 
 class TopBars extends React.Component {
