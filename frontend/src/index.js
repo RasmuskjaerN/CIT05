@@ -15,7 +15,6 @@ root.render(
       <TopBar />
       <SideBoxes />
       <DefaultFrontpage />
-      <FetchData />
   </React.StrictMode>
 );
 reportWebVitals();

@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import userLoggedIn from './UserHandler';
+import FetchData from './compTest';
 
 function SearchOut() {
 
@@ -8,7 +9,7 @@ function SearchOut() {
     
     return (
         <div className='page-margin'>
-            <h2>Movie Title Here</h2>
+            <FetchData />
             <img
             src="https://www.amazon.com/images/M/MV5BZjNlZmUyYmMtNjNjMS00NzQ5LTlmYjktNDVkMmRjMTQyMmVjXkEyXkFqcGdeQXVyNzk0NTA5NQ@@._V1_SX300.jpg?"
             alt="Missing Poster"
