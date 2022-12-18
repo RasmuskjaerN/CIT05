@@ -28,6 +28,9 @@ namespace WebServer.Models.Profiles
             CreateMap<titleRating, movietitleratingmodel>()
                 .ForMember(dst => dst.NumVotes, opt => opt.MapFrom(src => src.NumVotes))
                 .ForMember(dst => dst.AverageRating, opt => opt.MapFrom(src => src.AverageRating));
+            CreateMap<titleRating, MovieRatingListModel>()
+                .ForMember(dst => dst.NumVotes, opt => opt.MapFrom(src => src.NumVotes))
+                .ForMember(dst => dst.AverageRating, opt => opt.MapFrom(src => src.AverageRating));
         }
         
 

@@ -18,6 +18,14 @@ namespace WebServer.Models.Profiles
             CreateMap<userRate, userratingmodel>()
                .ForMember(dst => dst.ratingTconst, opt => opt.MapFrom(src => src.Tconst))
                .ForMember(dst => dst.ratingRate, opt => opt.MapFrom(src => src.Rating));
+
+            CreateMap<UserCreateModel, userMain>();
+            CreateMap<userMain,UserLoginModel>();
+            CreateMap<UserCreateBookmark, userBookmark>();
+            CreateMap<UserDeleteBookmark, userBookmark>();
+            CreateMap<userHistory, UserGetHistory>().ReverseMap();
+            CreateMap<UserModel, userHistory>();
+            CreateMap<SearchResult, SearchResultModel>();
         }
     }
 }

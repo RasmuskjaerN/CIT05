@@ -75,10 +75,10 @@ namespace DataLayer
         }*/
 
 
-        public void CreateMovieBookmark(string uid, string tconstmovie, string? note)
+        public void CreateMovieBookmark(int uid, string tconst, string? note)
         {
 
-            db.Database.ExecuteSqlInterpolated($"select bookmark_movie({uid}, {tconstmovie}, {note})");
+            db.Database.ExecuteSqlInterpolated($"select bookmark_movie({uid}, {tconst}, {note})");
             db.SaveChanges();
 
         }
@@ -87,9 +87,9 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select bookmark_actor({userid},{nconstactor},{usernote})");
             db.SaveChanges();
         }
-        public void DeleteMovieBookmark(string uid, string tconstmovie)
+        public void DeleteMovieBookmark(int uid, string tconst)
         {
-            db.Database.ExecuteSqlInterpolated($"select delete_bookmark_movie({uid},{tconstmovie})");
+            db.Database.ExecuteSqlInterpolated($"select delete_bookmark_movie({uid},{tconst})");
             db.SaveChanges();
         }
         public void DeleteRating(string uid, string tconst)
@@ -103,23 +103,33 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select delete_bookmark_actor({userid},{nconstactor})");
             db.SaveChanges();
         }
-        
-        
-        public void getSearch(string input)
+
+
+        public IList<SearchResult> getSearch(string input)
         {
-            db.Database.ExecuteSqlInterpolated($"select string_search({input})");
-            db.SaveChanges();
+            return db.SearchResults.FromSqlInterpolated($"select * from string_searchoffauth({input})").ToList();
+        }
+        public IList<SearchResult> getSearch(int uid, string input)
+        {
+            return db.SearchResults.FromSqlInterpolated($"select * from string_search({uid},{input})").ToList();
+
         }
 
         public userMain? GetUserName(string? username)
         {
-             userMain? user = db.userMain.Find(username);
-            return user;
+            return db.userMain.FirstOrDefault(x => x.UserName == username);
+        }
+        public IList<userHistory> GetUsersHistory(int uid)
+        {
+            var result = db.userHistories.Where(x => x.Uid == uid).ToList();
+            return result;
+
         }
 
         public void CreateRating(string uid, string tconst, int rating)
         {
-            throw new NotImplementedException();
+            db.Database.ExecuteSqlInterpolated($"select rate_movie({uid},{tconst},{rating})");
+            db.SaveChanges();
         }
     }
 }

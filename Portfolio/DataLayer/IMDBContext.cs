@@ -37,6 +37,7 @@ namespace DataLayer
         public DbSet<wi>? wis { get; set; }
         public DbSet<workedAs>? workedAs { get; set; }
         public DbSet<tempSearch>? tempSearches { get; set; }
+        public DbSet<SearchResult>? SearchResults { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -161,7 +162,7 @@ namespace DataLayer
             modelBuilder.Entity<userHistory>().Property(x => x.SearchInput).HasColumnName("searchinput");
 
             modelBuilder.Entity<userMain>().ToTable("user_main");
-            modelBuilder.Entity<userMain>().HasKey(x => x.Uid);
+            modelBuilder.Entity<userMain>().HasKey(x => new { x.Uid});
             modelBuilder.Entity<userMain>().Property(x => x.Uid).HasColumnName("uid");
             modelBuilder.Entity<userMain>().Property(x => x.UserName).HasColumnName("name");
             modelBuilder.Entity<userMain>().Property(x => x.Password).HasColumnName("password");
@@ -187,6 +188,8 @@ namespace DataLayer
 
             modelBuilder.Entity<tempSearch>().HasNoKey();
             modelBuilder.Entity<tempSearch>().Property(x => x.userInput).HasColumnName("userinput");
+
+            modelBuilder.Entity<SearchResult>().HasNoKey();
         }
 
     }

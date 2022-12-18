@@ -42,13 +42,13 @@ namespace WebServer.Controllers
 
 
         [HttpPost("create")]
-        
         public IActionResult CreateUser(UserCreateModel model)
         {
             var newUser = _mapper.Map<userMain>(model);
             _userService.CreateUser(newUser.UserName, newUser.Password, newUser.Salt);
             return CreatedAtRoute(null, UserCreateModel(newUser));
         }
+        [Authorize]
         [HttpGet("{uid}", Name = nameof(GetUser))]
         public IActionResult GetUser(int? uid)
         {
@@ -63,6 +63,21 @@ namespace WebServer.Controllers
 
             return Ok(model);
         }
+
+        /*[HttpGet("{uid}", Name = nameof(GetUserName))]
+        public IActionResult GetUserName(string? username)
+        {
+            var UserName = _userService.GetUserName(username);
+
+            if (UserName == null)
+            {
+                return NotFound();
+            }
+
+            var model = UserCreateModel(UserName);
+
+            return Ok(model);
+        }*/
 
 
 
@@ -95,7 +110,7 @@ namespace WebServer.Controllers
 
         [HttpPost("uid&tconst&rating")]
         [Route("rate")]
-      
+
         public IActionResult CreateRating(string uid, string tconst, int rating)
         {
             if (uid == null && string.IsNullOrEmpty(tconst) && rating == null)
@@ -112,7 +127,7 @@ namespace WebServer.Controllers
             }
             return Ok();
         }
-        
+
         [HttpDelete("uid&tconst")]
         [Route("ratedelete")]
         public IActionResult DeleteRating(string uid, string tconst)
@@ -124,26 +139,26 @@ namespace WebServer.Controllers
             try
             {
                 _userService.DeleteRating(uid, tconst);
-            } 
+            }
             catch
             {
                 return BadRequest();
             }
             return Ok();
         }
-        
 
-        [HttpPost("uid&tconstmovie&note")]
-        [Route("create/bookmark")]
-        public IActionResult CreateMovieBookmark(string uid, string tconstmovie, string? note)
+
+        [HttpPost]
+        [Route("bookmark/create")]
+        public IActionResult CreateMovieBookmark(CreateMovieBookmarkModel movie)
         {
-            if (string.IsNullOrEmpty(uid) || string.IsNullOrEmpty(tconstmovie))
+            if (movie.Uid == null || string.IsNullOrEmpty(movie.Tconst ))
             {
                 return BadRequest();
             }
             try
             {
-                _userService.CreateMovieBookmark(uid, tconstmovie, note);
+                _userService.CreateMovieBookmark(movie.Uid, movie.Tconst, movie.Note);
             }
             catch
             {
@@ -152,18 +167,18 @@ namespace WebServer.Controllers
             return Ok();
         }
         
-        [HttpDelete("uid&tconstmovie")]
+        [HttpPost]
         [Route("delete/bookmark")]
         
-        public IActionResult DeleteMovieBookmark(string uid, string tconstmovie)
+        public IActionResult DeleteMovieBookmark(int uid, string tconst)
         {
-            if (string.IsNullOrEmpty(uid) || string.IsNullOrEmpty(tconstmovie))
+            if (uid == null || string.IsNullOrEmpty(tconst))
             {
                 return BadRequest();
             }
             try
             {
-                _userService.DeleteMovieBookmark(uid, tconstmovie);
+                _userService.DeleteMovieBookmark(uid, tconst);
             }
             catch
             {
@@ -181,23 +196,21 @@ namespace WebServer.Controllers
             return model;
         }
 
-        /*        [HttpGet("uid")]
-                [Route("get/history")]
-
-                public IActionResult GetHistory(int uid)
+        [HttpGet]
+        [Route("history/{uid}")]
+        public IActionResult GetHistory(int uid)
+        {
+            if (uid != null)
+            {
+                var data = _userService.GetUsersHistory(uid).Select(x => _mapper.Map<UserGetHistory>(x));
+                if (data != null)
                 {
-                    if (uid != null)
-                    {
-                        var data = _userService.(uid);
-                        if (data != null)
-                        {
-                            var model = UserCreateModel(data);
-                            return Ok(model);
-                        }
-                    }
-                    return BadRequest();
+                    return Ok(data);
+                }
+            }
+            return BadRequest();
 
-                }*/
+        }
         [HttpPost]
         [Route("stringsearch")]
         public IActionResult StringSearch(string input)
@@ -206,15 +219,37 @@ namespace WebServer.Controllers
             {
                 return BadRequest();
             }
-            try
+            var data = _userService.getSearch(input).Select(x => _mapper.Map<SearchResultModel>(x));
+
+            /*try
             {
                 _userService.getSearch(input);
             }
             catch
             {
                 return BadRequest();
+            }*/
+            return Ok(data);
+        }
+        [HttpPost]
+        [Route("stringsearch/{uid}")]
+        public IActionResult StringSearch(int uid, string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return BadRequest();
             }
-            return Ok();
+            var data = _userService.getSearch(uid, input).Select(x => _mapper.Map<SearchResultModel>(x));
+
+            /*try
+            {
+                _userService.getSearch(input);
+            }
+            catch
+            {
+                return BadRequest();
+            }*/
+            return Ok(data);
         }
 
         private string? CreateLink(int page, int pageSize)
@@ -254,7 +289,7 @@ namespace WebServer.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.UserName)
+                new Claim(ClaimTypes.Name, user.UserName),
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("Auth:secret").Value));
@@ -263,11 +298,11 @@ namespace WebServer.Controllers
 
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddSeconds(30),
+                expires: DateTime.Now.AddHours(1),
                 signingCredentials: creds);
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-            return Ok(new {user.UserName, token = jwt});
+            return Ok(new {user.Uid,user.UserName, token = jwt});
         }
 
     }
