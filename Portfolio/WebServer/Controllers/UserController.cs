@@ -181,23 +181,21 @@ namespace WebServer.Controllers
             return model;
         }
 
-        /*        [HttpGet("uid")]
-                [Route("get/history")]
-
-                public IActionResult GetHistory(int uid)
+        [HttpGet]
+        [Route("history/{uid}")]
+        public IActionResult GetHistory(int uid)
+        {
+            if (uid != null)
+            {
+                var data = _userService.GetUsersHistory(uid).Select(x => _mapper.Map<UserGetHistory>(x));
+                if (data != null)
                 {
-                    if (uid != null)
-                    {
-                        var data = _userService.(uid);
-                        if (data != null)
-                        {
-                            var model = UserCreateModel(data);
-                            return Ok(model);
-                        }
-                    }
-                    return BadRequest();
+                    return Ok(data);
+                }
+            }
+            return BadRequest();
 
-                }*/
+        }
         [HttpPost]
         [Route("stringsearch")]
         public IActionResult StringSearch(string input)
@@ -206,15 +204,37 @@ namespace WebServer.Controllers
             {
                 return BadRequest();
             }
-            try
+            var data = _userService.getSearch(input).Select(x => _mapper.Map<SearchResultModel>(x));
+
+            /*try
             {
                 _userService.getSearch(input);
             }
             catch
             {
                 return BadRequest();
+            }*/
+            return Ok(data);
+        }
+        [HttpPost]
+        [Route("stringsearch/{uid}")]
+        public IActionResult StringSearch(int uid, string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return BadRequest();
             }
-            return Ok();
+            var data = _userService.getSearch(uid, input).Select(x => _mapper.Map<SearchResultModel>(x));
+
+            /*try
+            {
+                _userService.getSearch(input);
+            }
+            catch
+            {
+                return BadRequest();
+            }*/
+            return Ok(data);
         }
 
         private string? CreateLink(int page, int pageSize)

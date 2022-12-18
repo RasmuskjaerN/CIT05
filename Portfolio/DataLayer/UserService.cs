@@ -103,18 +103,28 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select delete_bookmark_actor({userid},{nconstactor})");
             db.SaveChanges();
         }
-        
-        
-        public void getSearch(string input)
+
+
+        public IList<SearchResult> getSearch(string input)
         {
-            db.Database.ExecuteSqlInterpolated($"select string_search({input})");
-            db.SaveChanges();
+            return db.SearchResults.FromSqlInterpolated($"select * from string_searchoffauth({input})").ToList();
+        }
+        public IList<SearchResult> getSearch(int uid, string input)
+        {
+            return db.SearchResults.FromSqlInterpolated($"select * from string_search({uid},{input})").ToList();
+
         }
 
         public userMain? GetUserName(string? username)
         {
              userMain? user = db.userMain.Find(username);
             return user;
+        }
+        public IList<userHistory> GetUsersHistory(int uid)
+        {
+            var result = db.userHistories.Where(x => x.Uid == uid).ToList();
+            return result;
+
         }
 
         public void CreateRating(string uid, string tconst, int rating)

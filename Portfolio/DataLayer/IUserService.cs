@@ -29,8 +29,9 @@ namespace DataLayer
         /*IList<userMain>? GetUserModel();*/
         public userMain? GetUserName(string? username);
         public IList<userMain> GetUsers();
-        
-        //IList<userHistory> GetUsersHistory(string uid);
-        void getSearch(string input);
+
+        IList<userHistory> GetUsersHistory(int uid);
+        IList<SearchResult> getSearch(string input);
+        IList<SearchResult> getSearch(int uid, string input);
     }
 }

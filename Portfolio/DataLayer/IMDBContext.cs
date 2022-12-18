@@ -37,6 +37,7 @@ namespace DataLayer
         public DbSet<wi>? wis { get; set; }
         public DbSet<workedAs>? workedAs { get; set; }
         public DbSet<tempSearch>? tempSearches { get; set; }
+        public DbSet<SearchResult>? SearchResults { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -187,6 +188,8 @@ namespace DataLayer
 
             modelBuilder.Entity<tempSearch>().HasNoKey();
             modelBuilder.Entity<tempSearch>().Property(x => x.userInput).HasColumnName("userinput");
+
+            modelBuilder.Entity<SearchResult>().HasNoKey();
         }
 
     }

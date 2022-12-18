@@ -34,7 +34,7 @@ namespace DataLayer
 
         public IList<titleBasic> GetMoviesList(int page = 0, int pagesize = 25)
         {
-            return db.titleBasics.Include(x=>x.OmdbData).Skip(page * pagesize).Take(pagesize).OrderBy(x => x.Tconst).ToList();
+            return db.titleBasics.Include(x=>x.OmdbData).Include(x=> x.TitleRating).Skip(page * pagesize).Take(pagesize).OrderBy(x => x.Tconst).ToList();
         }
         public int GetMoviesListCount()
         {
