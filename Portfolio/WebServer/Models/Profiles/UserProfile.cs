@@ -20,8 +20,7 @@ namespace WebServer.Models.Profiles
                .ForMember(dst => dst.ratingRate, opt => opt.MapFrom(src => src.Rating));
 
             CreateMap<UserCreateModel, userMain>();
-            /*CreateMap<UserCreateRatingModel, userRate>();
-            CreateMap<UserDeleteRating, userRate>();*/
+            CreateMap<userMain,UserLoginModel>();
             CreateMap<UserCreateBookmark, userBookmark>();
             CreateMap<UserDeleteBookmark, userBookmark>();
             CreateMap<userHistory, UserGetHistory>().ReverseMap();

@@ -49,5 +49,12 @@ namespace WebServer.Models
         public float? AverageRating { get; set; }
         public int? NumVotes { get; set; }
     }
+    public class CreateMovieBookmarkModel
+    {
+        public int Uid { get; set; }
+        public string Tconst { get; set; }
+
+        public string? Note { get; set; }
+    }
 
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Domain
 {
-
+    
     public class userMain
     {
         public int? Uid { get; set; }
