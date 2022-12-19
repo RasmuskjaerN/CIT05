@@ -1,7 +1,14 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Portfolio",
+    "\\Portfolio\\DataLayer",
+    "\\Portfolio\\WebServer",
+    "\\Portfolio\\WebServer\\Controllers"
   ],
-  "SelectedNode": "\\CIT05.sln",
+<<<<<<< HEAD
+=======
+  "SelectedNode": "\\Portfolio\\CIT05.sln",
+>>>>>>> 69f6454196bc23f9593a1aa521c720080af19d67
   "PreviewInSolutionExplorer": false
 }

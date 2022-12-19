@@ -2,6 +2,7 @@
 using AutoMapper;
 using DataLayer;
 using DataLayer.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebServer.Models;
 
@@ -40,6 +41,7 @@ namespace WebServer.Controllers
 
         [HttpGet(Name = nameof(GetMovies))]
         [Route("{page}&{pageSize}")]
+        //[Authorize]
         public IActionResult GetMovies(int page = 0, int pagesize = 10)
         {
             var movies = _dataService.GetMoviesList(page, pagesize).Select(x => MovieCreateListModel(x));
@@ -51,6 +53,7 @@ namespace WebServer.Controllers
         {
             var model = _mapper.Map<MovieListModel>(tconst);
             model.Url = _generator.GetUriByName(HttpContext, nameof(GetMovie), new { tconst.Tconst });
+            
             return model;
         }
 

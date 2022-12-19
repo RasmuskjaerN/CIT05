@@ -15,25 +15,37 @@ namespace DataLayer
     {
         
         public IMDBContext db = new IMDBContext();
-        
-        public titleBasic? GetMovie(string tconst)
+
+        public titleBasic? GetMovie(string? tconst)
         {
-            titleBasic? title = db.titleBasics.Find(tconst);
-            return title;
+            
+            titleBasic? movie = db.titleBasics
+                .FirstOrDefault(x => x.Tconst == tconst);//add first or default tconst
+            if (movie != null)
+            {
+                movie.OmdbData = db.omdbData.Where(x => x.Tconst == tconst).ToList();
+                movie.TitleAkas = db.titleAkas.Where(x => x.Tconst == tconst).ToList();
+                movie.TitleRating = db.titleRatings.Where(x => x.Tconst == tconst).ToList();
+                movie.UserBookmarks = db.userBookmarks.Where(x => x.Tconst == tconst).ToList();
+                movie.UserRating = db.userRates.Where(x => x.Tconst == tconst).ToList();
+                
+            }
+            return movie;
         }
 
         public IList<titleBasic> GetMoviesList(int page = 0, int pagesize = 25)
         {
-            return db.titleBasics.Skip(page * pagesize).Take(pagesize).ToList();
+            return db.titleBasics.Include(x=>x.OmdbData).Include(x=> x.TitleRating).Skip(page * pagesize).Take(pagesize).OrderBy(x => x.Tconst).ToList();
         }
         public int GetMoviesListCount()
         {
             return db.titleBasics.Count();
         }
 
-        public IList<titleGenre> GetSimilarMoviesList(string Tconst)
+        public IList<titleGenre> GetSimilarMoviesList(string uid,string Tconst)
         {
-            return db.titleGenres.ToList();
+            var result = db.titleGenres.FromSqlInterpolated($"select sim_movie({uid},{Tconst}");
+            return result.ToList();
         }
         
         public nameBasic? GetName(string nconst)
@@ -56,9 +68,9 @@ namespace DataLayer
         public IList<knownFor> GetCoactors(string uid, string namein)
         {
             var result = db.knownFor.FromSqlInterpolated($"select find_coactor({uid},{namein})");
-            return result.ToList();
+            return result.
+        ToList();
         }
-        
 
     }
 }

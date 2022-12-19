@@ -9,11 +9,11 @@ namespace DataLayer
     public interface IDataService
     {
 
-        titleBasic? GetMovie(string tconst);
+        public titleBasic? GetMovie(string? tconst);
         IList<titleBasic> GetMoviesList(int page, int pagesize);
         int GetMoviesListCount();
 
-        IList<titleGenre> GetSimilarMoviesList(string Tconst);
+        IList<titleGenre> GetSimilarMoviesList(string uid,string Tconst);
 
         nameBasic? GetName(string nconst);
         int GetNamesListCount();

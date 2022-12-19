@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -15,12 +16,12 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSingleton<IDataService, DataService>();
 
 
-//builder.Services.AddSingleton<Hashing>();
+builder.Services.AddSingleton<Hashing>();
 
-/*builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
     {
-        opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        opt.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Auth:secret").Value)),
@@ -29,15 +30,16 @@ builder.Services.AddSingleton<IDataService, DataService>();
             ClockSkew = TimeSpan.Zero
 
         };
-    });*/
+    });
 builder.Services.AddSingleton<IUserService, UserService>();
 
 var app = builder.Build();
-//app.UseAuthentication();
-//app.UseAuthorization();
-
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseCors(
+    options => options.WithOrigins("*").AllowAnyMethod().AllowAnyHeader()
+);
 app.MapControllers();
-
 
 app.Run();
 
