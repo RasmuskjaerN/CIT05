@@ -2,7 +2,6 @@ import React from 'react';
 import { userLoggedIn } from './UserHandler.js';
 import History from './UserHistory.js';
 import Bookmarks from './UserBookmarks';
-import TopBars from './TopBar';
 import { useState } from 'react';
 
 function SideBoxes(props) {
@@ -11,7 +10,7 @@ function SideBoxes(props) {
 
   return (
     <div>
-      {/*props.uid &&*/
+      {userLoggedIn &&
       <div>
       <div
         style={{

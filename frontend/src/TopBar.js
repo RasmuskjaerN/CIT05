@@ -1,14 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 import { userLoggedIn } from './UserHandler.js';
 import './App.css';
 import {useState} from 'react';
+import { Router } from 'react-router-dom';
 
   function TopBars() {
 
     const [username, setUsername] = useState(""); 
     const [password, setPassword] = useState("");
-    const [search, setSearch] = useState("");
     const [user, setUser] = useState([]);
     const [status, setStatus] = useState("idle");
     const [uid, setUid] = useState("");
@@ -43,14 +43,9 @@ import {useState} from 'react';
         return (
           <div>
             <div className="topbar">
-            <h1>OurMDB{user.uid}</h1>
+            <Link to="/" style={{ textDecoration: 'none', color: 'inherit'}}><h1>OurMDB{user.uid}</h1></Link>
           <div className='topbar-center'>
-            <input 
-                type="text"
-                placeholder="Search.."
-                value={search}
-                onChange={e => setSearch(e.target.value)}/>
-              <button type="submit">search</button>
+              <Link to="/movie"><button type="submit">Search for Movies</button></Link>
               </div>
               <div>{userLoggedIn ?
                 <div>
