@@ -1,5 +1,5 @@
-const userLoggedIn = true;  
+const userLoggedIn = false;  
 const userAlreadyRated = false;
-const userID = 2;
-
-export { userLoggedIn, userAlreadyRated, userID };
+const userID = '2';
+  
+export { userLoggedIn, userAlreadyRated, userID};

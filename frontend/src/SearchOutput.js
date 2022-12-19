@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import userLoggedIn from './UserHandler';
-import FetchData from './compTest';
+import FetchData from './Output';
 
 function SearchOut() {
     

@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { userLoggedIn } from './UserHandler.js';
 import History from './UserHistory.js';
 import Bookmarks from './UserBookmarks';
+import TopBars from './TopBar';
+import { useState } from 'react';
 
-function SideBoxes() {
+function SideBoxes(props) {
   const [isExpandedBookmark, setIsExpandedBookmark] = useState(false);
   const [isExpandedHistory, setIsExpandedHistory] = useState(false);
 
   return (
-    <div>{userLoggedIn &&
+    <div>
+      {/*props.uid &&*/
       <div>
       <div
         style={{
@@ -35,11 +38,11 @@ function SideBoxes() {
         style={{
           width: isExpandedHistory ? '30%' : '5%',
           height: '50%',
-          background: 'lightgray',
+          background: 'lightgreen',
           border: '1px solid black',
           position: 'fixed',
           right: 0,
-          bottom: 0,
+          top: '50%',
           transition: 'width 0.2s ease-in-out',
           display: 'flex',
           justifyContent: 'center',
@@ -48,12 +51,16 @@ function SideBoxes() {
         }}
         onClick={() => setIsExpandedHistory(!isExpandedHistory)}
       >
-        {isExpandedHistory ? 
-        <div>10 latest Search History <History /></div>
-        : <div style={{ transform: 'rotate(90deg)' }}>History</div>}
+        {isExpandedHistory ? (
+          <div>10 latest History <History /></div>
+        ) : (
+          <div style={{ transform: 'rotate(90deg)' }}>History</div>
+        )}
       </div>
+      </div>
+    }
     </div>
-}</div>
   );
 }
+
 export default SideBoxes;
