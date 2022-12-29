@@ -11,10 +11,10 @@ namespace DataLayer.Domain
 
     public class titleRating
     {
-        [Key]
         public string? Tconst { get; set; }
         public float? AverageRating { get; set; }
         public int? NumVotes { get; set; }
+        public titleBasic? TitleBasic { get; set; }
         
     }
 }

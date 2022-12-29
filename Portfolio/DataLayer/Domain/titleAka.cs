@@ -18,5 +18,6 @@ namespace DataLayer.Domain
         public string? Type { get; set; }
         public string? Attribute { get; set; }
         public bool IsOriginalTitle { get; set; }
+        public titleBasic? TitleBasic { get; set; }
     }
 }

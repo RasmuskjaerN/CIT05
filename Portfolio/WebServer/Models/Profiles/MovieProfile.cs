@@ -8,7 +8,11 @@ namespace WebServer.Models.Profiles
         public MovieProfile()
         {
             CreateMap<titleBasic, MovieModel>();
-            CreateMap<userBookmark, movieuserbookmarkmodel>()
+            CreateMap<titleBasic, MovieListModel>();
+
+
+
+            /*CreateMap<userBookmark, movieuserbookmarkmodel>()
                 .ForMember(dst => dst.Uid, opt => opt.MapFrom(src => src.Uid))
                 .ForMember(dst => dst.userbookmarkNote, opt => opt.MapFrom(src => src.Note));
             CreateMap<userRate, movieuserratingmodel>()
@@ -30,7 +34,7 @@ namespace WebServer.Models.Profiles
                 .ForMember(dst => dst.AverageRating, opt => opt.MapFrom(src => src.AverageRating));
             CreateMap<titleRating, MovieRatingListModel>()
                 .ForMember(dst => dst.NumVotes, opt => opt.MapFrom(src => src.NumVotes))
-                .ForMember(dst => dst.AverageRating, opt => opt.MapFrom(src => src.AverageRating));
+                .ForMember(dst => dst.AverageRating, opt => opt.MapFrom(src => src.AverageRating));*/
         }
         
 

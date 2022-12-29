@@ -20,10 +20,10 @@ namespace DataLayer.Domain
         public string? EndYear { get; set; }
         public int? RunTimeMinutes { get; set; }
         public string? Genre { get; set; }
-        public IList<omdbData>? OmdbData { get; set; }
+        public omdbData? OmdbData { get; set; }
+        public IList<omdbData>? OmdbDatas { get; set; }
         public IList<titleAka>? TitleAkas { get; set; }
-        public IList<titleRating>? TitleRating { get; set; }
-        public IList<userBookmark>? UserBookmarks { get; set; }
-        public IList<userRate>? UserRating { get; set; }
+        public titleRating? TitleRating { get; set; }
+        public IList<titleRating>? TitleRatings { get; set; }
     }
 }
