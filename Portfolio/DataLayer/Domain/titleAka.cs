@@ -10,7 +10,7 @@ namespace DataLayer.Domain
 
     public class titleAka
     {
-        public string? Tconst { get; set; }
+        public string Tconst { get; set; }
         public int Ordering { get; set; }
         public string? Title { get; set; }
         public string? Region { get; set; }

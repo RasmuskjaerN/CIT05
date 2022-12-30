@@ -13,9 +13,9 @@ namespace WebServer.Models
         public string? EndYear { get; set; }
         public int? RunTimeMinutes { get; set; }
         public string? Genre { get; set; }
-        public omdbData? OmdbData { get; set; }
-        public IList<titleAka>? TitleAkas { get; set; }
-        public titleRating? TitleRating { get; set; }
+        public movieomdbmodel? OmdbData { get; set; }
+        public movietitleratingmodel? TitleRating { get; set; }
+        public IList<movietitleakasmodel>? TitleAkas { get; set; }
     }
     public class movieomdbmodel
     {

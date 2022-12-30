@@ -9,21 +9,18 @@ namespace WebServer.Models.Profiles
         {
             CreateMap<titleBasic, MovieModel>();
             CreateMap<titleBasic, MovieListModel>();
-
-
-
+            CreateMap<omdbData, movieomdbmodel>();
+            CreateMap<omdbData, MoviePosterListModel>();
+            CreateMap<titleRating, movietitleratingmodel>();
+            CreateMap<titleRating,MovieRatingListModel>();
+            CreateMap<titleAka, movietitleakasmodel>();
             /*CreateMap<userBookmark, movieuserbookmarkmodel>()
                 .ForMember(dst => dst.Uid, opt => opt.MapFrom(src => src.Uid))
                 .ForMember(dst => dst.userbookmarkNote, opt => opt.MapFrom(src => src.Note));
-            CreateMap<userRate, movieuserratingmodel>()
-                .ForMember(dst => dst.Uid, opt => opt.MapFrom(src => src.Uid))
-                .ForMember(dst => dst.userratingRate, opt => opt.MapFrom(src => src.Rating));
             CreateMap<omdbData, movieomdbmodel>()
                 .ForMember(dst => dst.Plot, opt => opt.MapFrom(src => src.Plot))
                 .ForMember(dst => dst.Poster, opt => opt.MapFrom(src => src.Poster));
             CreateMap<titleBasic, MovieListModel>();
-            CreateMap<omdbData, MoviePosterListModel>()
-                .ForMember(dst => dst.Poster, opt => opt.MapFrom(src => src.Poster));
             CreateMap<titleAka, movietitleakasmodel>()
                 .ForMember(dst => dst.Ordering, opt => opt.MapFrom(src => src.Ordering))
                 .ForMember(dst => dst.Region, opt => opt.MapFrom(src => src.Region))

@@ -54,9 +54,10 @@ namespace DataLayer
             modelBuilder.Entity<userHistory>().HasOne(x => x.UserMain).WithMany(m => m.Histories).HasForeignKey(x => x.Uid);
             modelBuilder.Entity<userRate>().HasOne(x => x.UserMain).WithMany(m => m.Ratings).HasForeignKey(x => x.Uid);
 
-            modelBuilder.Entity<omdbData>().HasOne(x => x.TitleBasic).WithOne(m => m.OmdbData).HasForeignKey<omdbData>(x => x.Tconst);
+            
+            modelBuilder.Entity<omdbData>().HasOne(x => x.TitleBasic).WithOne(m => m.OmdbData).HasForeignKey<titleBasic>(x => x.Tconst);
             modelBuilder.Entity<titleAka>().HasOne(x => x.TitleBasic).WithMany(m => m.TitleAkas).HasForeignKey(m => m.Tconst);
-            modelBuilder.Entity<titleRating>().HasOne(x => x.TitleBasic).WithOne(m => m.TitleRating).HasForeignKey<titleRating>(m => m.Tconst);
+            modelBuilder.Entity<titleRating>().HasOne(x => x.TitleBasic).WithOne(m => m.TitleRating).HasForeignKey<titleBasic>(x => x.Tconst);
 
             modelBuilder.Entity<akaAttribute>().ToTable("aka_attributes");
             modelBuilder.Entity<akaAttribute>().HasKey(x => new { x.Tconst, x.Ordering });
