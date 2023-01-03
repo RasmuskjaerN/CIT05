@@ -8,8 +8,8 @@ namespace WebServer.Models
         public string? PrimaryTitle { get; set; }
         public string? StartYear { get; set; }
         public string? Genre { get; set; }
-        public IList<MoviePosterListModel>? OmdbData { get; set; }
-        public IList<MovieRatingListModel>? TitleRating { get; set; }
+        public MoviePosterListModel? OmdbData { get; set; }
+        public MovieRatingListModel? TitleRating { get; set; }
 
     }
     public class MoviePosterListModel

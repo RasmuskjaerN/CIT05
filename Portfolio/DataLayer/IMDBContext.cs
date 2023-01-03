@@ -50,7 +50,14 @@ namespace DataLayer
 
             //base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<omdbData>().HasOne(x => x.title).WithOne(m => m.OmdbData).HasForeignKey<titleBasic>(x => x.Tconst);
+            modelBuilder.Entity<userBookmark>().HasOne(x => x.UserMain).WithMany(m => m.Bookmarks).HasForeignKey(x => x.Uid);
+            modelBuilder.Entity<userHistory>().HasOne(x => x.UserMain).WithMany(m => m.Histories).HasForeignKey(x => x.Uid);
+            modelBuilder.Entity<userRate>().HasOne(x => x.UserMain).WithMany(m => m.Ratings).HasForeignKey(x => x.Uid);
+
+            
+            modelBuilder.Entity<omdbData>().HasOne(x => x.TitleBasic).WithOne(m => m.OmdbData).HasForeignKey<titleBasic>(x => x.Tconst);
+            modelBuilder.Entity<titleAka>().HasOne(x => x.TitleBasic).WithMany(m => m.TitleAkas).HasForeignKey(m => m.Tconst);
+            modelBuilder.Entity<titleRating>().HasOne(x => x.TitleBasic).WithOne(m => m.TitleRating).HasForeignKey<titleBasic>(x => x.Tconst);
 
             modelBuilder.Entity<akaAttribute>().ToTable("aka_attributes");
             modelBuilder.Entity<akaAttribute>().HasKey(x => new { x.Tconst, x.Ordering });
@@ -79,7 +86,7 @@ namespace DataLayer
             modelBuilder.Entity<nameBasic>().Property(x => x.NameRating).HasColumnName("name_rating");
 
             modelBuilder.Entity<omdbData>().ToTable("omdb_data");
-            modelBuilder.Entity<omdbData>().HasKey(x => new { x.Tconst, x.Poster });
+            modelBuilder.Entity<omdbData>().HasKey(x =>  x.Tconst);
             modelBuilder.Entity<omdbData>().Property(x => x.Tconst).HasColumnName("tconst");
             modelBuilder.Entity<omdbData>().Property(x => x.Poster).HasColumnName("poster");
             modelBuilder.Entity<omdbData>().Property(x => x.Plot).HasColumnName("plot");
@@ -139,7 +146,7 @@ namespace DataLayer
             modelBuilder.Entity<titlePrincipal>().Property(x => x.Job).HasColumnName("job");
 
             modelBuilder.Entity<titleRating>().ToTable("title_ratings");
-            modelBuilder.Entity<titleRating>().HasKey(x => new { x.Tconst, x.NumVotes });
+            modelBuilder.Entity<titleRating>().HasKey(x => x.Tconst);
             modelBuilder.Entity<titleRating>().Property(x => x.Tconst).HasColumnName("tconst");
             modelBuilder.Entity<titleRating>().Property(x => x.AverageRating).HasColumnName("averagerating");
             modelBuilder.Entity<titleRating>().Property(x => x.NumVotes).HasColumnName("numvotes");

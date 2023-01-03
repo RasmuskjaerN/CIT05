@@ -1,73 +1,81 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 import { userLoggedIn } from './UserHandler.js';
 import './App.css';
+import {useState} from 'react';
+import { Router } from 'react-router-dom';
 
-class TopBars extends React.Component {
-    state = {
-      query: '',
-      username: '',
-      password: ''
-    };
-  
-  
-    handleQueryChange = (event) => {
-      this.setState({ query: event.target.value });
+  function TopBars() {
+
+    const [username, setUsername] = useState(""); 
+    const [password, setPassword] = useState("");
+    const [user, setUser] = useState([]);
+    const [status, setStatus] = useState("idle");
+    const [uid, setUid] = useState("");
+    const [token, setToken] = useState("");
+
+    async function HandleLogin() {
+      const loginData = {
+        UserName: username,
+        Password: password
+      };
+    
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(loginData)
+      };
+    
+      try {
+        const response = await fetch('http://localhost:5001/api/user/login', options);
+        const json = await response.json();
+        setUser(json);
+        setStatus('done');
+        setUid(user.uid)
+        setToken(user.token)
+      } catch (e) {
+        setStatus('error');
+      }
     }
-  
-    handleUsernameChange = (event) => {
-      this.setState({ username: event.target.value });
-    }
-  
-    handlePasswordChange = (event) => {
-      this.setState({ password: event.target.value });
-    }
-  
-    handleLogin = (event) => {
-      event.preventDefault();
-      // perform login here
-    }
-  
-    render() {
-      return (
-        <div>
-          <div className="topbar">
-          <h1>OurMDB</h1>
-          <input className='topbar-center'
-              type="text"
-              placeholder="Search..."
-              value={this.state.query}
-              onChange={this.handleQueryChange}
-            />
-            <div>{userLoggedIn ?
-              <div>
-                <button type="submit">Log out</button>
-              </div>:
-              <div className= 'topbar-right'>
-              <form onSubmit={this.handleLogin}>
-                <input
-                  type="text"
-                  placeholder="Username"
-                  value={this.state.username}
-                  onChange={this.handleUsernameChange}
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={this.state.password}
-                  onChange={this.handlePasswordChange}
-                />
-                <button type="submit">Signup</button>
-                <button type="submit">Login</button>
-              </form>
-              </div>}
+
+        return (
+          <div>
+            <div className="topbar">
+            <Link to="/" style={{ textDecoration: 'none', color: 'inherit'}}><h1>OurMDB{user.uid}</h1></Link>
+          <div className='topbar-center'>
+              <Link to="/movie"><button type="submit">Search for Movies</button></Link>
+              </div>
+              <div>{userLoggedIn ?
+                <div>
+                  <button type="submit">Log out</button>
+                </div>:
+                <div className= 'topbar-right'>
+                <form>
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                  />
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                  />
+                  <button type="submit">Signup</button>
+                  <button onClick={HandleLogin} type="button">Login</button>
+                </form>
+                </div>}
+              </div>
+              <h1></h1>
             </div>
+            <main>
+              Test
+            </main>
           </div>
-          <main>
-            Test  
-          </main>
-        </div>
-      );
+        );
     }
-  }
-export default TopBars;
+  export default TopBars;

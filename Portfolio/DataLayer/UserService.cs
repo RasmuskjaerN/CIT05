@@ -34,8 +34,17 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select user_delete({uid})");
             db.SaveChanges();
         }
-        
         public userMain? GetUser(int? uid)
+        {
+            userMain? user = db.userMain
+                .Include(x => x.Bookmarks)
+                .Include(x => x.Histories)
+                .Include(x => x.Ratings)
+                .FirstOrDefault(x => x.Uid == uid);
+            return user;
+        }
+        
+        /*public userMain? GetUser(int? uid)
         {
             userMain? user = db.userMain
                 .FirstOrDefault(x=> x.Uid == uid);//add first or default tconst
@@ -46,7 +55,7 @@ namespace DataLayer
                 user.Ratings = db.userRates.Where(x => x.Uid == uid).ToList();
             }
             return user;
-        }
+        }*/
         public IList<userMain> GetUsers()
         {
             return db.userMain.ToList();
