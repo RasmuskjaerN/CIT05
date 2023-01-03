@@ -53,8 +53,8 @@ namespace DataLayer
             modelBuilder.Entity<userBookmark>().HasOne(x => x.UserMain).WithMany(m => m.Bookmarks).HasForeignKey(x => x.Uid);
             modelBuilder.Entity<userHistory>().HasOne(x => x.UserMain).WithMany(m => m.Histories).HasForeignKey(x => x.Uid);
             modelBuilder.Entity<userRate>().HasOne(x => x.UserMain).WithMany(m => m.Ratings).HasForeignKey(x => x.Uid);
-
             
+
             modelBuilder.Entity<omdbData>().HasOne(x => x.TitleBasic).WithOne(m => m.OmdbData).HasForeignKey<titleBasic>(x => x.Tconst);
             modelBuilder.Entity<titleAka>().HasOne(x => x.TitleBasic).WithMany(m => m.TitleAkas).HasForeignKey(m => m.Tconst);
             modelBuilder.Entity<titleRating>().HasOne(x => x.TitleBasic).WithOne(m => m.TitleRating).HasForeignKey<titleBasic>(x => x.Tconst);
@@ -176,7 +176,7 @@ namespace DataLayer
             modelBuilder.Entity<userMain>().Property(x => x.Salt).HasColumnName("salt");
 
             modelBuilder.Entity<userRate>().ToTable("user_rate");
-            modelBuilder.Entity<userRate>().HasKey(x => new { x.Uid, x.Tconst });
+            modelBuilder.Entity<userRate>().HasKey(x => new { x.Uid, x.Tconst, x.Rating } );
             modelBuilder.Entity<userRate>().Property(x => x.Uid).HasColumnName("uid");
             modelBuilder.Entity<userRate>().Property(x => x.Tconst).HasColumnName("tconst");
             modelBuilder.Entity<userRate>().Property(x => x.Rating).HasColumnName("rate");

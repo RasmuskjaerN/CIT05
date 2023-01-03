@@ -24,8 +24,14 @@ namespace WebServer.Models
     }
     public class userratingmodel
     {
-        public string? ratingTconst { get; set; }
-        public int? ratingRate { get; set; }
+        public string ratingTconst { get; set; }
+        public int ratingRate { get; set; }
+    }
+    public class UserRatingCreateModel
+    {
+        public int Uid { get; set; }
+        public string ratingTconst { get; set; }
+        public int ratingRate { get; set; }
     }
     public class UserCreateBookmark
     {
