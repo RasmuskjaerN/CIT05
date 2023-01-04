@@ -14,6 +14,8 @@ namespace WebServer.Models.Profiles
             CreateMap<titleRating, movietitleratingmodel>();
             CreateMap<titleRating,MovieRatingListModel>();
             CreateMap<titleAka, movietitleakasmodel>();
+            CreateMap<nameBasic, movieactormodel>();
+            
             /*CreateMap<userBookmark, movieuserbookmarkmodel>()
                 .ForMember(dst => dst.Uid, opt => opt.MapFrom(src => src.Uid))
                 .ForMember(dst => dst.userbookmarkNote, opt => opt.MapFrom(src => src.Note));

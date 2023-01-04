@@ -13,5 +13,7 @@ namespace DataLayer.Domain
         public string? Nconst { get; set; }
         public string? Tconst { get; set; }
         public string? Character { get; set; }
+        public nameBasic? NameBasic { get; set; }
+        public titleBasic? TitleBasic { get; set; }
     }
 }

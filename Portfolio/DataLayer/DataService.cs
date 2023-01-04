@@ -22,6 +22,7 @@ namespace DataLayer
                 .Include(x => x.TitleAkas)
                 .Include(x => x.OmdbData)
                 .Include(x => x.TitleRating)
+                .Include(x => x.Actors)
                 .FirstOrDefault(x => x.Tconst == tconst);
             return movie;
         }
@@ -46,7 +47,6 @@ namespace DataLayer
         {
             return db.titleBasics
                 .Include(x => x.OmdbData)
-                .Include(x => x.TitleRating)
                 .Skip(page * pagesize).Take(pagesize).ToList();
         }
         public int GetMoviesListCount()
@@ -59,11 +59,13 @@ namespace DataLayer
             var result = db.titleGenres.FromSqlInterpolated($"select sim_movie({uid},{Tconst}");
             return result.ToList();
         }
-        
-        public nameBasic? GetName(string nconst)
+
+        public nameBasic? GetName(string? nconst)
         {
-            nameBasic? name = db.nameBasics.Find(nconst);
-            return name;
+            nameBasic? Name = db.nameBasics
+                .Include(x => x.Character)
+                .FirstOrDefault(x => x.Nconst == nconst);
+            return Name;
         }
 
         public int GetNamesListCount()

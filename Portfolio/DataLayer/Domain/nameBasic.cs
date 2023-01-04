@@ -15,5 +15,7 @@ namespace DataLayer.Domain
         public string? Birthyear { get; set; }
         public string? Deathyear { get; set; }
         public float? NameRating { get; set; }
+        public IList<Role>? Character { get; set; }
+        
     }
 }

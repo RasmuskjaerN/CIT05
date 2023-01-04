@@ -16,6 +16,14 @@ namespace WebServer.Models
         public movieomdbmodel? OmdbData { get; set; }
         public movietitleratingmodel? TitleRating { get; set; }
         public IList<movietitleakasmodel>? TitleAkas { get; set; }
+        public IList<RoleModel>? Actors { get; set; }
+    }
+
+    public class movieactormodel
+    {
+        public string? Nconst { get; set; }
+        public string? PrimaryName { get; set; }
+        public string? Character { get; set; }
     }
     public class movieomdbmodel
     {

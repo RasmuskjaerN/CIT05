@@ -23,6 +23,7 @@ namespace DataLayer.Domain
         public omdbData? OmdbData { get; set; }
         public titleRating? TitleRating { get; set; }
         public IList<titleAka>? TitleAkas { get; set; }
+        public IList<Role>? Actors { get; set; }
 
     }
 }
