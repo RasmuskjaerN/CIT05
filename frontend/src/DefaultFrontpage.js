@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 class DefaultFrontpage extends React.Component {
@@ -15,6 +15,7 @@ class DefaultFrontpage extends React.Component {
         const response = await fetch(url);
         const data = await response.json(); 
         this.setState({movie: data, loading: false})
+        
         } catch (error) {
         this.setState({error: error.message});
         }
@@ -22,6 +23,7 @@ class DefaultFrontpage extends React.Component {
 
     render() {
         console.log(this.state.movie);
+        let rank = "";
         return (
           <div>
             {this.state.error ? (
@@ -32,24 +34,25 @@ class DefaultFrontpage extends React.Component {
               ) : (
                 <div>
                   <div className='container'>
-                    <div className='box'> 
-                      <h1> Top 20 Titles </h1>
+                    {/* <h1> Top 20 Titles </h1> */}
+                    <div className='cards'> 
                       {this.state.movie.items
-                        .filter(movie => movie.titleRating[0].numVotes >= 500)
-                        .sort((a, b) => b.titleRating[0].averageRating - a.titleRating[0].averageRating)
+                        .filter(movie => movie.titleRating.numVotes >= 50)
+                        .sort((a, b) => b.titleRating.averageRating - a.titleRating.averageRating)
                         .slice(0, 20)
                         .map((movie, index) => (
-                          <div key={index}>{movie.titleRating[0].averageRating} &#9734; - <h4>{movie.primaryTitle}</h4> ({movie.genre})</div>
+                          <div className='card' 
+                          key={index}>{rank = (index + 1) + ". "}
+                          <img 
+                            src= {movie.omdbData.poster}
+                            alt="Missing Poster"
+                            style={{ width: '80%', borderRadius: '25px', objectFit: 'contain', alignItems: 'center'}}/>
+                          {movie.titleRating.averageRating} {/* &#9734; */} - 
+                          <h4>{movie.primaryTitle}</h4> ({movie.genre})</div>
                         ))}
                     </div>
-                    <div className='box'> 
-                      <h1> Random 20 Titles </h1>
-                      {this.state.movie.items
-                        .sort(() => Math.random() - 0.5)
-                        .slice(0, 20)
-                        .map((movie, index) => (
-                          <div key={index}>{movie.titleRating[0].averageRating} &#9734; - <h4>{movie.primaryTitle}</h4> ({movie.genre})</div>
-                        ))}
+                    <div className='cards'> 
+                      
                     </div>
                   </div>
                 </div>
