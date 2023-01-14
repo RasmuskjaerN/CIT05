@@ -13,11 +13,17 @@ namespace WebServer.Models
         public string? EndYear { get; set; }
         public int? RunTimeMinutes { get; set; }
         public string? Genre { get; set; }
-        public IList<movieomdbmodel>? OmdbData { get; set; }
+        public movieomdbmodel? OmdbData { get; set; }
+        public movietitleratingmodel? TitleRating { get; set; }
         public IList<movietitleakasmodel>? TitleAkas { get; set; }
-        public IList<titleRating>? TitleRating { get; set; }
-        public IList<movieuserbookmarkmodel>? UserBookmarks { get; set; }
-        public IList<movieuserratingmodel>? UserRating { get; set; }
+        public IList<RoleModel>? Actors { get; set; }
+    }
+
+    public class movieactormodel
+    {
+        public string? Nconst { get; set; }
+        public string? PrimaryName { get; set; }
+        public string? Character { get; set; }
     }
     public class movieomdbmodel
     {

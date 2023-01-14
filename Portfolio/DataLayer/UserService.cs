@@ -34,8 +34,17 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select user_delete({uid})");
             db.SaveChanges();
         }
-        
         public userMain? GetUser(int? uid)
+        {
+            userMain? user = db.userMain
+                .Include(x => x.Bookmarks)
+                .Include(x => x.Histories)
+                .Include(x => x.Ratings)
+                .FirstOrDefault(x => x.Uid == uid);
+            return user;
+        }
+        
+        /*public userMain? GetUser(int? uid)
         {
             userMain? user = db.userMain
                 .FirstOrDefault(x=> x.Uid == uid);//add first or default tconst
@@ -46,7 +55,7 @@ namespace DataLayer
                 user.Ratings = db.userRates.Where(x => x.Uid == uid).ToList();
             }
             return user;
-        }
+        }*/
         public IList<userMain> GetUsers()
         {
             return db.userMain.ToList();
@@ -92,10 +101,10 @@ namespace DataLayer
             db.Database.ExecuteSqlInterpolated($"select delete_bookmark_movie({uid},{tconst})");
             db.SaveChanges();
         }
-        public void DeleteRating(string uid, string tconst)
+        public void DeleteRating(int uid, string tconst, int rating)
         {
             //var user = db.userRate.Find(uid);
-            db.Database.ExecuteSqlInterpolated($"select delete_rate({uid},{tconst})");
+            db.Database.ExecuteSqlInterpolated($"select delete_rate({uid},{tconst},{rating})");
             db.SaveChanges();
         }
         public void DeleteActorBookmark(string userid, string nconstactor)
@@ -126,7 +135,7 @@ namespace DataLayer
 
         }
 
-        public void CreateRating(string uid, string tconst, int rating)
+        public void CreateRating(int uid, string tconst, int rating)
         {
             db.Database.ExecuteSqlInterpolated($"select rate_movie({uid},{tconst},{rating})");
             db.SaveChanges();
