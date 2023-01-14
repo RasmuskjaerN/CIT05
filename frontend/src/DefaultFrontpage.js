@@ -1,4 +1,4 @@
-import React from 'react';
+  import React from 'react';
 import './App.css';
 
 class DefaultFrontpage extends React.Component {
@@ -43,7 +43,7 @@ class DefaultFrontpage extends React.Component {
                         ))}
                     </div>
                     <div className='box'> 
-                      <h1> Random 20 Titles </h1>
+                      <h1> 20 Random Titles </h1>
                       {this.state.movie.items
                         .sort(() => Math.random() - 0.5)
                         .slice(0, 20)
