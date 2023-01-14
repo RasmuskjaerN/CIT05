@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import { Container, Row, Col, Image, Button, Card } from 'react-bootstrap';
 import './App.css';
-
 export default function Menu({currentPage, setCurrentPage}){
   const [loading, setLoading] = useState(true);
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState(null);
-
+//test
   useEffect(() => {
     const fetchData = async () => {
       try {
