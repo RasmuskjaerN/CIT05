@@ -12,90 +12,12 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-h1 {
-  margin-top: 5px;
-  text-align: center;
-}
 
-<<<<<<< HEAD
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-=======
-h3 {
-  margin-top: 0px;
-}
-
-h4 {
-  margin: 0px;
-  display: inline;
-}
-
-.rate {
-  font-size:larger;
-  font-weight: bold;
-  margin-top: 5px;
-}
-
-.page-margin {
-  margin-top: 50px;
-  margin-left: 30px;
-}
-.moive-description {
-  background-color: #494949;
-  position: absolute;
-  left: 270px;
-  top: 217px;
-  margin-right: 35px;
-  max-width: 500px;
-  border: 1px solid black;
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  width: 100%;
-  height: 50px;
-  background: linear-gradient(180deg, #494949 0%, #2b2b2b 100%);
-  text-shadow: 2px 2px 5px rgb(0, 139, 139) ;
-  box-shadow: 0 0 8px rgb(0, 139, 139);
-  color: #fff;
-  z-index: 10;
-  margin-bottom: 50px;
-  
-}
-.topbar-left {
-  display: flex;
-  align-items: center;
-  margin-left: 10px;
-  font-size: 20px;
-}
-
-.topbar-center {
->>>>>>> 076f01ae7648dfba6ebc880efe2a7ddfcea66e8f
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 
 .App-link {
   color: #61dafb;
 }
 
-<<<<<<< HEAD
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 .overflow-auto::-webkit-scrollbar {
   width: 5px;
   background-color: rgb(207, 207, 207);
@@ -104,44 +26,14 @@ h4 {
 .overflow-auto::-webkit-scrollbar-thumb {
   background-color: rgb(72, 72, 72);
   border-radius: 10px;
-=======
+}
 .container {
       display: flex;
       justify-content: center;
       margin-top: 30px;
-      
-      
->>>>>>> 076f01ae7648dfba6ebc880efe2a7ddfcea66e8f
-}
+    }
 .box {
-<<<<<<< HEAD
   /* Other styles */
   border-right: 1px solid #ccc;
 }
 
-=======
-      width: 40%;
-      height: fit-content;
-      background-color: gray;
-      color: rgb(0, 0, 0);
-      border-radius: 4px;
-      box-shadow: 0 0 8px darkcyan;
-      margin: 50px;
-}
-
-.cards{
-  justify-content: center;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  background-color: #2b2b2b;
-  border-radius: 20px;
-  box-shadow: 0px 0px 5px #131313;
-  
-}
-.card{
-  object-fit: contain;
-  aspect-ratio: 3/2;
-  align-items: center;
-}
->>>>>>> 076f01ae7648dfba6ebc880efe2a7ddfcea66e8f
