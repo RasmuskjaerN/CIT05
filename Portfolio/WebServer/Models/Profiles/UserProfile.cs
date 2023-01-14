@@ -8,7 +8,7 @@ namespace WebServer.Models.Profiles
     {
         public UserProfile()
         {
-            CreateMap<userMain, UserModel>();                
+            CreateMap<userMain, UserModel>();
             CreateMap<userBookmark, userbookmarkmodel>()
                 .ForMember(dst => dst.bookmarkTconst, opt => opt.MapFrom(src => src.Tconst))
                 .ForMember(dst => dst.bookmarkNote, opt => opt.MapFrom(src => src.Note));
@@ -18,7 +18,7 @@ namespace WebServer.Models.Profiles
             CreateMap<userRate, userratingmodel>()
                .ForMember(dst => dst.ratingTconst, opt => opt.MapFrom(src => src.Tconst))
                .ForMember(dst => dst.ratingRate, opt => opt.MapFrom(src => src.Rating));
-
+            CreateMap<UserRatingCreateModel, userMain>();
             CreateMap<UserCreateModel, userMain>();
             CreateMap<userMain,UserLoginModel>();
             CreateMap<UserCreateBookmark, userBookmark>();
