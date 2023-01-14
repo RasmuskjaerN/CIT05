@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { userID } from  './UserHandler.js';
 
 function Bookmarks() {
   const [loading, setLoading] = useState(true);
@@ -10,7 +9,7 @@ function Bookmarks() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const uid = userID;
+        const uid = 2;
         const url = `http://localhost:5001/api/user/` + uid;
         const response = await fetch(url/*, {
           headers: {

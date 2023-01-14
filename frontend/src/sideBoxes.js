@@ -1,5 +1,4 @@
 import React from 'react';
-import { userLoggedIn } from './UserHandler.js';
 import History from './UserHistory.js';
 import Bookmarks from './UserBookmarks';
 import { useState } from 'react';
@@ -10,13 +9,13 @@ function SideBoxes(props) {
 
   return (
     <div>
-      {userLoggedIn &&
+      {
       <div>
       <div
         style={{
           width: isExpandedBookmark ? '30%' : '5%',
           height: '50%',
-          background: 'lightblue',
+          background: 'darkgray',
           border: '1px solid black',
           position: 'fixed',
           right: 0,
@@ -37,7 +36,7 @@ function SideBoxes(props) {
         style={{
           width: isExpandedHistory ? '30%' : '5%',
           height: '50%',
-          background: 'lightgreen',
+          background: 'darkgray',
           border: '1px solid black',
           position: 'fixed',
           right: 0,
