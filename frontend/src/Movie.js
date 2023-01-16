@@ -2,22 +2,24 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import "./App.css";
 
-function Movie(url) {
+function Movie() {
   const [loading, setLoading] = useState(true);
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState(null);
-  const [tconst, setTconst] = useState("tt10850888");
+  const [search, setSearch] = useState("");
+  const [tconst, setTconst] = useState('tt10850888');
 
   useEffect(() => {
+    setError(null);
     async function fetchMovie() {
       try {
-        const url = `http://localhost:5001/api/movies/` + tconst;
+        const url = `http://localhost:5001/api/movies/` +tconst;
         const response = await fetch(url);
         if (!response.ok) {
-          setTconst("tt10850888");
+          setError("Ups, There doent seem to exist anything with that title.");
           return;
         }
-        const data = await response.json();
+        const data = await response.json(); 
         setMovie(data);
         setLoading(false);
       } catch (error) {
@@ -28,13 +30,22 @@ function Movie(url) {
     fetchMovie();
   }, [tconst]);
 
+
   console.log(movie);
   return (
     <div className="page-margin">
+            <div>
+            <p></p>
+          <input
+                class="form-control"
+                type="text"
+                placeholder="Search.."
+                value={search}
+                onChange={e => setSearch(e.target.value)}/>
+              <button type="submit" class="btn btn-primary" onClick={() => setTconst(search)} type="submit">Search</button>
+          </div>
       {error ? (
-        <div>{error}</div>
-      ) : loading || !movie ? (
-        <div>Loading...</div>
+        <div>{error}</div>  
       ) : loading || !movie ? (
         <div>Loading...</div>
       ) : (
