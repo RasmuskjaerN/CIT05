@@ -47,9 +47,9 @@ const Login = () => {
 
   return (
     <Container>
+      <form onSubmit={handleSubmit}>
       <Row>
-        <form onSubmit={handleSubmit}>
-          <Col>
+          <Col xs={6}>
             <div class="input-group">
               <input
                 class="form-control"
@@ -67,16 +67,18 @@ const Login = () => {
               />
             </div>
           </Col>
+          <Col xs={6}>
           <button type="submit" class="btn btn-primary">
             Login
           </button>
           <button type="submit" class="btn btn-primary">
             Register
           </button>
-        </form>
-      </Row>
+          </Col>
+        </Row>
+      </form>
     </Container>
   );
-};
+}
 
 export default Login;

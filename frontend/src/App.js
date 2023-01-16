@@ -15,8 +15,11 @@ import Pagin from "./Pagin";
 import MovieBest from "./MovieBest";
 import MovieRandom from "./MovieRandom";
 import Login from "./Login";
+import Movie from "./Movie";
+import { BrowserRouter, Route, Link } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 function App() {
-  const [activeTab, setActiveTab] = useState("All");
+  const [activeTab, setActiveTab] = useState("");
 
   return (
     <>
@@ -27,34 +30,19 @@ function App() {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
               <NavDropdown title={activeTab} id="tabs-dropdown">
-                <NavDropdown.Item
-                  href="#All"
-                  active={activeTab === "All"}
-                  onClick={() => setActiveTab("All")}
-                >
-                  All Titles
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  href="#Best"
-                  active={activeTab === "Best"}
-                  onClick={() => setActiveTab("Best")}
-                >
-                  Best Titles
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  href="#Random"
-                  active={activeTab === "Random"}
-                  onClick={() => setActiveTab("Random")}
-                >
-                  Random Title
-                </NavDropdown.Item>
+              <LinkContainer to="/Search">
+                <NavDropdown.Item active={activeTab === "Search"} onClick={() => setActiveTab("Search")}>Search for a Title</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to="/">
+                <NavDropdown.Item active={activeTab === "All"} onClick={() => setActiveTab("All")}>All Titles</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to="/Best">
+                <NavDropdown.Item active={activeTab === "Best"} onClick={() => setActiveTab("Best")}>Best Titles</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to="/Random">
+                <NavDropdown.Item active={activeTab === "Random"} onClick={() => setActiveTab("Random")}>Random Title</NavDropdown.Item>
+              </LinkContainer>
               </NavDropdown>
-              <FormControl
-                type="text"
-                placeholder="Search"
-                className="mr-sm-2"
-                size="lg"
-              />
             </Nav>
             <p></p>
             <Nav>
@@ -64,9 +52,6 @@ function App() {
         </Container>
       </Navbar>
       <div>
-        {activeTab === "All" && <Pagin />}
-        {activeTab === "Best" && <MovieBest />}
-        {activeTab === "Random" && <MovieRandom />}
       </div>
     </>
   );
