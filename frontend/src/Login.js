@@ -2,11 +2,10 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import useLocalStorage from "./useLocalStorage";
 import useInput from "./useInput";
+import { Col, Container, Row } from "react-bootstrap";
+import App from "./App";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
   const [username, resetUser, userAttri] = useInput("user", "");
   const [password, resetPwd, pwdAttri] = useInput("password", "");
   const [userId, setUid] = useState("");
@@ -47,25 +46,36 @@ const Login = () => {
   };
 
   return (
-    <section>
-      <p></p>
-      <h1>Sign In</h1>
-      <form onSubmit={handleSubmit}>
-        <label>Username:</label>
-        <input type="text" id="username" {...userAttri} />
-
-        <label>Password:</label>
-        <input type="password" id="password" {...pwdAttri} />
-        <button>Sign In</button>
-      </form>
-      <p>
-        Need an Account?
-        <br />
-        <span className="line">
-          <Link to="/register">Sign Up</Link>
-        </span>
-      </p>
-    </section>
+    <Container>
+      <Row>
+        <form onSubmit={handleSubmit}>
+          <Col>
+            <div class="input-group">
+              <input
+                class="form-control"
+                type="text"
+                id="username"
+                {...userAttri}
+              />
+            </div>
+            <div>
+              <input
+                class="form-control"
+                type="password"
+                id="password"
+                {...pwdAttri}
+              />
+            </div>
+          </Col>
+          <button type="submit" class="btn btn-primary">
+            Login
+          </button>
+          <button type="submit" class="btn btn-primary">
+            Register
+          </button>
+        </form>
+      </Row>
+    </Container>
   );
 };
 
