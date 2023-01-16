@@ -42,7 +42,7 @@ function Movie() {
                 placeholder="Search.."
                 value={search}
                 onChange={e => setSearch(e.target.value)}/>
-              <button type="submit" class="btn btn-primary" onClick={() => setTconst(search)} type="submit">Search</button>
+              <button type="submit" class="btn btn-primary" onClick={() => setTconst(search)} >Search</button>
           </div>
       {error ? (
         <div>{error}</div>  
