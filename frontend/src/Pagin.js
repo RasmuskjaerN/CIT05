@@ -9,12 +9,12 @@ const Pagin = () => {
 
   return (
     <div>
-        <h2 style={{ display: "flex", justifyContent: "center" }}> All Movies - Page {currentPage}</h2>
+        <h2 style={{ display: "flex", justifyContent: "center" }}> All Titels - Page {currentPage+1}</h2>
         <Pagination style={{ display: "flex", justifyContent: "center" }}>
         <Pagination.First disabled={currentPage === 0} onClick={() => setCurrentPage(0)} />
         <Pagination.Prev disabled={currentPage === 0} onClick={() => setCurrentPage(currentPage - 1)} />
         <Pagination.Item active={true}>
-          {currentPage}
+          {currentPage+1}
         </Pagination.Item>
         <Pagination.Next disabled={currentPage === maxPage} onClick={() => setCurrentPage(currentPage + 1)} />
         <Pagination.Last disabled={currentPage === maxPage} onClick={() => setCurrentPage(maxPage)} />

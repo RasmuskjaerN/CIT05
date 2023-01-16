@@ -1,15 +1,14 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
 import useLocalStorage from "./useLocalStorage";
 import useInput from "./useInput";
 import { Col, Container, Row } from "react-bootstrap";
-import App from "./App";
+import { useState } from "react";
 
 const Login = () => {
-  const [username, resetUser, userAttri] = useInput("user", "");
+  const [username, setUser, userAttri] = useInput("user", "");
   const [password, resetPwd, pwdAttri] = useInput("password", "");
-  const [userId, setUid] = useState("");
+  const [userId, setUid] = useLocalStorage("uid","");
   const [token, setToken] = useLocalStorage("token", "");
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,7 +41,10 @@ const Login = () => {
       // setPwd(json.password);
       //resetUser();
       //if (token != "undefined") navigate(from, { replace: true });
-    } catch {}
+    } catch(error) {
+      setError(error.message + "Invalid Login")
+      console.log(error)
+    }
   };
 
   return (
@@ -55,6 +57,7 @@ const Login = () => {
                 class="form-control"
                 type="text"
                 id="username"
+                placeholder=""
                 {...userAttri}
               />
             </div>
@@ -63,6 +66,7 @@ const Login = () => {
                 class="form-control"
                 type="password"
                 id="password"
+                placeholder=""
                 {...pwdAttri}
               />
             </div>

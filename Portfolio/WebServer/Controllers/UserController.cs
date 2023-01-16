@@ -48,7 +48,7 @@ namespace WebServer.Controllers
             _userService.CreateUser(newUser.UserName, newUser.Password, newUser.Salt);
             return CreatedAtRoute(null, UserCreateModel(newUser));
         }
-        //[Authorize]
+        [Authorize]
         [HttpGet("{uid}", Name = nameof(GetUser))]
         public IActionResult GetUser(int? uid)
         {

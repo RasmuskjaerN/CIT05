@@ -2,12 +2,16 @@ import React from 'react';
 import History from './UserHistory.js';
 import Bookmarks from './UserBookmarks';
 import { useState } from 'react';
+import useLocalStorage from './useLocalStorage.js';
 
 function SideBoxes(props) {
   const [isExpandedBookmark, setIsExpandedBookmark] = useState(false);
   const [isExpandedHistory, setIsExpandedHistory] = useState(false);
+  const [uid, setUid] = useLocalStorage("uid","");
+  const [token, setToken] = useLocalStorage("token", "");
 
   return (
+    token ? (
     <div>
       {
       <div>
@@ -58,6 +62,7 @@ function SideBoxes(props) {
       </div>
     }
     </div>
+    ) : (null)
   );
 }
 

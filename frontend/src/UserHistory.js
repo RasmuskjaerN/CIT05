@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from "react";
+import useLocalStorage from "./useLocalStorage";
 import "./App.css";
 
 function History() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+  const [uid, setUid] = useLocalStorage("uid","");
+  const [token, setToken] = useLocalStorage("token", "");
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const uid = 2;
         const url = `http://localhost:5001/api/user/` + uid;
         const response = await fetch(
-          url /*, {
+          url , {
           headers: {
             'Authorization': 'Bearer ' + token
           }
-        }*/
+        }
         );
         const data = await response.json();
         setUser(data);
@@ -28,12 +30,12 @@ function History() {
     fetchData();
   }, []);
 
-  console.log(user);
+  console.log(uid);
   return (
     <div>
       {error ? (
         <div>{error}</div>
-      ) : loading || !user ? (
+      ) : loading || !uid ? (
         <div>Loading...</div>
       ) : (
         <div>
