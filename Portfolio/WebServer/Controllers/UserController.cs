@@ -48,7 +48,7 @@ namespace WebServer.Controllers
             _userService.CreateUser(newUser.UserName, newUser.Password, newUser.Salt);
             return CreatedAtRoute(null, UserCreateModel(newUser));
         }
-        //[Authorize]
+        [Authorize]
         [HttpGet("{uid}", Name = nameof(GetUser))]
         public IActionResult GetUser(int? uid)
         {
@@ -108,18 +108,17 @@ namespace WebServer.Controllers
             return Ok();
         }
 
-        [HttpPost("uid&tconst&rating")]
-        [Route("rate")]
-
-        public IActionResult CreateRating(string uid, string tconst, int rating)
+        [HttpPost]
+        [Route("rate/create")]
+        public IActionResult CreateRating(UserRatingCreateModel model)
         {
-            if (uid == null && string.IsNullOrEmpty(tconst) && rating == null)
+            if (model.Uid == null && string.IsNullOrEmpty(model.ratingTconst) && model.ratingRate == null)
             {
                 return BadRequest();
             }
             try
             {
-                _userService.CreateRating(uid, tconst, rating);
+                _userService.CreateRating(model.Uid, model.ratingTconst, model.ratingRate);
             }
             catch
             {
@@ -128,21 +127,21 @@ namespace WebServer.Controllers
             return Ok();
         }
 
-        [HttpDelete("uid&tconst")]
-        [Route("ratedelete")]
-        public IActionResult DeleteRating(string uid, string tconst)
+        [HttpPost]
+        [Route("rate/delete")]
+        public IActionResult DeleteRating(UserRatingCreateModel model)
         {
-            if (string.IsNullOrEmpty(uid) || string.IsNullOrEmpty(tconst))
+            if (model.Uid == null && string.IsNullOrEmpty(model.ratingTconst) && model.ratingRate == null)
             {
-                return BadRequest();
+                return BadRequest("cunt");
             }
             try
             {
-                _userService.DeleteRating(uid, tconst);
+                _userService.DeleteRating(model.Uid, model.ratingTconst, model.ratingRate);
             }
             catch
             {
-                return BadRequest();
+                return BadRequest("cunt i anden");
             }
             return Ok();
         }
@@ -168,17 +167,17 @@ namespace WebServer.Controllers
         }
         
         [HttpPost]
-        [Route("delete/bookmark")]
+        [Route("bookmark/delete")]
         
-        public IActionResult DeleteMovieBookmark(int uid, string tconst)
+        public IActionResult DeleteMovieBookmark(CreateMovieBookmarkModel movie)
         {
-            if (uid == null || string.IsNullOrEmpty(tconst))
+            if (movie.Uid == null || string.IsNullOrEmpty(movie.Tconst))
             {
                 return BadRequest();
             }
             try
             {
-                _userService.DeleteMovieBookmark(uid, tconst);
+                _userService.DeleteMovieBookmark(movie.Uid, movie.Tconst);
             }
             catch
             {

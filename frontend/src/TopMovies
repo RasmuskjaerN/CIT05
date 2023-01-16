@@ -1,0 +1,69 @@
+import React, {useState, useEffect} from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import './App.css';
+
+export default function TopMovies({currentPage, setCurrentPage}){
+  const [loading, setLoading] = useState(true);
+  const [movie, setMovie] = useState(null);
+  const [error, setError] = useState(null);
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const url = `http://localhost:5001/api/movies?page=`+currentPage+`&pageSize=10`;
+        const response = await fetch(url);
+        const data = await response.json(); 
+        setMovie(data);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+    fetchData();
+  }, [currentPage]);
+
+    return (
+        <div>
+          {error ? (
+            <div>{error}</div>
+          ) : (
+            loading || !movie ? (
+              <div>Loading...</div>
+            ) : (
+              <div>
+                <Container>
+                <Row>
+                    <Col xs={6}>
+                    <h2 style={{ display: "flex", justifyContent: "center" }}>Top 30 Titles</h2>
+                    <div className="overflow-auto" style={{maxHeight: '500px'}}>
+                    {movie.items
+                        .filter(movie => movie.titleRating[0].numVotes >= 500)
+                        .sort((a, b) => b.titleRating[0].averageRating - a.titleRating[0].averageRating)
+                        .slice(0, 30)
+                        .map((movie, index) => (
+                          <div key={index}>{movie.titleRating[0].averageRating} &#9734; - <b>{movie.primaryTitle}</b>
+                          <span className="d-none d-md-inline"> ({movie.genre})</span></div>
+                        ))}
+                    </div>
+                    </Col>
+                    <Col xs={6}>
+                    <h2>30 Random Titles</h2>
+                    <div className="overflow-auto" style={{maxHeight: '500px'}}>
+                    {movie.items
+                        .sort(() => Math.random() - 0.5)
+                        .slice(0, 30)
+                        .map((movie, index) => (
+                          <div key={index}>{movie.titleRating[0].averageRating} &#9734; - <b>{movie.primaryTitle}</b>
+                          <span className="d-none d-md-inline"> ({movie.genre})</span></div>
+                        ))}
+                    </div>
+                    </Col>
+                </Row>
+                </Container>
+              </div>
+            )
+          )}
+        </div>
+  );
+};

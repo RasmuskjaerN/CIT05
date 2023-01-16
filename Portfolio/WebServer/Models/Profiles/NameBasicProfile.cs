@@ -9,6 +9,9 @@ namespace WebServer.Models.Profiles
         {
             CreateMap<nameBasic, NameBasicModel>();
             CreateMap<nameBasic, NameBasicListModel>();
+            CreateMap<Role, RoleModel>();
+            CreateMap<titleBasic, NameCharacterModel>();
+            
         }
         
     }

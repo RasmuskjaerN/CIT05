@@ -1,22 +1,25 @@
 import React from 'react';
-import { userLoggedIn } from './UserHandler.js';
 import History from './UserHistory.js';
 import Bookmarks from './UserBookmarks';
 import { useState } from 'react';
+import useLocalStorage from './useLocalStorage.js';
 
 function SideBoxes(props) {
   const [isExpandedBookmark, setIsExpandedBookmark] = useState(false);
   const [isExpandedHistory, setIsExpandedHistory] = useState(false);
+  const [uid, setUid] = useLocalStorage("uid","");
+  const [token, setToken] = useLocalStorage("token", "");
 
   return (
+    token ? (
     <div>
-      {userLoggedIn &&
+      {
       <div>
       <div
         style={{
           width: isExpandedBookmark ? '30%' : '5%',
           height: '50%',
-          background: 'lightblue',
+          background: 'darkgray',
           border: '1px solid black',
           position: 'fixed',
           right: 0,
@@ -37,7 +40,7 @@ function SideBoxes(props) {
         style={{
           width: isExpandedHistory ? '30%' : '5%',
           height: '50%',
-          background: 'lightgreen',
+          background: 'darkgray',
           border: '1px solid black',
           position: 'fixed',
           right: 0,
@@ -59,6 +62,7 @@ function SideBoxes(props) {
       </div>
     }
     </div>
+    ) : (null)
   );
 }
 

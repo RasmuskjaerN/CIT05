@@ -1,23 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import { userID } from  './UserHandler.js';
+import React, { useState, useEffect } from "react";
+import useLocalStorage from "./useLocalStorage";
+import "./App.css";
 
-function Bookmarks() {
+function History() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+  const [uid, setUid] = useLocalStorage("uid","");
+  const [token, setToken] = useLocalStorage("token", "");
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const uid = userID;
         const url = `http://localhost:5001/api/user/` + uid;
-        const response = await fetch(url/*, {
+        const response = await fetch(
+          url , {
           headers: {
             'Authorization': 'Bearer ' + token
           }
-        }*/);
-        const data = await response.json(); 
+        }
+        );
+        const data = await response.json();
         setUser(data);
         setLoading(false);
       } catch (error) {
@@ -27,26 +30,24 @@ function Bookmarks() {
     fetchData();
   }, []);
 
-  console.log(user);
+  console.log(uid);
   return (
     <div>
       {error ? (
         <div>{error}</div>
+      ) : loading || !uid ? (
+        <div>Loading...</div>
       ) : (
-        loading || !user ? (
-          <div>Loading...</div>
-        ) : (
-          <div>
-            {user.histories
-              .slice(-10)
-              .map((history, index) => (
-                <div key={index}>{history.historyDate} | {history.historySearchInput}</div>
-              ))}
-          </div>
-        )
+        <div>
+          {user.histories.slice(-10).map((history, index) => (
+            <div key={index}>
+              {history.historyDate} | {history.historySearchInput}
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
 }
 
-export default Bookmarks;
+export default History;
