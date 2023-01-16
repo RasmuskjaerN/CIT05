@@ -14,6 +14,7 @@ import { useState } from "react";
 import Pagin from "./Pagin";
 import MovieBest from "./MovieBest";
 import MovieRandom from "./MovieRandom";
+import Login from "./Login";
 function App() {
   const [activeTab, setActiveTab] = useState("All");
 
@@ -57,20 +58,7 @@ function App() {
             </Nav>
             <p></p>
             <Nav>
-              <Row>
-                <Col>
-                  <Form.Control placeholder="Username" size="sm" />
-                  <Form.Control placeholder="Password" size="sm" />
-                </Col>
-                <Col xs={2}>
-                  <Button variant="outline-light" size="sm">
-                    Login
-                  </Button>
-                  <Button variant="outline-light" size="sm">
-                    Create
-                  </Button>
-                </Col>
-              </Row>
+              <Login />
             </Nav>
           </Navbar.Collapse>
         </Container>

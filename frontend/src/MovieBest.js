@@ -37,17 +37,17 @@ export default function MovieBest({currentPage, setCurrentPage}){
                 <h2 style={{ display: "flex", justifyContent: "center" }}>Top 30 Titles</h2>
                 <div className="d-flex flex-wrap">
                   {movie.items
-                    .filter(movie => movie.titleRating[0] && movie.titleRating[0].numVotes >= 500)
-                    .sort((a, b) => b.titleRating[0].averageRating - a.titleRating[0].averageRating)
+                    .filter(movie => movie.titleRating && movie.titleRating.numVotes >= 500)
+                    .sort((a, b) => b.titleRating.averageRating - a.titleRating.averageRating)
                     .slice(0, 30)                  
                     .map((movie, index) => (
                     <div className="p-2" key={index}>
                         <Card style={{ width: '13rem', height: '20rem', overflow: 'hidden' }}>
-                          <Card.Img variant="top" src={movie.omdbData[0].poster} alt="Movie Poster Missing" thumbnail style={{ objectFit: 'cover', width: '100%', height: '70%'}} />
+                          <Card.Img variant="top" src={movie.omdbData.poster} alt="Movie Poster Missing" thumbnail style={{ objectFit: 'cover', width: '100%', height: '70%'}} />
                           <Card.Body>
                             <Card.Title>{movie.primaryTitle}</Card.Title>
                             <Card.Text>
-                                {movie.titleRating[0] && movie.titleRating[0].averageRating && <>{movie.titleRating[0].averageRating} &#9734; - </>}
+                                {movie.titleRating && movie.titleRating.averageRating && <>{movie.titleRating.averageRating} &#9734; - </>}
                                 {movie.genre}
                             </Card.Text>
                           </Card.Body>

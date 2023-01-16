@@ -35,6 +35,8 @@ function Movie(url) {
         <div>{error}</div>
       ) : loading || !movie ? (
         <div>Loading...</div>
+      ) : loading || !movie ? (
+        <div>Loading...</div>
       ) : (
         <Container>
           <h1>{movie.primaryTitle}</h1>
@@ -50,11 +52,7 @@ function Movie(url) {
           </p>
           <Row>
             <Col xs={4}>
-              <Image
-                src={movie.omdbData[0].poster}
-                alt="Movie Poster"
-                thumbnail
-              />
+              <Image src={movie.omdbData.poster} alt="Movie Poster" thumbnail />
             </Col>
             <Col xs={8}>
               <h2>Genres: </h2>
@@ -69,7 +67,7 @@ function Movie(url) {
                 className="overflow-auto"
                 style={{ maxHeight: "150px", width: "500px" }}
               >
-                {movie.omdbData[0].plot}
+                {movie.omdbData.plot}
               </div>
               <h3>Actors</h3>
               <p>Actor list is missing.</p>
@@ -77,7 +75,7 @@ function Movie(url) {
           </Row>
           <Row>
             <Col xs={12}>
-              <p>Movie Rating: {movie.titleRating[0].averageRating}</p>
+              <p>Movie Rating: {movie.titleRating.averageRating}</p>
               <form>
                 <input type="number" min="0" max="10" step="1" />
                 <input type="submit" value="Rate" />
